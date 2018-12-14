@@ -17,11 +17,11 @@
 
 if [[ "$HOSTNAME" != "Pauls-MacBook-Pro.local" ]]; then
     printf "Execution on remote...\n"
-    trpth="/workdir/pc683/AAD_Davis_station"
+    trpth="/workdir/pc683/AAD_combined"
     cores="$(nproc --all)"
 elif [[ "$HOSTNAME" == "Pauls-MacBook-Pro.local" ]]; then
     printf "Execution on local...\n"
-    trpth="/Users/paul/Documents/AAD_Davis_station"
+    trpth="/Users/paul/Documents/AAD_combined"
     qiime2cli() { qiime "$@" ; }
     cores='2'
 fi

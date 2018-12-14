@@ -14,33 +14,33 @@ set -x
 # ----------------------------------------------
 if [[ "$HOSTNAME" != "pc683.eeb.cornell.edu" ]]; then
     printf "Execution on remote...\n"
-    trpth="/data/AAD_Davis_station"
+    trpth="/data/AAD_combined"
     thrds='40'
 elif [[ "$HOSTNAME" == "pc683.eeb.cornell.edu" ]]; then
     printf "Execution on local...\n"
-    trpth="/Users/paul/Documents/AAD_Davis_station"
+    trpth="/Users/paul/Documents/AAD_combined"
     qiime2cli() { qiime "$@" ; }
     thrds='2'
 fi
 
 # define input and output locations
 # ---------------------------------
-tab[1]='/Users/paul/Documents/AAD_Davis_station/Zenodo/Qiime/050_16S_agrf-tab.qza'
-tab[2]='/Users/paul/Documents/AAD_Davis_station/Zenodo/Qiime/050_16S_rama-tab.qza'
-tab[3]='/Users/paul/Documents/AAD_Davis_station/Zenodo/Qiime/050_16S_rama_unsw-tab.qza'
+tab[1]='/Users/paul/Documents/AAD_combined/Zenodo/Qiime/050_16S_agrf-tab.qza'
+tab[2]='/Users/paul/Documents/AAD_combined/Zenodo/Qiime/050_16S_rama-tab.qza'
+tab[3]='/Users/paul/Documents/AAD_combined/Zenodo/Qiime/050_16S_rama_unsw-tab.qza'
 
-seq[1]='/Users/paul/Documents/AAD_Davis_station/Zenodo/Qiime/050_16S_agrf-seq.qza'
-seq[2]='/Users/paul/Documents/AAD_Davis_station/Zenodo/Qiime/050_16S_rama-seq.qza'
-seq[3]='/Users/paul/Documents/AAD_Davis_station/Zenodo/Qiime/050_16S_rama_unsw-seq.qza'
+seq[1]='/Users/paul/Documents/AAD_combined/Zenodo/Qiime/050_16S_agrf-seq.qza'
+seq[2]='/Users/paul/Documents/AAD_combined/Zenodo/Qiime/050_16S_rama-seq.qza'
+seq[3]='/Users/paul/Documents/AAD_combined/Zenodo/Qiime/050_16S_rama_unsw-seq.qza'
 
 
-tab[4]='/Users/paul/Documents/AAD_Davis_station/Zenodo/Qiime/050_18S_agrf-tab.qza'
-tab[5]='/Users/paul/Documents/AAD_Davis_station/Zenodo/Qiime/050_18S_rama-tab.qza'
-tab[6]='/Users/paul/Documents/AAD_Davis_station/Zenodo/Qiime/050_18S_rama_unsw-tab.qza'
+tab[4]='/Users/paul/Documents/AAD_combined/Zenodo/Qiime/050_18S_agrf-tab.qza'
+tab[5]='/Users/paul/Documents/AAD_combined/Zenodo/Qiime/050_18S_rama-tab.qza'
+tab[6]='/Users/paul/Documents/AAD_combined/Zenodo/Qiime/050_18S_rama_unsw-tab.qza'
 
-seq[4]='/Users/paul/Documents/AAD_Davis_station/Zenodo/Qiime/050_18S_agrf-seq.qza'
-seq[5]='/Users/paul/Documents/AAD_Davis_station/Zenodo/Qiime/050_18S_rama-seq.qza'
-seq[6]='/Users/paul/Documents/AAD_Davis_station/Zenodo/Qiime/050_18S_rama_unsw-seq.qza'
+seq[4]='/Users/paul/Documents/AAD_combined/Zenodo/Qiime/050_18S_agrf-seq.qza'
+seq[5]='/Users/paul/Documents/AAD_combined/Zenodo/Qiime/050_18S_rama-seq.qza'
+seq[6]='/Users/paul/Documents/AAD_combined/Zenodo/Qiime/050_18S_rama_unsw-seq.qza'
 
 
 otpth_tab[1]='Zenodo/Qiime/065_16S_merged_tab.qza'

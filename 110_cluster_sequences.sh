@@ -23,11 +23,11 @@ set -x
 # ----------------------------------------------
 if [[ "$HOSTNAME" != "pc683.eeb.cornell.edu" ]]; then
     printf "Execution on remote...\n"
-    trpth="/data/AAD_Davis_station"
+    trpth="/data/AAD_combined"
     thrds="$(nproc --all)"
 elif [[ "$HOSTNAME" == "pc683.eeb.cornell.edu" ]]; then
     printf "Execution on local...\n"
-    trpth="/Users/paul/Documents/AAD_Davis_station"
+    trpth="/Users/paul/Documents/AAD_combined"
     qiime2cli() { qiime "$@" ; }
     thrds='2'
 fi
