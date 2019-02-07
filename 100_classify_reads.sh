@@ -1,4 +1,4 @@
-# 25.03.2018 - Paul Czechowski - paul.czechowski@gmail.com 
+# 06.02.2019 - Paul Czechowski - paul.czechowski@gmail.com 
 # ========================================================
 # https://docs.qiime2.org/2017.11/tutorials/moving-pictures/
 
@@ -15,7 +15,6 @@ if [[ "$HOSTNAME" != "pc683.eeb.cornell.edu" ]]; then
 elif [[ "$HOSTNAME" == "pc683.eeb.cornell.edu" ]]; then
     printf "Execution on local...\n"
     trpth="/Users/paul/Documents/AAD_combined"
-    qiime2cli() { qiime "$@" ; }
     thrds='2'
 fi
 
@@ -46,7 +45,7 @@ taxv[2]="100_18S_taxonomy.qzv"
 # Run scripts
 # ------------
 for ((i=1;i<=2;i++)); do
-  qiime2cli feature-classifier classify-sklearn \
+  qiime feature-classifier classify-sklearn \
     --i-classifier "$trpth"/"${wdir[$i]}"/"${clssf[$i]}" \
     --i-reads "$trpth"/"${qdir[$i]}"/"${repset[$i]}" \
     --o-classification "$trpth"/"${qdir[$i]}"/"${tax[$i]}" \
@@ -55,7 +54,7 @@ for ((i=1;i<=2;i++)); do
 done
 
 for ((i=1;i<=2;i++)); do
-  qiime2cli metadata tabulate \
+  qiime metadata tabulate \
     --m-input-file "$trpth"/"${qdir[$i]}"/"${tax[$i]}" \
     --o-visualization "$trpth"/"${qdir[$i]}"/"${taxv[$i]}"
 done
