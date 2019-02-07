@@ -30,8 +30,12 @@
   * running: `/Users/paul/Documents/AAD_combined/Github/085_train_16S_classifier.sh` - ok 
   * running: `/Users/paul/Documents/AAD_combined/Github/095_train_18S_classifier.sh` - ok
 * ***06.02.2019*** - stepping through scripts
-  * running: `/Users/paul/Documents/AAD_combined/Github/100_classify_reads.sh` - pending
-   
+  * running: `/Users/paul/Documents/AAD_combined/Github/100_classify_reads.sh` - ok
+  * running: `/Users/paul/Documents/AAD_combined/Github/110_cluster_sequences.sh` - ok
+  * for script `/Users/paul/Documents/AAD_combined/Github/120_summarize_clusters.sh`
+     * removing "a" in fornt of The Ridge samples ids (smaller numbers and letter) from file `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/05_Davis_and_TheRidge_metdata_curated_corrected.txt`
+     * completed successfully after change
+  * running `/Users/paul/Documents/AAD_combined/Github/130_show_classification.sh` - ok  
 
 
 ## Todo

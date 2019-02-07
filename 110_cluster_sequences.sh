@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 26.03.2018 - Paul Czechowski - paul.czechowski@gmail.com 
+# 07.02.2019 - Paul Czechowski - paul.czechowski@gmail.com 
 # ========================================================
 #   "Given a feature table and the associated feature sequences, cluster the
 #   features based on user-specified percent identity threshold of their

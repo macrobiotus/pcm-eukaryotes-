@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 26.03.2018 - Paul Czechowski - paul.czechowski@gmail.com 
+# 07.02.2019 - Paul Czechowski - paul.czechowski@gmail.com 
 # ========================================================
 # Summarizing clustering output, part 1 of 2
 
@@ -24,8 +24,8 @@ fi
 # Define input files
 # ------------------
 
-inpth_map[1]='Zenodo/Manifest/05_DAVIS_metadata.tsv'
-inpth_map[2]='Zenodo/Manifest/05_DAVIS_metadata.tsv'
+inpth_map[1]='Zenodo/Manifest/05_Davis_and_TheRidge_metdata_curated_corrected.txt'
+inpth_map[2]='Zenodo/Manifest/05_Davis_and_TheRidge_metdata_curated_corrected.txt'
 
 clust_tab[1]='Zenodo/Qiime/110_16S_097_cl_tab.qza'
 clust_tab[2]='Zenodo/Qiime/110_18S_097_cl_tab.qza'
@@ -61,5 +61,4 @@ for ((i=1;i<=2;i++)); do
   qiime2cli feature-table tabulate-seqs \
     --i-data "$trpth"/"${clust_seq[$i]}" \
     --o-visualization "$trpth"/"${seq_vis[$i]}"
-
 done

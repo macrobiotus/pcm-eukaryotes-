@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 26.03.2018 - Paul Czechowski - paul.czechowski@gmail.com 
+# 07.02.2019 - Paul Czechowski - paul.czechowski@gmail.com 
 # ========================================================
 # Summarizing clustering output, part 2 of 2
 
@@ -31,8 +31,8 @@ clust_tab[2]='Zenodo/Qiime/110_18S_097_cl_tab.qza'
 tax_map[1]='Zenodo/Qiime/100_16S_taxonomy.qza'
 tax_map[2]='Zenodo/Qiime/100_18S_taxonomy.qza'
 
-inpth_map[1]='Zenodo/Manifest/05_DAVIS_metadata.tsv'
-inpth_map[2]='Zenodo/Manifest/05_DAVIS_metadata.tsv'
+inpth_map[1]='Zenodo/Manifest/05_Davis_and_TheRidge_metdata_curated_corrected.txt'
+inpth_map[2]='Zenodo/Manifest/05_Davis_and_TheRidge_metdata_curated_corrected.txt'
 
 # output files
 # ------------
