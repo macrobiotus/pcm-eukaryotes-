@@ -20,7 +20,7 @@
      * using sample ids for The Ridge data as in file `/Users/paul/Documents/AAD_The_Ridge/Zenodo/Manifest/05_16S_manifest_sorted.txt`
      * using sample ids for The Ridge data as in file `/Users/paul/Documents/AAD_The_Ridge/Zenodo/Manifest/05_18S_manifest_sorted.txt`
      * assign sample ids from manifest files above to field ids using this file  `/Users/paul/Documents/AAD_The_Ridge/Zenodo/Manifest/00_sample_mapping_file.xlsx`
-* ***06.02.2019***
+* ***06.02.2019*** - stepping through scripts
   * received new metadata in file `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/00_Davis_and_TheRidge_metdata_curated.csv`
   * matching manifest files from David and The Ridge data with new metadata file
      * creating `~/Documents/AAD_combined/Github/070_check_sample_ids.r` which reads files from outside project tree and may not work later
@@ -29,6 +29,8 @@
   * running: `/Users/paul/Documents/AAD_combined/Github/075_smr_features_and_table.sh` - ok
   * running: `/Users/paul/Documents/AAD_combined/Github/085_train_16S_classifier.sh` - ok 
   * running: `/Users/paul/Documents/AAD_combined/Github/095_train_18S_classifier.sh` - ok
+* ***06.02.2019*** - stepping through scripts
+  * running: `/Users/paul/Documents/AAD_combined/Github/100_classify_reads.sh` - pending
    
 
 
