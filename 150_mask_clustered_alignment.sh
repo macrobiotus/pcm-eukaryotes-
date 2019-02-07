@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 26.03.2018 - Paul Czechowski - paul.czechowski@gmail.com 
+# 07.02.2019 - Paul Czechowski - paul.czechowski@gmail.com 
 # ========================================================
 # Masking clustered sequence alignments. For tree matching clustered sequences.
 # Ideally one would do this with the unclustered sequences, but the
@@ -15,7 +15,7 @@ set -x
 # ----------------------------------------------
 if [[ "$HOSTNAME" != "pc683.eeb.cornell.edu" ]]; then
     printf "Execution on remote...\n"
-    trpth="/data/AAD_combined"
+    trpth="/Users/paul/Documents/AAD_combined"
     cores="$(nproc --all)"
 elif [[ "$HOSTNAME" == "pc683.eeb.cornell.edu" ]]; then
     printf "Execution on local...\n"
@@ -35,7 +35,7 @@ otpth[2]='Zenodo/Qiime/150_18S_097_cl_masked_alignment.qza'
 # Run scripts
 # ------------
 for ((i=1;i<=2;i++)); do
-  qiime2cli alignment mask \
+  qiime alignment mask \
     --i-alignment "$trpth"/"${inpth[$i]}" \
     --o-masked-alignment "$trpth"/"${otpth[$i]}"
 done  

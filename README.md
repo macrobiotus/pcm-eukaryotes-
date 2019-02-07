@@ -35,7 +35,12 @@
   * for script `/Users/paul/Documents/AAD_combined/Github/120_summarize_clusters.sh`
      * removing "a" in fornt of The Ridge samples ids (smaller numbers and letter) from file `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/05_Davis_and_TheRidge_metdata_curated_corrected.txt`
      * completed successfully after change
-  * running `/Users/paul/Documents/AAD_combined/Github/130_show_classification.sh` - ok  
+  * running `/Users/paul/Documents/AAD_combined/Github/130_show_classification.sh` - ok
+  * checking and committing Transport scripts in `/Users/paul/Documents/AAD_combined/Transport`
+  * adjusted before cluster roundtrip, followed by commit
+    * `/Users/paul/Documents/AAD_combined/Github/140_align_clustered_repseqs.sh`
+    * `/Users/paul/Documents/AAD_combined/Github/150_mask_clustered_alignment.sh`
+    * `/Users/paul/Documents/AAD_combined/Github/160_build_clustered_trees.sh`
 
 
 ## Todo

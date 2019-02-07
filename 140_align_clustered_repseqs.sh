@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 26.03.2018 - Paul Czechowski - paul.czechowski@gmail.com 
+# 07.02.2019 - Paul Czechowski - paul.czechowski@gmail.com 
 # ========================================================
 # Aligning clustered sequences. For tree matching clustered sequences.
 # Ideally one would do this with the unclustered sequences, but the
@@ -15,12 +15,11 @@ set -x
 # ----------------------------------------------
 if [[ "$HOSTNAME" != "pc683.eeb.cornell.edu" ]]; then
     printf "Execution on remote...\n"
-    trpth="/data/AAD_combined"
+    trpth="/Users/paul/Documents/AAD_combined"
     cores="$(nproc --all)"
 elif [[ "$HOSTNAME" == "pc683.eeb.cornell.edu" ]]; then
     printf "Execution on local...\n"
     trpth="/Users/paul/Documents/AAD_combined"
-    qiime2cli() { qiime "$@" ; }
     cores='2'
 fi
 
@@ -35,7 +34,7 @@ otpth[2]='Zenodo/Qiime/140_18S_097_cl_raw_alignment.qza'
 # Run scripts
 # ------------
 for ((i=1;i<=2;i++)); do
-  qiime2cli alignment mafft \
+  qiime alignment mafft \
     --i-sequences "$trpth"/"${inpth[$i]}" \
     --o-alignment "$trpth"/"${otpth[$i]}" \
     --p-n-threads "$cores"
