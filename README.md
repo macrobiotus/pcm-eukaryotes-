@@ -26,6 +26,9 @@
      * creating `~/Documents/AAD_combined/Github/070_check_sample_ids.r` which reads files from outside project tree and may not work later
      * missing samples in metadata file: `a512A`, `BacMck`, `NoTmpl`, `SoilDNA`, `FunMck`
      * adding samples to `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/05_Davis_and_TheRidge_metdata_curated_corrected.csv`
+  * running: `/Users/paul/Documents/AAD_combined/Github/075_smr_features_and_table.sh` - ok
+  * running: `/Users/paul/Documents/AAD_combined/Github/085_train_16S_classifier.sh` - pending 
+  * running: `/Users/paul/Documents/AAD_combined/Github/095_train_18S_classifier.sh` - not completed
      
   
 

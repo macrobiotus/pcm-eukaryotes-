@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 25.03.2018 - Paul Czechowski - paul.czechowski@gmail.com 
+# 06.02.2019 - Paul Czechowski - paul.czechowski@gmail.com 
 # ========================================================
 # https://docs.qiime2.org/2017.11/tutorials/moving-pictures/
 
@@ -18,7 +18,7 @@ elif [[ "$HOSTNAME" == "pc683.eeb.cornell.edu" ]]; then
     printf "Execution on local...\n"
     trpth="/Users/paul/Documents/AAD_combined"
     qiime2cli() { qiime "$@" ; }
-    thrds='1'
+    thrds='2'
 fi
 
 # define input and output locations
@@ -57,7 +57,7 @@ qiime tools import \
 printf "Importing 16S reference taxonomy into Qiime...\n"
 qiime tools import \
   --type 'FeatureData[Taxonomy]' \
-  --source-format HeaderlessTSVTaxonomyFormat \
+  --input-format HeaderlessTSVTaxonomyFormat \
   --input-path "$taxdbmed" \
   --output-path "$trpth"/"$wdir"/"$taxf"
 

@@ -16,7 +16,7 @@ elif [[ "$HOSTNAME" == "pc683.eeb.cornell.edu" ]]; then
     printf "Execution on local...\n"
     trpth="/Users/paul/Documents/AAD_combined"
     qiime2cli() { qiime "$@" ; }
-    thrds='1'
+    thrds='2'
 fi
 
 # define input and output locations
@@ -55,7 +55,7 @@ qiime tools import \
 printf "Importing reference taxonomy into Qiime...\n"
 qiime tools import \
   --type 'FeatureData[Taxonomy]' \
-  --source-format HeaderlessTSVTaxonomyFormat \
+  --input-format HeaderlessTSVTaxonomyFormat \
   --input-path "$taxdbmed" \
   --output-path "$trpth"/"$wdir"/"$taxf"
 

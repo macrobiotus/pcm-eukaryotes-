@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 15.03.2018 - Paul Czechowski - paul.czechowski@gmail.com 
+# 06.02.2019 - Paul Czechowski - paul.czechowski@gmail.com 
 # ========================================================
 # Visualising reads after denoising and merging procedure.
 
@@ -29,16 +29,14 @@ inpth_rep[1]='Zenodo/Qiime/065_16S_merged_seq.qza'
 otpth_tab[1]='Zenodo/Qiime/075_16S_sum_feat_tab.qzv'
 otpth_rep[1]='Zenodo/Qiime/075_16S_sum_repr_seq.qzv'
 
-
 inpth_tab[2]='Zenodo/Qiime/065_18S_merged_tab.qza'
 inpth_rep[2]='Zenodo/Qiime/065_18S_merged_seq.qza'
 
 otpth_tab[2]='Zenodo/Qiime/075_18S_sum_feat_tab.qzv'
 otpth_rep[2]='Zenodo/Qiime/075_18S_sum_repr_seq.qzv'
 
-
-inpth_map[1]='Zenodo/Manifest/05_DAVIS_metadata.tsv'
-inpth_map[2]='Zenodo/Manifest/05_DAVIS_metadata.tsv'
+inpth_map[1]='Zenodo/Manifest/05_Davis_and_TheRidge_metdata_curated_corrected.txt'
+inpth_map[2]='Zenodo/Manifest/05_Davis_and_TheRidge_metdata_curated_corrected.txt'
 
 # run script for 16S and 18S
 # --------------------------
