@@ -21,7 +21,6 @@ if [[ "$HOSTNAME" != "pc683.eeb.cornell.edu" ]]; then
 elif [[ "$HOSTNAME" == "pc683.eeb.cornell.edu" ]]; then
     printf "Execution on local...\n"
     trpth="/Users/paul/Documents/AAD_combined"
-    qiime2cli() { qiime "$@" ; }
     cores='2'
 fi
 
@@ -39,13 +38,13 @@ rooted_tree[2]='Zenodo/Qiime/160_18S_097_cl_tree_rooted.qza'
 plot_dir[1]="Zenodo/Qiime/170_16S_core_metrics"
 plot_dir[2]="Zenodo/Qiime/170_18S_core_metrics"
 
-depth[1]='5935' # using frequency of 120_16S_097_cl_tab.qzv 
-depth[2]='3381' # using frequency of 120_18S_097_cl_tab.qzv
+depth[1]='29260' # excluding first quartile of samples as per 120_16S_097_cl_tab.qzv 
+depth[2]='14055' # excluding first quartile of samples as per 120_18S_097_cl_tab.qzv
 
 # Run scripts
 # ------------
 for ((i=1;i<=2;i++)); do
-  qiime2cli diversity core-metrics-phylogenetic \
+  qiime diversity core-metrics-phylogenetic \
     --i-phylogeny "$trpth"/"${rooted_tree[$i]}" \
     --i-table "$trpth"/"${clust_tab[$i]}" \
     --m-metadata-file "$trpth"/"${inpth_map[$i]}" \

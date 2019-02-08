@@ -17,7 +17,6 @@ if [[ "$HOSTNAME" != "pc683.eeb.cornell.edu" ]]; then
 elif [[ "$HOSTNAME" == "pc683.eeb.cornell.edu" ]]; then
     printf "Execution on local...\n"
     trpth="/Users/paul/Documents/AAD_combined"
-    qiime2cli() { qiime "$@" ; }
     cores='2'
 fi
 
@@ -49,7 +48,7 @@ tab_vis[2]='Zenodo/Qiime/120_18S_097_cl_tab.qzv'
 for ((i=1;i<=2;i++)); do
   # summarize feature tables
   printf "Summarizing  \"${clust_tab[$i]}\" at $(date +"%T")  ... \n"
-  qiime2cli feature-table summarize \
+  qiime feature-table summarize \
      --i-table "$trpth"/"${clust_tab[$i]}" \
      --o-visualization "$trpth"/"${tab_vis[$i]}" \
      --m-sample-metadata-file "$trpth"/"${inpth_map[$i]}"
@@ -58,7 +57,7 @@ done
 for ((i=1;i<=2;i++)); do
   # summarize sequence tables
   printf "Summarizing  \"${clust_seq[$i]}\" at $(date +"%T")  ... \n"
-  qiime2cli feature-table tabulate-seqs \
+  qiime feature-table tabulate-seqs \
     --i-data "$trpth"/"${clust_seq[$i]}" \
     --o-visualization "$trpth"/"${seq_vis[$i]}"
 done
