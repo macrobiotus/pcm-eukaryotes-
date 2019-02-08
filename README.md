@@ -42,7 +42,17 @@
     * `/Users/paul/Documents/AAD_combined/Github/150_mask_clustered_alignment.sh`
     * `/Users/paul/Documents/AAD_combined/Github/160_build_clustered_trees.sh`
     * pushing to cluster - do not work locally
-    * date arrived on `cbsumm21`
+* ***08.02.2019*** - stepping through scripts
+    * data arrived on `cbsumm21`
+    * adjusting file paths
+    * running: `140_align_clustered_repseqs.sh` - ok
+    * running: `150_mask_clustered_alignment.sh` - ok
+    * running: `160_build_clustered_trees.sh` - pending
+    * need files `120_16S_097_cl_tab.qzv` and `120_18S_097_cl_tab.qzv` for continuation which appear to be missing
+       * on local, in parallel to cluster work, correcting mnetadata file in `Manifest folder - also done on cluster
+       * rerunning script `120...` locally 
+       * if accidentally overwritten during back sync just redo, file stamps should be 8-Feb-19 around 16:35 
+       * pulling to local to redu and continue with script `170...`
     
 
 

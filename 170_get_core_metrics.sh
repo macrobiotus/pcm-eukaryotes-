@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 26.03.2018 - Paul Czechowski - paul.czechowski@gmail.com 
+# 08.02.2019 - Paul Czechowski - paul.czechowski@gmail.com 
 # ========================================================
 # Qiime biodiversity core analyses
 # https://docs.qiime2.org/2017.11/tutorials/moving-pictures/
@@ -16,7 +16,7 @@ set -x
 # ----------------------------------------------
 if [[ "$HOSTNAME" != "pc683.eeb.cornell.edu" ]]; then
     printf "Execution on remote...\n"
-    trpth="/data/AAD_combined"
+    trpth="/workdir/pc683/AAD_combined"
     cores="$(nproc --all)"
 elif [[ "$HOSTNAME" == "pc683.eeb.cornell.edu" ]]; then
     printf "Execution on local...\n"
@@ -27,8 +27,8 @@ fi
 
 # Define input and output locations
 # ---------------------------------
-inpth_map[1]='Zenodo/Manifest/05_DAVIS_metadata.tsv'
-inpth_map[2]='Zenodo/Manifest/05_DAVIS_metadata.tsv'
+inpth_map[1]='Zenodo/Manifest/05_Davis_and_TheRidge_metdata_curated_corrected.txt'
+inpth_map[2]='Zenodo/Manifest/05_Davis_and_TheRidge_metdata_curated_corrected.txt'
 
 clust_tab[1]='Zenodo/Qiime/110_16S_097_cl_tab.qza'
 clust_tab[2]='Zenodo/Qiime/110_18S_097_cl_tab.qza'
