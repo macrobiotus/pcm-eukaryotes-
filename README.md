@@ -52,7 +52,8 @@
        * on local, in parallel to cluster work, correcting mnetadata file in `Manifest folder - also done on cluster
        * rerunning script `120...` locally - also adjusted on cluster - also ran on cluster, successfully 
        * if accidentally overwritten during back sync just redo, file stamps should be 8-Feb-19 around 16:35 
-       * pulling to local to continue with script `170...`
+    * saving to remote home before starting script `170...` on cluster 
+    * continuing on cluster with script `170...` - ok
     
 
 
