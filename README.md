@@ -42,6 +42,7 @@
     * `/Users/paul/Documents/AAD_combined/Github/150_mask_clustered_alignment.sh`
     * `/Users/paul/Documents/AAD_combined/Github/160_build_clustered_trees.sh`
     * pushing to cluster - do not work locally
+    * date arrived on `cbsumm21`
     
 
 

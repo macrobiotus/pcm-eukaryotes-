@@ -1,3 +1,4 @@
+
 #!/bin/bash
 
 # 07.02.2019 - Paul Czechowski - paul.czechowski@gmail.com 

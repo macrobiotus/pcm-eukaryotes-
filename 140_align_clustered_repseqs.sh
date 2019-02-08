@@ -39,4 +39,3 @@ for ((i=1;i<=2;i++)); do
     --o-alignment "$trpth"/"${otpth[$i]}" \
     --p-n-threads "$cores"
 done
-
