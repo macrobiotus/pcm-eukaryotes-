@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 26.03.2018 - Paul Czechowski - paul.czechowski@gmail.com 
+# 08.02.2019 - Paul Czechowski - paul.czechowski@gmail.com 
 # ========================================================
 # Converting clustering results to biom files for Qiime 1 and
 # network graphics.
@@ -42,8 +42,8 @@ tax_map[2]='Zenodo/Qiime/100_18S_taxonomy.qza'
 rooted_tree[1]='Zenodo/Qiime/160_16S_097_cl_tree_rooted.qza'
 rooted_tree[2]='Zenodo/Qiime/160_18S_097_cl_tree_rooted.qza'
 
-mapping[1]='Zenodo/Manifest/05_DAVIS_metadata.tsv'
-mapping[2]='Zenodo/Manifest/05_DAVIS_metadata.tsv'
+mapping[1]='Zenodo/Manifest/05_Davis_and_TheRidge_metdata_curated_corrected.txt'
+mapping[2]='Zenodo/Manifest/05_Davis_and_TheRidge_metdata_curated_corrected.txt'
 
 # Define output files files
 # -------------------------
@@ -55,9 +55,9 @@ tree_exp[2]="180_18S_097_cl_tree_rooted.tre"
 
 for ((i=1;i<=2;i++)); do
    printf "Exporting Qiime 2 files at $(date +"%T")...\n"
-   qiime tools export "$trpth"/"${clust_tab[$i]}" --output-dir "$trpth"/"${clust_exp[$i]}" && \
-   qiime tools export "$trpth"/"${clust_seq[$i]}" --output-dir "$trpth"/"${clust_exp[$i]}" && \
-   qiime tools export "$trpth"/"${tax_map[$i]}" --output-dir "$trpth"/"${clust_exp[$i]}" && \
+   qiime tools export --input-path "$trpth"/"${clust_tab[$i]}" --output-path "$trpth"/"${clust_exp[$i]}" && \
+   qiime tools export --input-path "$trpth"/"${clust_seq[$i]}" --output-path "$trpth"/"${clust_exp[$i]}" && \
+   qiime tools export --input-path "$trpth"/"${tax_map[$i]}" --output-path "$trpth"/"${clust_exp[$i]}" && \
    unzip -p "$shpth"/"${rooted_tree[$i]}" > "$shpth"/"${clust_exp[$i]}"/"${tree_exp[$i]}" || { echo 'Qiime 2 export failed' ; exit 1; }
 
 done

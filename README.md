@@ -54,6 +54,8 @@
        * if accidentally overwritten during back sync just redo, file stamps should be 8-Feb-19 around 16:35 
     * saving to remote home before starting script `170...` on cluster 
     * continuing on cluster with script `170...` - ok
+    * back on local
+    * running `/Users/paul/Documents/AAD_combined/Github/180_convert_clusters.sh` - ok
     
 
 
