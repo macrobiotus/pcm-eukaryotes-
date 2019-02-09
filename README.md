@@ -56,7 +56,7 @@
     * continuing on cluster with script `170...` - ok
     * back on local
     * running `/Users/paul/Documents/AAD_combined/Github/180_convert_clusters.sh` - ok
-    
+       * can't import trees. Committing then changing syntax in tree import request of script `180...`
 
 
 ## Todo
