@@ -58,8 +58,7 @@ for ((i=1;i<=2;i++)); do
    qiime tools export --input-path "$trpth"/"${clust_tab[$i]}" --output-path "$trpth"/"${clust_exp[$i]}" && \
    qiime tools export --input-path "$trpth"/"${clust_seq[$i]}" --output-path "$trpth"/"${clust_exp[$i]}" && \
    qiime tools export --input-path "$trpth"/"${tax_map[$i]}" --output-path "$trpth"/"${clust_exp[$i]}" && \
-   unzip -p "$shpth"/"${rooted_tree[$i]}" > "$shpth"/"${clust_exp[$i]}"/"${tree_exp[$i]}" || { echo 'Qiime 2 export failed' ; exit 1; }
-
+   qiime tools export --input-path "$shpth"/"${rooted_tree[$i]}" --output-path "$shpth"/"${clust_exp[$i]}"/"${tree_exp[$i]}" || { echo 'Qiime 2 export failed' ; exit 1; }
 done
 
 for ((i=1;i<=2;i++)); do
