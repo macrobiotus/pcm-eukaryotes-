@@ -59,7 +59,11 @@
        * can't import trees. 
        * Committing then changing syntax in tree import request of script `180...`
        * re-running script `180...`
-    * full Phyloseq objects available for review of taxonomy strings, committing. 
+    * full Phyloseq objects available for review of taxonomy strings, committing.
+* ***11.03.2018*** - update
+   * results should be usable but can be improved:
+     * trim 5' end of all sequences to be imported (Not only 3'. Started this but not finished.)
+     * Classify using Blast as done for CU data. (Not only 3'. Started this but not finished.)
 
 
 ## Todo
