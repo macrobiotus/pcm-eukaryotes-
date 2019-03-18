@@ -64,7 +64,57 @@
    * results should be usable but can be improved:
      * trim 5' end of all sequences to be imported (Not only 3'. Started this but not finished.)
      * Classify using Blast as done for CU data. (Not only 3'. Started this but not finished.)
+* ***11.03.2018*** - checking  primer location in full and filtered reference databases
+  * updating todo list (see below)
+  * opening all relevant files and save as BBedit project
+  * check if primers can principally be found in referenece data
+     * primers 
+       * 16S Forward (27F, Read 1 Primer) p27F `AGAGTTTGATCMTGGCTCAG`
+       * 16S Reverse (519R, Read 2 Primer) p519R `GWATTACCGCGGCKGCTG` (RC: `CAGCMGCCGCGGTAATWC`)
+       * 18S Forward (1391f, Read 1 Primer) p1391f `GTACACACCGCCCGTC`
+       * 18S Reverse (EukBr, Read 2 Primer) pEukBr `TGATCCTTCTGCAGGTTCACCTAC` (RC: `GTAGGTGAACCTGCAGAAGGATCA`)
+     * reference data - untrimmed
+       * `/Users/paul/Sequences/References/gg_13_8_otus/rep_set/99_otus.fasta`
+       * `/Users/paul/Sequences/References/SILVA_128_QIIME_release/rep_set/rep_set_18S_only/99/99_otus_18S.fasta`
+     * reference data export - trimmed - and exported (via `qiime tools export` and manual renaming)
+       * `/Users/paul/Documents/AAD_combined/Zenodo/Classifier/095_18S_ref-seqs.qza`
+       * `/Users/paul/Documents/AAD_combined/Zenodo/Classifier/085_16S_ref-seqs.qza`
+       * `/Users/paul/Documents/AAD_combined/Zenodo/Classifier/095_18S_ref-seqs.fasta`
+       * `/Users/paul/Documents/AAD_combined/Zenodo/Classifier/085_16S_ref-seqs.fasta`
+    * checking primer coverage 16S full db:
+       * `grep "AGAGTTTGATC.TGGCTCAG" /Users/paul/Sequences/References/gg_13_8_otus/rep_set/99_otus.fasta`
+         * 203452 seqs in db, 68217 occurrences at read start (33%)
+       * `grep "CAGC.GCCGCGGTAAT.C" /Users/paul/Sequences/References/gg_13_8_otus/rep_set/99_otus.fasta`
+         * 203452 seqs in db, 169747 occurrences in read middle (83%) 
+    * checking for flanking regions in 16S truncated db:
+       * `grep "AACGAACGCT" /Users/paul/Documents/AAD_combined/Zenodo/Classifier/085_16S_ref-seqs.fasta`
+         * 101431 seqs in db, match found at read start as expected, ~11454 times, (~11% approximate!)   
+       * `grep "AACTTCGTGC" /Users/paul/Documents/AAD_combined/Zenodo/Classifier/085_16S_ref-seqs.fasta`
+         * 101431 seqs in db, match found at read end as expected, ~7856 times, ~7% approximate!)
+    * checking primer coverage 18S full db:
+       * `grep "GTACACACCGCCCGTC" /Users/paul/Sequences/References/SILVA_128_QIIME_release/rep_set/rep_set_18S_only/99/99_otus_18S.fasta`
+         * 48294 seqs in db, 39926 occurrences found towards read end (82%)
+       * `grep "GTAGGTGAACCTGCAGAAGGATCA" /Users/paul/Sequences/References/SILVA_128_QIIME_release/rep_set/rep_set_18S_only/99/99_otus_18S.fasta`
+         * 48294 seqs in db, 0 occurrences ?
+       * not RC as required `grep "TGATCCTTCTGCAGGTTCACCTAC" /Users/paul/Sequences/References/SILVA_128_QIIME_release/rep_set/rep_set_18S_only/99/99_otus_18S.fasta`
+         * 4 occurrences, flanking regions is `GGAAACCAAGATT`
+     * checking primer coverage 18S:
+       * checking primer coverage 18S truncated db - **aborted, can't get flanking regions toi primers listed below:**
+         * `grep "GTACACACCGCCCGTC" /Users/paul/Documents/AAD_combined/Zenodo/Classifier/095_18S_ref-seqs.fasta`
+         * `grep "TGATCCTTCTGCAGGTTCACCTAC" /Users/paul/Documents/AAD_combined/Zenodo/Classifier/095_18S_ref-seqs.fasta`
+    *  additionally checking primer coverage in 18S "full" db SILVA version  119:
+       * `grep "GTACACACCGCCCGTC" /Users/paul/Sequences/References/SILVA_119_QIIME_release/Silva_119_provisional_release/rep_set_eukaryotes/99/Silva_119_rep_set99_18S.fna`
+         * 36378 seqs in db, 30163 occurrences found towards read end (82%)
+       * `grep "GTAGGTGAACCTGCAGAAGGATCA" /Users/paul/Sequences/References/SILVA_119_QIIME_release/Silva_119_provisional_release/rep_set_eukaryotes/99/Silva_119_rep_set99_18S.fna`
+         * 48294 seqs in db, 4 occurrences ?
+  * 16S data is ok, but cannot define region in 18S data - commit repository for now
 
 
 ## Todo
-* foo
+* export 16S and 18S primers and aligne to reference data in Geneious.
+* export 16s and 18S repsets and match to reference data
+* representative sequences - adapter content and length distribution
+* re-import
+* re-classify without bad trimming parameter
+* create new filesconsider silenced next steps allow 2x8h work time
+
