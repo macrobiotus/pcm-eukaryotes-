@@ -108,13 +108,25 @@
        * `grep "GTAGGTGAACCTGCAGAAGGATCA" /Users/paul/Sequences/References/SILVA_119_QIIME_release/Silva_119_provisional_release/rep_set_eukaryotes/99/Silva_119_rep_set99_18S.fna`
          * 48294 seqs in db, 4 occurrences ?
   * 16S data is ok, but cannot define region in 18S data - commit repository for now
-
+* ***18.04.2019*** - restart
+  * work in this directory from now on for all data
+  * received sorted file lists at `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/input_file_lists_reviewed.zip`
+  * edited files and stored backup at `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/input_file_lists_reviewed_bak.zip`
+  * created and ran `/Users/paul/Documents/AAD_combined/Github/010_format_file_lists.sh`
+  * created and ran `/Users/paul/Documents/AAD_combined/Github/015_check_file_presences.sh`
+  * created and ran `/Users/paul/Documents/AAD_combined/Github/020_check_fastq_files.sh`
+  * started `/Users/paul/Documents/AAD_combined/Github/025_collate_qc_reports.sh` - not done
+  * started `/Users/paul/Documents/AAD_combined/Github/030_parse_fastqc_logs.sh` - not done
+  * committed repository
 
 ## Todo
-* export 16S and 18S primers and aligne to reference data in Geneious.
-* export 16s and 18S repsets and match to reference data
+* restart the whole pipeline
+  * as started **18.04.2019**
+  * later dissolve `/Users/paul/Documents/AAD_Davis_station`
+  * later dissolve `/Users/paul/Documents/AAD_Davis_station`
+* export 16S and 18S primers and align to reference data in Geneious
+* export 16s and 18S repsets and match to reference data in Geneious
 * representative sequences - adapter content and length distribution
 * re-import
 * re-classify without bad trimming parameter
-* create new filesconsider silenced next steps allow 2x8h work time
-
+* create new files consider silenced next steps allow 2x8h work time
