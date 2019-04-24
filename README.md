@@ -119,8 +119,8 @@
   * started `/Users/paul/Documents/AAD_combined/Github/030_parse_fastqc_logs.sh` - not done
   * committed repository
 * ***23.04.2019*** - collating FastQc reports
-  * created and committed `/Users/paul/Documents/AAD_combined/Github/025_collate_qc_reports.sh`
-  * running and finish pending
+  * created and committed `/Users/paul/Documents/AAD_combined/Github/025_collate_qc_reports.sh` (comit `44e6f4a48c20d0777ee88af8447dc15c7031c517`)
+  * running and finished
 
 
 ## Todo
