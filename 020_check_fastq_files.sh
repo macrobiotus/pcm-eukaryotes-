@@ -23,7 +23,8 @@ if [[ "$HOSTNAME" != "pc683.eeb.cornell.edu" ]]; then
 elif [[ "$HOSTNAME" == "pc683.eeb.cornell.edu" ]]; then
     printf "Execution on local...\n"
     trpth="/Users/paul/Documents/AAD_combined"
-    cores="$(nproc --all)"
+    # cores="$(nproc --all)"
+    cores=2
 fi
 
 # define input files

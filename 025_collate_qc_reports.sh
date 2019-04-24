@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# 18.04.2019 - Paul Czechowski - paul.czechowski@gmail.com 
+# 24.04.2019 - Paul Czechowski - paul.czechowski@gmail.com 
 # ========================================================
 
 # activate Qiime manually 
@@ -23,13 +23,9 @@ if [[ "$HOSTNAME" != "pc683.eeb.cornell.edu" ]]; then
 elif [[ "$HOSTNAME" == "pc683.eeb.cornell.edu" ]]; then
     printf "Execution on local...\n"
     trpth="/Users/paul/Documents/AAD_combined"
+    cores='2'
 fi
 
-# define input files
-# -------------------
-
-# revised manifest are stored in
-manifests='Zenodo/Manifest'
 
 # define input directories
 # -----------------------
@@ -41,64 +37,50 @@ multiqcdir='Zenodo/MultiQC'
 multiqclogdir='Zenodo/MultiQC_logs'
 
 
-# run commands
-# ------------
+# prepare environment 
+# -------------------
 
-# loop over manifests - for fastqc 
-for filename in "$trpth"/"$manifests"/*.txt; do
+# not sure if needed
+shopt -s dotglob  # Bash includes filenames beginning with a ‘.’ in the results of filename expansion
+shopt -s nullglob # Bash allows filename patterns which match no files to expand to a null string, rather than themselves
 
-  # define FastQC output path
-  fqc_path="$trpth"/"$fastqcdir"/"FastQC_$(basename "$filename" .txt)"
+# custom environment needs to activated, otherwise script will crash 
+source activate activate multiqc 
+
+# create target diretory to hold results ...
+mkdir -p "$trpth"/"$multiqcdir"
+
+# ... and log files
+mkdir -p "$trpth"/"$multiqclogdir"
+
+# fill an aray with directory list
+array=("$trpth"/"$fastqcdir"/*)
+
+
+# run Multiqc
+# -----------
+
+for dir in "${array[@]}"; do 
+
+  # get input diretory - for debugging 
+  # echo "$dir"
   
-  # define FastQC log output path 
-  fqc_log_path="$trpth"/"$fastqclogdir"
+  # get output directory - for debugging 
+  # echo "$trpth"/"$multiqcdir"/"$(basename $dir)"
   
-  # create directory for qc files
-  mkdir -p "$fqc_path"
+  # get logfile - for debugging 
+  # echo "$trpth"/"$multiqclogdir"/"$(basename $dir)_multiqc_log.txt"
   
-  # create directory for qc log files
-  mkdir -p "$fqc_log_path"
-  
-  # loop over paths in manifests
-  while read -r fastq_path; do
-     
-     # get logfile path
-     fqclog="$fqc_log_path"/"$(basename "$fastq_path" .fastq.gz)_fastqc_log.txt"
-     echo 
-     
-     # do sequence check
-     fastqc -o "$fqc_path" --threads "$cores" "$fastq_path" 2>&1 | tee -a "$fqclog" 
-  
-  # read next line in file
-  done < "$filename"
-  
+  # run the program 
+  multiqc \
+    --fullnames \
+    --title \""$(basename $dir)"\" \
+    --verbose \
+    --force \
+    --outdir "$trpth"/"$multiqcdir"/"$(basename $dir)" \
+    "$dir" 2>&1 | tee -a "$trpth"/"$multiqclogdir"/"$(basename $dir)_multiqc_log.txt" || \
+      printf "Multiqc failed at "$(date)" on \"$dir\". \n"
+
 done
 
-# loop over manifests - for fastqc 
-# for filename in "$trpth"/"$manifests"/*.txt; do
-# 
-#   define FastQC output paths 
-#   fqc_path="$trpth"/"$fastqcdir"/"FastQC_$(basename "$filename" .txt)"
-#   
-#   define MultiQC output paths
-#   mqc_path="$trpth"/"$fastqcdir"/"MultiQC_$(basename "$filename" .txt)"
-#   
-#   echo "$fqc_path"
-#   echo "$mqc_path"
-#   
-#   loop over paths in manifests
-#   while read -r fastq_path; do
-#      
-#      get logfile path
-#      echo "$(basename "$fastq_path" .fastq.gz)_log.txt"
-#      echo fastqc -o "$fqc_path" --threads "$cores" "$fastq_path" 2>&1 
-#   done < "$filename"
-#   
-#  
-#   
-# done
-
-
-
-
-
+conda deactivate # custom environment needs is deactivated

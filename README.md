@@ -118,6 +118,10 @@
   * started `/Users/paul/Documents/AAD_combined/Github/025_collate_qc_reports.sh` - not done
   * started `/Users/paul/Documents/AAD_combined/Github/030_parse_fastqc_logs.sh` - not done
   * committed repository
+* ***23.04.2019*** - collating FastQc reports
+  * created and committed `/Users/paul/Documents/AAD_combined/Github/025_collate_qc_reports.sh`
+  * running and finish pending
+
 
 ## Todo
 * restart the whole pipeline
