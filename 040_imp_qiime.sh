@@ -90,10 +90,10 @@ sf[16]='PairedEndFastqManifestPhred33'
 # Run import script - adjust `i` starting number! 
 # -----------------------------------------------
 for ((i=1;i<=16;i++)); do
-    echo qiime tools import \
-        --type 'SampleData[PairedEndSequencesWithQuality]' \
-        --input-path  "$trpth"/"${inpth[$i]}" \
-        --output-path "$trpth"/"${otpth[$i]}" \
-        --input-format "${sf[$i]}" 2>&1 | tee -a "$trpth"/"Zenodo/Qiime"/"$(basename ${otpth[$i]} .qza)_import_log.txt" || \
-      printf "Import failed at "$(date)" on \"${otpth[$i]}\". \n"
+  qiime tools import \
+    --type 'SampleData[PairedEndSequencesWithQuality]' \
+    --input-path  "$trpth"/"${inpth[$i]}" \
+    --output-path "$trpth"/"${otpth[$i]}" \
+    --input-format "${sf[$i]}" 2>&1 | tee -a "$trpth"/"Zenodo/Qiime"/"$(basename ${otpth[$i]} .qza)_import_log.txt" || \
+  printf "Import failed at "$(date)" on \"${otpth[$i]}\". \n"
 done
