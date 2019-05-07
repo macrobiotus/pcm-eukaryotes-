@@ -99,7 +99,7 @@
        * not RC as required `grep "TGATCCTTCTGCAGGTTCACCTAC" /Users/paul/Sequences/References/SILVA_128_QIIME_release/rep_set/rep_set_18S_only/99/99_otus_18S.fasta`
          * 4 occurrences, flanking regions is `GGAAACCAAGATT`
      * checking primer coverage 18S:
-       * checking primer coverage 18S truncated db - **aborted, can't get flanking regions toi primers listed below:**
+       * checking primer coverage 18S truncated db - **aborted, can't get flanking regions to primers listed below:**
          * `grep "GTACACACCGCCCGTC" /Users/paul/Documents/AAD_combined/Zenodo/Classifier/095_18S_ref-seqs.fasta`
          * `grep "TGATCCTTCTGCAGGTTCACCTAC" /Users/paul/Documents/AAD_combined/Zenodo/Classifier/095_18S_ref-seqs.fasta`
     *  additionally checking primer coverage in 18S "full" db SILVA version  119:
@@ -118,10 +118,26 @@
   * started `/Users/paul/Documents/AAD_combined/Github/025_collate_qc_reports.sh` - not done
   * started `/Users/paul/Documents/AAD_combined/Github/030_parse_fastqc_logs.sh` - not done
   * committed repository
-* ***23.04.2019*** - collating FastQc reports
+* ***23.04.2019*** - collating FastQC reports
   * created and committed `/Users/paul/Documents/AAD_combined/Github/025_collate_qc_reports.sh` (comit `44e6f4a48c20d0777ee88af8447dc15c7031c517`)
   * running and finished
-
+* ***07.05.2019*** - creating manifest files
+  * created and ran `/Users/paul/Documents/AAD_combined/Github/030_parse_fastqc_logs.sh`
+    * `Check and remove corresponding read file for "/Users/paul/Documents/AAD_combined/Zenodo/FastQC_logs/613C_S47_L001_R1_001_fastqc_log.txt".`
+    * `Check and remove corresponding read file for "/Users/paul/Documents/AAD_combined/Zenodo/FastQC_logs/833A_S86_L001_R1_001_fastqc_log.txt".`
+  * created and ran `/Users/paul/Documents/AAD_combined/Github/035_create_manifests.sh`
+  * revising manually file below - **keeping mock samples only** - **revise with Eden** 
+    * `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/035_manifest_16S_fastq_list_unwanted_1.txt`
+    * `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/035_manifest_16S_fastq_list_unwanted_2.txt`
+    * `Users/paul/Documents/AAD_combined/Zenodo/Manifest/035_manifest_18S_fastq_list_unwanted_1.txt`
+    * `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/035_manifest_18S_fastq_list_unwanted_2.txt`
+  * created `/Users/paul/Documents/AAD_combined/Github/040_imp_qiime.sh`
+    * erased all files in `/Users/paul/Documents/AAD_combined/Zenodo/Qiime`
+    * last backup is `/Volumes/Time Machine Backups/Backups.backupdb/macmini/2019-05-07-18391`
+  * running `/Users/paul/Documents/AAD_combined/Github/040_imp_qiime.sh`  - pending
+    * next
+      * was import successful? - check log
+      * try import once reply from Edem is here
 
 ## Todo
 * restart the whole pipeline
