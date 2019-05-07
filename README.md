@@ -136,8 +136,11 @@
     * last backup is `/Volumes/Time Machine Backups/Backups.backupdb/macmini/2019-05-07-18391`
   * running `/Users/paul/Documents/AAD_combined/Github/040_imp_qiime.sh`  - pending
     * next
-      * was import successful? - check log
+      * was import successful? - check logs in Qiime folder
       * try import once reply from Edem is here
+
+
+
 
 ## Todo
 * restart the whole pipeline
