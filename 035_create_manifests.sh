@@ -44,8 +44,9 @@ for filename in $trpth/$manifests/*.txt; do
   
   # writing sample identifiers - filename after last slash minus 9 characters (to get rid of file extesnions)
   #  see https://unix.stackexchange.com/questions/305190/remove-last-character-from-string-captured-with-awk?rq=1
-  awk -F '/' 'BEGIN { OFS = "," } { $0=substr($NF, 1, length($NF)-9) OFS $0; print}' "$filename" > "$manifest"
-  
+  # giving up here
+  gawk -F '/' 'BEGIN { OFS = "," } {fmt = substr($NF, 1, length($NF)-9); $0=fmt OFS $0; print}' "$filename" > "$manifest"
+    
   # writing sample read directions
   gsed -i '/_R1/ s/$/,forward/' "$manifest"
   gsed -i '/_R2/ s/$/,reverse/' "$manifest"
