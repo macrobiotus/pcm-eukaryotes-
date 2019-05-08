@@ -44,13 +44,13 @@ otpth[4]='Zenodo/Qiime/040_16S_import_run_4'
 otpth[5]='Zenodo/Qiime/040_16S_import_run_5'
 
 # output file array - 18S
-otpth[6]='Zenodo/Manifest/040_18S_import_run_1'
-otpth[7]='Zenodo/Manifest/040_18S_import_run_2_a'
-otpth[8]='Zenodo/Manifest/040_18S_import_run_2_b'
-otpth[9]='Zenodo/Manifest/040_18S_import_run_3'
-otpth[10]='Zenodo/Manifest/040_18S_import_run_4'
-otpth[11]='Zenodo/Manifest/040_18S_import_run_5'
-otpth[12]='Zenodo/Manifest/040_18S_import_run_6'
+otpth[6]='Zenodo/Qiime/040_18S_import_run_1'
+otpth[7]='Zenodo/Qiime/040_18S_import_run_2_a'
+otpth[8]='Zenodo/Qiime/040_18S_import_run_2_b'
+otpth[9]='Zenodo/Qiime/040_18S_import_run_3'
+otpth[10]='Zenodo/Qiime/040_18S_import_run_4'
+otpth[11]='Zenodo/Qiime/040_18S_import_run_5'
+otpth[12]='Zenodo/Qiime/040_18S_import_run_6'
 
 # output file array
 sf[1]='PairedEndFastqManifestPhred33'

@@ -157,7 +157,21 @@
     * to save disk space
       * erasing all files in `/Users/paul/Documents/AAD_Davis_station/Zenodo/Qiime`
       * erasing all `.qza` files in `/Users/paul/Documents/AAD_The_Ridge/Zenodo/Qiime`
-  * now running  `/Users/paul/Documents/AAD_combined/Github/040_imp_qiime.sh` - pending 
+  * now running  `/Users/paul/Documents/AAD_combined/Github/040_imp_qiime.sh` - pending - erasing logfiles after succesful import
+    * from file `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/035_manifest_18S_fastq_list_run_2_a.txt`
+      * removing sample `119950_S150_L001_R_001,/Users/paul/Sequences/Raw/180208_AAD_Davis_Station/DAVIS_18S/fillers_ramaciotti_(75)/R1-R2/119950_S150_L001_R2_001.fastq.gz,reverse`
+    * from file `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/035_manifest_18S_fastq_list_run_5.txt`
+      * removing sample `119350_S131_L001_R_001,/Users/paul/Sequences/Raw/180208_AAD_Davis_Station/DAVIS_18S/fillers_ramaciotti_(75)/R1-R2/119350_S131_L001_R1_001.fastq.gz,forward`
+    * from file `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/035_manifest_16S_fastq_list_run_5.txt`
+      * removing samples due to import error 
+        * `592C_S45_L001_R_001,/Users/paul/Sequences/Raw/181212_AAD_The_Ridge/16S_The_Ridge/592C_S45_L001_R1_001.fastq.gz,forward`
+        * `592C_S45_L001_R_001,/Users/paul/Sequences/Raw/181212_AAD_The_Ridge/16S_The_Ridge/592C_S45_L001_R2_001.fastq.gz,reverse`
+        * `588C_S75_L001_R_001,/Users/paul/Sequences/Raw/181212_AAD_The_Ridge/16S_The_Ridge/588C_S75_L001_R1_001.fastq.gz,forward`
+        * `588C_S75_L001_R_001,/Users/paul/Sequences/Raw/181212_AAD_The_Ridge/16S_The_Ridge/588C_S75_L001_R2_001.fastq.gz,reverse`
+  * import finished
+
+
+`
 
 ## Todo
 * restart the whole pipeline
