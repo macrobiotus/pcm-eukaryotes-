@@ -51,6 +51,10 @@ for filename in $trpth/$manifests/*.txt; do
   gsed -i '/_R1/ s/$/,forward/' "$manifest"
   gsed -i '/_R2/ s/$/,reverse/' "$manifest"
   
+  # adjusting sample ids, since could not be achieved with awk above
+  gsed -i 's/R1/R/' "$manifest"
+  gsed -i 's/R2/R/' "$manifest"
+  
   # sorting file contents - untested - already done in "015_check_file_presences.sh"
   #  gsort -t, -k3,3n -k4,4n -o "$manifest" "$manifest"
   #  gsort --version-sort -o "$manifest" "$manifest"

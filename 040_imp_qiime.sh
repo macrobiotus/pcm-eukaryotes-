@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# 07.05.2019 - Paul Czechowski - paul.czechowski@gmail.com 
+# 08.05.2019 - Paul Czechowski - paul.czechowski@gmail.com 
 # ========================================================
 # Import files to Qiime
 
@@ -36,15 +36,6 @@ inpth[10]='Zenodo/Manifest/035_manifest_18S_fastq_list_run_4.txt'
 inpth[11]='Zenodo/Manifest/035_manifest_18S_fastq_list_run_5.txt'
 inpth[12]='Zenodo/Manifest/035_manifest_18S_fastq_list_run_6.txt'
 
-# input file array - 16S truncated to mock - see README 07.05.2019
-inpth[13]='Zenodo/Manifest/035_manifest_16S_fastq_list_unwanted_1.txt'
-inpth[14]='Zenodo/Manifest/035_manifest_16S_fastq_list_unwanted_2.txt'
-
-# input file array - 18S truncated to mock - see README 07.05.2019
-inpth[15]='Zenodo/Manifest/035_manifest_18S_fastq_list_unwanted_1.txt'
-inpth[16]='Zenodo/Manifest/035_manifest_18S_fastq_list_unwanted_2.txt'
-
-
 # output file array - 16S
 otpth[1]='Zenodo/Manifest/040_16S_import_run_1'
 otpth[2]='Zenodo/Manifest/040_16S_import_run_2'
@@ -61,14 +52,6 @@ otpth[10]='Zenodo/Manifest/040_18S_import_run_4'
 otpth[11]='Zenodo/Manifest/040_18S_import_run_5'
 otpth[12]='Zenodo/Manifest/040_18S_import_run_6'
 
-# output file array - 16S truncated to mock - see README 07.05.2019
-otpth[13]='Zenodo/Manifest/040_16S_import_unwanted_1'
-otpth[14]='Zenodo/Manifest/040_16S_import_unwanted_2'
-
-# output file array - 18S truncated to mock - see README 07.05.2019
-otpth[15]='Zenodo/Manifest/040_18S_import_unwanted_1'
-otpth[16]='Zenodo/Manifest/040_18S_import_unwanted_2'
-
 # output file array
 sf[1]='PairedEndFastqManifestPhred33'
 sf[2]='PairedEndFastqManifestPhred33'
@@ -82,14 +65,10 @@ sf[9]='PairedEndFastqManifestPhred33'
 sf[10]='PairedEndFastqManifestPhred33'
 sf[11]='PairedEndFastqManifestPhred33'
 sf[12]='PairedEndFastqManifestPhred33'
-sf[13]='PairedEndFastqManifestPhred33'
-sf[14]='PairedEndFastqManifestPhred33'
-sf[15]='PairedEndFastqManifestPhred33'
-sf[16]='PairedEndFastqManifestPhred33'
 
 # Run import script - adjust `i` starting number! 
 # -----------------------------------------------
-for ((i=1;i<=16;i++)); do
+for ((i=1;i<=12;i++)); do
   qiime tools import \
     --type 'SampleData[PairedEndSequencesWithQuality]' \
     --input-path  "$trpth"/"${inpth[$i]}" \

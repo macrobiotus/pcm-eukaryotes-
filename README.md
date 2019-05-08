@@ -130,13 +130,30 @@
   * created and ran `/Users/paul/Documents/AAD_combined/Github/035_create_manifests.sh`
     * todo:
       * mail Eden - which samples to keep
-      * clean out sample id mmanually instead of using awk
+      * clean out sample id mmanually instead of using awk - use `sed` in shell script `gsed '0,/Apple/{s/Apple/Banana/}' filename`
       * revise the following file to keep only samples of interest
         * `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/035_manifest_16S_fastq_list_unwanted_1.txt`
         * `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/035_manifest_16S_fastq_list_unwanted_2.txt`
         * `Users/paul/Documents/AAD_combined/Zenodo/Manifest/035_manifest_18S_fastq_list_unwanted_1.txt`
         * `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/035_manifest_18S_fastq_list_unwanted_2.txt`
         * run drafted `/Users/paul/Documents/AAD_combined/Github/040_imp_qiime.sh`
+* ***08.05.2019*** - creating manifest files
+  * revised and ran `/Users/paul/Documents/AAD_combined/Github/035_create_manifests.sh` - ok
+  * manually checking manifests with unwanted files with Edens files - using these files instead of "unwanted" lists
+    * `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/02_16S_fastq_list_new_controls.txt`
+    * `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/02_16S_manifest_new_controls.txt`
+    * `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/02_18S_fastq_list_new_controls.txt`
+    * `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/02_18S_manifest_new_controls.txt`
+  * further preparing import
+    * copying sampels from `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/02_18S_manifest_new_controls.txt` 
+      * to `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/035_manifest_18S_fastq_list_run_6.txt`
+      * to enable readwise denoising
+    * copying samples from `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/02_16S_manifest_new_controls.txt`
+      * to `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/035_manifest_16S_fastq_list_run_5.txt`
+      * to enable readwise denoising
+    * revising `/Users/paul/Documents/AAD_combined/Github/040_imp_qiime.sh`
+    * committing
+ 
 
 ## Todo
 * restart the whole pipeline
