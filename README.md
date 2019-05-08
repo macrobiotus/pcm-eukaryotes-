@@ -152,8 +152,12 @@
       * to `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/035_manifest_16S_fastq_list_run_5.txt`
       * to enable readwise denoising
     * revising `/Users/paul/Documents/AAD_combined/Github/040_imp_qiime.sh`
-    * committing
- 
+    * committing `1d3e42db8a664d15657234ac8e4a0375682fcd28`
+    * again trouble-shooting manifest - import now running - pending, check logs
+    * to save disk space
+      * erasing all files in `/Users/paul/Documents/AAD_Davis_station/Zenodo/Qiime`
+      * erasing all `.qza` files in `/Users/paul/Documents/AAD_The_Ridge/Zenodo/Qiime`
+  * now running  `/Users/paul/Documents/AAD_combined/Github/040_imp_qiime.sh` - pending 
 
 ## Todo
 * restart the whole pipeline

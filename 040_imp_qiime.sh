@@ -37,11 +37,11 @@ inpth[11]='Zenodo/Manifest/035_manifest_18S_fastq_list_run_5.txt'
 inpth[12]='Zenodo/Manifest/035_manifest_18S_fastq_list_run_6.txt'
 
 # output file array - 16S
-otpth[1]='Zenodo/Manifest/040_16S_import_run_1'
-otpth[2]='Zenodo/Manifest/040_16S_import_run_2'
-otpth[3]='Zenodo/Manifest/040_16S_import_run_3'
-otpth[4]='Zenodo/Manifest/040_16S_import_run_4'
-otpth[5]='Zenodo/Manifest/040_16S_import_run_5'
+otpth[1]='Zenodo/Qiime/040_16S_import_run_1'
+otpth[2]='Zenodo/Qiime/040_16S_import_run_2'
+otpth[3]='Zenodo/Qiime/040_16S_import_run_3'
+otpth[4]='Zenodo/Qiime/040_16S_import_run_4'
+otpth[5]='Zenodo/Qiime/040_16S_import_run_5'
 
 # output file array - 18S
 otpth[6]='Zenodo/Manifest/040_18S_import_run_1'
