@@ -169,6 +169,9 @@
         * `588C_S75_L001_R_001,/Users/paul/Sequences/Raw/181212_AAD_The_Ridge/16S_The_Ridge/588C_S75_L001_R1_001.fastq.gz,forward`
         * `588C_S75_L001_R_001,/Users/paul/Sequences/Raw/181212_AAD_The_Ridge/16S_The_Ridge/588C_S75_L001_R2_001.fastq.gz,reverse`
   * import finished
+  * starting to work on `/Users/paul/Documents/AAD_combined/Github/045_cut_adapt.sh`
+    * draft moved over - draft complete - setting x flag - testing on local
+    * commit - moving to cluster - pending
 
 
 `

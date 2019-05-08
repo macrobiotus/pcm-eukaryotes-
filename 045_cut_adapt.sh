@@ -4,9 +4,6 @@
 # ========================================================
 # Wrapper for Qiime cutadapt script
 
-
-#############DRAFT!!!!!!!!!!!!!!!!#################
-
 # For debugging only
 # ------------------ 
 # set -x
@@ -26,14 +23,49 @@ fi
 # Defining paths
 # --------------
 # input file array - ordered ascending by size of input files - check README
-inpth[1]='Zenodo/Qiime/020_16S_ridge.qza'
-inpth[2]='Zenodo/Qiime/020_18S_ridge.qza'
+inpth[1]='Zenodo/Qiime/040_16S_import_run_1.qza'
+inpth[2]='Zenodo/Qiime/040_16S_import_run_2.qza'
+inpth[3]='Zenodo/Qiime/040_16S_import_run_3.qza'
+inpth[4]='Zenodo/Qiime/040_16S_import_run_4.qza'
+inpth[5]='Zenodo/Qiime/040_16S_import_run_5.qza'
 
-otpth[1]='Zenodo/Qiime/030_16S_ridge-trimmed.qza'
-otpth[2]='Zenodo/Qiime/030_18S_ridge-trimmed.qza'
+inpth[6]='Zenodo/Qiime/040_18S_import_run_1.qza'
+inpth[7]='Zenodo/Qiime/040_18S_import_run_2_a.qza'
+inpth[8]='Zenodo/Qiime/040_18S_import_run_2_b.qza'
+inpth[9]='Zenodo/Qiime/040_18S_import_run_3.qza'
+inpth[10]='Zenodo/Qiime/040_18S_import_run_4.qza'
+inpth[11]='Zenodo/Qiime/040_18S_import_run_5.qza'
+inpth[12]='Zenodo/Qiime/040_18S_import_run_6.qza'
 
-log[1]='Zenodo/Qiime/030_16S_ridge-trimmed.txt'
-log[2]='Zenodo/Qiime/030_18S_ridge-trimmed.txt'
+
+otpth[1]='Zenodo/Qiime/045_16S_trimmed_run_1.qza'
+otpth[2]='Zenodo/Qiime/045_16S_trimmed_run_2.qza'
+otpth[3]='Zenodo/Qiime/045_16S_trimmed_run_3.qza'
+otpth[4]='Zenodo/Qiime/045_16S_trimmed_run_4.qza'
+otpth[5]='Zenodo/Qiime/045_16S_trimmed_run_5.qza'
+
+otpth[6]='Zenodo/Qiime/045_18S_trimmed_run_1.qza'
+otpth[7]='Zenodo/Qiime/045_18S_trimmed_run_2_a.qza'
+otpth[8]='Zenodo/Qiime/045_18S_trimmed_run_2_b.qza'
+otpth[9]='Zenodo/Qiime/045_18S_trimmed_run_3.qza'
+otpth[10]='Zenodo/Qiime/045_18S_trimmed_run_4.qza'
+otpth[11]='Zenodo/Qiime/045_18S_trimmed_run_5.qza'
+otpth[12]='Zenodo/Qiime/045_18S_trimmed_run_6.qza'
+
+
+log[1]='Zenodo/Qiime/045_16S_trimmed_run_1.txt'
+log[2]='Zenodo/Qiime/045_16S_trimmed_run_2.txt'
+log[3]='Zenodo/Qiime/045_16S_trimmed_run_3.txt'
+log[4]='Zenodo/Qiime/045_16S_trimmed_run_4.txt'
+log[5]='Zenodo/Qiime/045_16S_trimmed_run_5.txt'
+
+log[6]='Zenodo/Qiime/045_18S_trimmed_run_1.txt'
+log[7]='Zenodo/Qiime/045_18S_trimmed_run_2_a.txt'
+log[8]='Zenodo/Qiime/045_18S_trimmed_run_2_b.txt'
+log[9]='Zenodo/Qiime/045_18S_trimmed_run_3.txt'
+log[10]='Zenodo/Qiime/045_18S_trimmed_run_4.txt'
+log[11]='Zenodo/Qiime/045_18S_trimmed_run_5.txt'
+log[12]='Zenodo/Qiime/045_18S_trimmed_run_6.txt'
 
 
 # Defining sequences to be cut out - as per email
@@ -67,30 +99,50 @@ log[2]='Zenodo/Qiime/030_18S_ridge-trimmed.txt'
 # 
 # AGTCAGTCAG CA 5'-TGATCCTTCTGCAGGTTCACCTAC-3'
 
-# 16S
-fwdcut[1]='AGAGTTTGATCMTGGCTCAG'
-revcut[1]='GWATTACCGCGGCKGCTG'
 
-adpfcut[1]='CAGCMGCCGCGGTAATWC'
-adprcut[1]='CTGAGCCAKGATCAAACTCT'
+# run trimming script for 18S 
+# ---------------------------
 
 # 18S 
-fwdcut[2]='GTACACACCGCCCGTC'
-revcut[2]='TGATCCTTCTGCAGGTTCACCTAC'
+fwdcut[1]='GTACACACCGCCCGTC'
+revcut[1]='TGATCCTTCTGCAGGTTCACCTAC'
 
-adpfcut[2]='GTAGGTGAACCTGCAGAAGGATCA'
-adprcut[2]='GACGGGCGGTGTGTAC'
+adpfcut[1]='GTAGGTGAACCTGCAGAAGGATCA'
+adprcut[1]='GACGGGCGGTGTGTAC'
 
-# run trimming script
-# -------------------
-for ((i=1;i<=2;i++)); do
+for ((i=6;i<=12;i++)); do
+    printf "Trimming 18S data from file \"$trpth/${inpth[$i]}\".\n"
     qiime cutadapt trim-paired \
         --i-demultiplexed-sequences "$trpth"/"${inpth[$i]}" \
         --p-cores "$cores" \
-        --p-front-f "${fwdcut[$i]}" \
-        --p-front-r "${revcut[$i]}" \
-        --p-adapter-f "${adpfcut[$i]}" \
-        --p-adapter-r "${adprcut[$i]}" \
+        --p-front-f "${fwdcut[1]}" \
+        --p-front-r "${revcut[1]}" \
+        --p-adapter-f "${adpfcut[1]}" \
+        --p-adapter-r "${adprcut[1]}" \
+        --p-error-rate 0.1 \
+        --o-trimmed-sequences "$trpth"/"${otpth[$i]}" \
+        --verbose | tee "$trpth"/"${log[$i]}"
+done
+
+# run trimming script for 16S 
+# ---------------------------
+
+# 16S
+fwdcut[2]='AGAGTTTGATCMTGGCTCAG'
+revcut[2]='GWATTACCGCGGCKGCTG'
+
+adpfcut[2]='CAGCMGCCGCGGTAATWC'
+adprcut[2]='CTGAGCCAKGATCAAACTCT'
+
+for ((i=1;i<=5;i++)); do
+    printf "Trimming 16S data from file \"$trpth/${inpth[$i]}\".\n"
+    qiime cutadapt trim-paired \
+        --i-demultiplexed-sequences "$trpth"/"${inpth[$i]}" \
+        --p-cores "$cores" \
+        --p-front-f "${fwdcut[2]}" \
+        --p-front-r "${revcut[2]}" \
+        --p-adapter-f "${adpfcut[2]}" \
+        --p-adapter-r "${adprcut[2]}" \
         --p-error-rate 0.1 \
         --o-trimmed-sequences "$trpth"/"${otpth[$i]}" \
         --verbose | tee "$trpth"/"${log[$i]}"
