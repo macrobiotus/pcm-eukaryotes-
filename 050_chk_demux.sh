@@ -6,7 +6,7 @@
 
 # For debugging only
 # ------------------ 
-set -x
+# set -x
 
 # Paths need to be adjusted for remote execution
 # ----------------------------------------------
