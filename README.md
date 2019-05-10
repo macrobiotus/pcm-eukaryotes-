@@ -196,9 +196,13 @@
   * rewrote `/Users/paul/Documents/AAD_combined/Github/045_cut_adapt.sh` - ok, skips readily available output files. (But not fully tested.)
   * rewrote `/Users/paul/Documents/AAD_combined/Github/050_chk_demux.sh` - ok, skips readily available output files. (But not fully tested.)
   * todo
+    * using revised script that skip readily available files repeat import, summary, and denoising until there are no more errors
     * run and check logs of `/Users/paul/Documents/AAD_combined/Github/055_dns_paired_dada2.sh`
-     * using revised script that skip readily available files repeat import, summary, and denoising until there are no more errors
-     * step further through pipeline - plotting
+    * step further through pipeline - plotting
+  * working off above todo - check logs - while iterating
+    * `./040_imp_qiime.sh` - ok 
+    * `./045_cut_adapt.sh` - running 
+    * `./050_chk_demux.sh` - queued on local
 
 ## Todo
 * rewrite
