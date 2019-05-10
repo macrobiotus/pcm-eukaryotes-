@@ -68,7 +68,7 @@ sf[12]='PairedEndFastqManifestPhred33'
 
 # Run import script - adjust `i` starting number! 
 # -----------------------------------------------
-for ((i=1;i<=12;i++)); do
+for ((i=5;i<=6;i++)); do
   qiime tools import \
     --type 'SampleData[PairedEndSequencesWithQuality]' \
     --input-path  "$trpth"/"${inpth[$i]}" \

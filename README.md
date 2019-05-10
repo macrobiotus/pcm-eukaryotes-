@@ -175,18 +175,28 @@
 * ***10.05.2019*** - stepping further through pipeline
   * copied over for adjustment subsequent script files
     * `/Users/paul/Documents/AAD_combined/Github/050_chk_demux.sh` - adjusted and running. 
-    * `/Users/paul/Documents/AAD_combined/Github/055_dns_paired_dada2.sh` - adjusted.  
+    * `/Users/paul/Documents/AAD_combined/Github/055_dns_paired_dada2.sh` - adjusted - upload to cluster pending - after all data is imported.  
     * `/Users/paul/Documents/AAD_combined/Github/060_16S_check_merging_results.gnu` - so far untouched.
     * `/Users/paul/Documents/AAD_combined/Github/060_18S_check_merging_results.gnu` - so far untouched.
-  * commit
-
+  * commit (`6fa9b6262dc446ec60ee6223be8efcbf85c2bbf7`).
+  * **trouble shoot: import - cut-adapt - denoise - the following files**:
+    * `/Users/paul/Documents/AAD_combined/Zenodo/Qiime/040_16S_import_run_5.qza`
+      * use manifest file `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/035_manifest_16S_fastq_list_run_5.txt
+        * removed `585A_S40_L001_R_001_150_L001_R1_001.fastq.gz` and `585A_S40_L001_R_001_151_L001_R2_001.fastq.gz` - ok 
+    * `/Users/paul/Documents/AAD_combined/Zenodo/Qiime/040_18S_import_run_1.qza`
+      * after removing these samples from the manifest files:
+        * non identified yet
+    * adjusted target indices in loops of `~/Documents/AAD_combined/Github/040_imp_qiime.sh` - not yet run.
+    * adjusted target indices in loops of `~/Users/paul/Documents/AAD_combined/Github/045_cut_adapt.sh` - not yet run
+    * adjusted target indices in loops of `~/Documents/AAD_combined/Github/050_chk_demux.sh` - not yet run
+  * preparing denoising
+    * `/Users/paul/Documents/AAD_combined/Github/055_dns_paired_dada2.sh` - adjusting to check for presence of output files, not run yet.
+  * adjusted `/Users/paul/Documents/AAD_combined/Github/055_dns_paired_dada2.sh` - commit
 `
 
 ## Todo
-* restart the whole pipeline
-  * as started **18.04.2019**
-  * later dissolve `/Users/paul/Documents/AAD_Davis_station`
-  * later dissolve `/Users/paul/Documents/AAD_Davis_station`
+* later dissolve `/Users/paul/Documents/AAD_Davis_station`
+* later dissolve `/Users/paul/Documents/AAD_Davis_station`
 * export 16S and 18S primers and align to reference data in Geneious
 * export 16s and 18S repsets and match to reference data in Geneious
 * representative sequences - adapter content and length distribution

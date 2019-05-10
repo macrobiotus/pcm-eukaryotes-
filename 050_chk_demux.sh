@@ -52,7 +52,13 @@ otpth[12]='Zenodo/Qiime/050_18S_trimmed_run_6.qzv'
 
 # Run script
 # ----------
-for ((i=1;i<=12;i++)); do
+for ((i=5;i<=5;i++)); do
+   qiime demux summarize \
+      --i-data "$trpth"/"${inpth[$i]}" \
+      --o-visualization "$trpth"/"${otpth[$i]}"
+done
+
+for ((i=6;i<=6;i++)); do
    qiime demux summarize \
       --i-data "$trpth"/"${inpth[$i]}" \
       --o-visualization "$trpth"/"${otpth[$i]}"

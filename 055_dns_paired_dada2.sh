@@ -28,95 +28,97 @@ elif [[ "$HOSTNAME" == "pc683.eeb.cornell.edu" ]]; then
     normal=$(tput sgr0)
 fi
 
-# define input locations
-# ---------------------------------
-inpth[1]='Zenodo/Qiime/045_16S_trimmed_run_1.qza'
-inpth[2]='Zenodo/Qiime/045_16S_trimmed_run_2.qza'
-inpth[3]='Zenodo/Qiime/045_16S_trimmed_run_3.qza'
-inpth[4]='Zenodo/Qiime/045_16S_trimmed_run_4.qza'
-inpth[5]='Zenodo/Qiime/045_16S_trimmed_run_5.qza'
+# define relative input locations - data files
+# ------------------------------------------------
 
-inpth[6]='Zenodo/Qiime/045_18S_trimmed_run_1.qza'
-inpth[7]='Zenodo/Qiime/045_18S_trimmed_run_2_a.qza'
-inpth[8]='Zenodo/Qiime/045_18S_trimmed_run_2_b.qza'
-inpth[9]='Zenodo/Qiime/045_18S_trimmed_run_3.qza'
-inpth[10]='Zenodo/Qiime/045_18S_trimmed_run_4.qza'
-inpth[11]='Zenodo/Qiime/045_18S_trimmed_run_5.qza'
-inpth[12]='Zenodo/Qiime/045_18S_trimmed_run_6.qza'
+# Fill table array using find 
+inpth_data_unsorted=()
+while IFS=  read -r -d $'\0'; do
+    inpth_data_unsorted+=("$REPLY")
+done < <(find "$trpth/Zenodo/Qiime" -name '045_???_trimmed_*.qza' -print0)
 
-# trimming parameters 16S - aiming for Phred 30 
-# ---------------------------------------------
-lenf[1]='145'
-lenr[1]='145'
-ee[1]='5'
+# Sort array 
+IFS=$'\n' data_tab=($(sort <<<"${inpth_data_unsorted[*]}"))
+unset IFS
 
-# trimming parameters 18S - aiming for Phred 30 
-# ---------------------------------------------
-lenf[2]='145'
-lenr[2]='145'
-ee[2]='9'
+# for debugging -  print sorted tables - ok!
+printf '%s\n'
+printf '%s\n' "$(basename ${data_tab[@]})"
 
-# run denoising 
-# -----------
 
-printf "Processing 16S data.\n"
-for ((i=1;i<=5;i++)); do
-   
-   # define output locations
-   otpth_seq="$(dirname "${inpth[$i]}")/055_"${$inpth:4:-4}"_denoised_seq.qza"
-   otpth_tab="$(dirname "${inpth[$i]}")/055_"${$inpth:4:-4}"_denoised_tab.qza"
-   otpth_stat="$(dirname "${inpth[$i]}")/055_"${$inpth:4:-4}"_denoised_stat.qza"
-   otpth_statv="$(dirname "${inpth[$i]}")/055_"${$inpth:4:-4}"_denoised_stat.qzv"
-   output_log="$(dirname "${inpth[$i]}")/055_"${$inpth:4:-4}"_denoised_log.txt"
+# loop over input data files
+# ------------------------------------------------
+for i in "${!data_tab[@]}"; do
 
+  # create output file names
+  trunc=$(basename "$data_tab")
+  # for debugging 
+  # echo $(dirname "$data_tab")
+  # echo ${trunc:4:-4}
+  
+  otpth_seq="$(dirname "$data_tab")/055_"${trunc:4:-4}"_denoised_seq.qza"
+  otpth_tab="$(dirname "$data_tab")/055_"${trunc:4:-4}"_denoised_tab.qza"
+  otpth_stat="$(dirname "$data_tab")/055_"${trunc:4:-4}"_denoised_stat.qza"
+  otpth_statv="$(dirname "$data_tab")/055_"${trunc:4:-4}"_denoised_stat.qzv"
+  output_log="$(dirname "$data_tab")/055_"${trunc:4:-4}"_denoised_log.txt"
+  
+  # echo "$otpth_seq"
+  # echo "$otpth_tab"
+  # echo "$otpth_stat"
+  # echo "$otpth_statv"
+  # echo "$output_log"
+  
+  # call denoising only if output file isn't already there
+  if [ ! -f "$otpth_seq" ]; then
+    
+    # diagnostic message
+    printf "${bold}$(date):${normal} Starting denoising of \"$(basename "$data_tab")\"...\n"
+    
+    # setting processing parameters
+    case "$data_tab" in
+      *"045_16S_trimmed_"* )
+        lenf='145'
+        lenr='145'
+        ee='5'
+        echo "${bold}Parameters for 16S set to:${normal} lenf = $lenf, lenr = $lenr, ee = $ee. "
+        ;;
+      *"045_18S_trimmed_"* )
+        lenf='145'
+        lenr='145'
+        ee='9'
+        echo "${bold}Parameters for 18S set to:${normal} lenf = $lenf, lenr = $lenr, ee = $ee."
+        ;;
+      *)
+        echo "Depth setting error in case statemnet, aborting."
+        exit
+        ;;
+    esac
+       
    # qiime calls
-   printf "${bold}$(date):${normal} Starting denoising of \"$(basename "$trpth"/"${inpth[$i]}")\"...\n"
+   printf "${bold}$(date):${normal} Starting denoising of \"$(basename "$data_tab")\"...\n"
    qiime dada2 denoise-paired \
-      --i-demultiplexed-seqs "$trpth"/"${inpth[$i]}" \
-      --p-trunc-len-f "${lenf[1]}" \
-      --p-trunc-len-r "${lenr[1]}" \
+      --i-demultiplexed-seqs "$data_tab" \
+      --p-trunc-len-f "$lenf" \
+      --p-trunc-len-r "$lenr" \
       --p-n-threads "$cores" \
-      --p-max-ee "${ee[1]}" \
+      --p-max-ee "$ee" \
       --o-representative-sequences "$otpth_seq" \
       --o-denoising-stats "$otpth_stat" \
       --o-table "$otpth_tab" \
       --verbose  2>&1 | tee -a "$output_log"
-    printf "${bold}$(date):${normal} ...finished denoising of \"$(basename "$trpth"/"${inpth[$i]}")\".\n"
-    
+    printf "${bold}$(date):${normal} ...finished denoising of \"$(basename "$data_tab")\".\n"
+        
     # export stats file for manual inspection and gnuplot
     qiime metadata tabulate \
       --m-input-file "$otpth_stat" \
       --o-visualization "$otpth_statv"
-
-done
-
-printf "Processing 18S data.\n"
-for ((i=6;i<=12;i++)); do
-   
-   # define output locations
-   otpth_seq="$(dirname "${inpth[$i]}")/055_"${$inpth:4:-4}"_denoised_seq.qza"
-   otpth_tab="$(dirname "${inpth[$i]}")/055_"${$inpth:4:-4}"_denoised_tab.qza"
-   otpth_stat="$(dirname "${inpth[$i]}")/055_"${$inpth:4:-4}"_denoised_stat.qza"
-   otpth_statv="$(dirname "${inpth[$i]}")/055_"${$inpth:4:-4}"_denoised_stat.qzv"
-   output_log="$(dirname "${inpth[$i]}")/055_"${$inpth:4:-4}"_denoised_log.txt"
-
-   # qiime calls
-   printf "${bold}$(date):${normal} Starting denoising of \"$(basename "$trpth"/"${inpth[$i]}")\"...\n"
-   qiime dada2 denoise-paired \
-      --i-demultiplexed-seqs "$trpth"/"${inpth[$i]}" \
-      --p-trunc-len-f "${lenf[2]}" \
-      --p-trunc-len-r "${lenr[2]}" \
-      --p-n-threads "$cores" \
-      --p-max-ee "${ee[2]}" \
-      --o-representative-sequences "$otpth_seq" \
-      --o-denoising-stats "$otpth_stat" \
-      --o-table "$otpth_tab" \
-      --verbose 2>&1 | tee -a "$output_log"
-   printf "${bold}$(date):${normal} ...finished denoising of \"$(basename "$trpth"/"${inpth[$i]}")\".\n"
+  
+  else
     
-    # export stats file for manual inspection and gnuplot
-    qiime metadata tabulate \
-      --m-input-file "$otpth_stat" \
-      --o-visualization "$otpth_statv"
+    # diagnostic message
+    printf "${bold}$(date):${normal} Analysis already done for \"$(basename "$data_tab")\"...\n"
+  fi
+
+  exit
 
 done

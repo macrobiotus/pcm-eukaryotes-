@@ -110,7 +110,7 @@ revcut[1]='TGATCCTTCTGCAGGTTCACCTAC'
 adpfcut[1]='GTAGGTGAACCTGCAGAAGGATCA'
 adprcut[1]='GACGGGCGGTGTGTAC'
 
-for ((i=6;i<=12;i++)); do
+for ((i=6;i<=6;i++)); do
     printf "Trimming 18S data from file \"$trpth/${inpth[$i]}\".\n"
     qiime cutadapt trim-paired \
         --i-demultiplexed-sequences "$trpth"/"${inpth[$i]}" \
@@ -134,7 +134,7 @@ revcut[2]='GWATTACCGCGGCKGCTG'
 adpfcut[2]='CAGCMGCCGCGGTAATWC'
 adprcut[2]='CTGAGCCAKGATCAAACTCT'
 
-for ((i=1;i<=5;i++)); do
+for ((i=5;i<=6;i++)); do
     printf "Trimming 16S data from file \"$trpth/${inpth[$i]}\".\n"
     qiime cutadapt trim-paired \
         --i-demultiplexed-sequences "$trpth"/"${inpth[$i]}" \
