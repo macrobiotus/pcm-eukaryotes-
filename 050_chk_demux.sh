@@ -14,10 +14,14 @@ if [[ "$HOSTNAME" != "pc683.eeb.cornell.edu" ]]; then
     printf "Execution on remote...\n"
     trpth="/workdir/pc683/AAD_combined"
     cores="$(nproc --all)"
+    bold=$(tput bold)
+    normal=$(tput sgr0)
 elif [[ "$HOSTNAME" == "pc683.eeb.cornell.edu" ]]; then
     printf "Execution on local...\n"
     trpth="/Users/paul/Documents/AAD_combined"
     cores='2'
+    bold=$(tput bold)
+    normal=$(tput sgr0)
 fi
 
 # input file array
@@ -52,14 +56,41 @@ otpth[12]='Zenodo/Qiime/050_18S_trimmed_run_6.qzv'
 
 # Run script
 # ----------
-for ((i=5;i<=5;i++)); do
-   qiime demux summarize \
+for ((i=1;i<=5;i++)); do
+
+  # call import only if output file isn't already there
+  if [ ! -f "$trpth"/"${otpth[$i]}" ]; then
+  
+    printf "${bold}$(date):${normal} Summarizing 16S data file \""$trpth"/"${inpth[$i]}"\".\n"
+    qiime demux summarize \
       --i-data "$trpth"/"${inpth[$i]}" \
       --o-visualization "$trpth"/"${otpth[$i]}"
+  
+  else
+  
+    # diagnostic message
+    printf "${bold}$(date):${normal} Trimmed 16S data file available for \"$(basename "$trpth"/"${inpth[$i]}")\", skipping.\n"
+  
+  fi
+
 done
 
-for ((i=6;i<=6;i++)); do
-   qiime demux summarize \
+
+for ((i=6;i<=12;i++)); do
+  
+  # call import only if output file isn't already there
+  if [ ! -f "$trpth"/"${otpth[$i]}" ]; then
+  
+    printf "${bold}$(date):${normal} Summarizing 18S data file \""$trpth"/"${inpth[$i]}"\".\n"
+    qiime demux summarize \
       --i-data "$trpth"/"${inpth[$i]}" \
       --o-visualization "$trpth"/"${otpth[$i]}"
+  
+  else
+  
+    # diagnostic message
+    printf "${bold}$(date):${normal} Trimmed 16S data file available for \"$(basename "$trpth"/"${inpth[$i]}")\", skipping.\n"
+  
+  fi
+
 done

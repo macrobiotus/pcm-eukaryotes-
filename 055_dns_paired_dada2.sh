@@ -119,6 +119,4 @@ for i in "${!data_tab[@]}"; do
     printf "${bold}$(date):${normal} Analysis already done for \"$(basename "$data_tab")\"...\n"
   fi
 
-  exit
-
 done

@@ -14,10 +14,14 @@ if [[ "$HOSTNAME" != "pc683.eeb.cornell.edu" ]]; then
     printf "Execution on remote...\n"
     trpth="/workdir/pc683/AAD_combined"
     cores="$(nproc --all)"
+    bold=$(tput bold)
+    normal=$(tput sgr0)
 elif [[ "$HOSTNAME" == "pc683.eeb.cornell.edu" ]]; then
     printf "Execution on local...\n"
     trpth="/Users/paul/Documents/AAD_combined"
     cores='2'
+    bold=$(tput bold)
+    normal=$(tput sgr0)
 fi
 
 # Defining paths
@@ -110,18 +114,29 @@ revcut[1]='TGATCCTTCTGCAGGTTCACCTAC'
 adpfcut[1]='GTAGGTGAACCTGCAGAAGGATCA'
 adprcut[1]='GACGGGCGGTGTGTAC'
 
-for ((i=6;i<=6;i++)); do
-    printf "Trimming 18S data from file \"$trpth/${inpth[$i]}\".\n"
-    qiime cutadapt trim-paired \
-        --i-demultiplexed-sequences "$trpth"/"${inpth[$i]}" \
-        --p-cores "$cores" \
-        --p-front-f "${fwdcut[1]}" \
-        --p-front-r "${revcut[1]}" \
-        --p-adapter-f "${adpfcut[1]}" \
-        --p-adapter-r "${adprcut[1]}" \
-        --p-error-rate 0.1 \
-        --o-trimmed-sequences "$trpth"/"${otpth[$i]}" \
-        --verbose | tee "$trpth"/"${log[$i]}"
+for ((i=6;i<=12;i++)); do
+
+    # call import only if output file isn't already there
+    if [ ! -f "$trpth"/"${otpth[$i]}" ]; then
+
+      printf "${bold}$(date):${normal} Trimming 18S data file \""$trpth"/"${inpth[$i]}"\".\n"
+      qiime cutadapt trim-paired \
+          --i-demultiplexed-sequences "$trpth"/"${inpth[$i]}" \
+          --p-cores "$cores" \
+          --p-front-f "${fwdcut[1]}" \
+          --p-front-r "${revcut[1]}" \
+          --p-adapter-f "${adpfcut[1]}" \
+          --p-adapter-r "${adprcut[1]}" \
+          --p-error-rate 0.1 \
+          --o-trimmed-sequences "$trpth"/"${otpth[$i]}" \
+          --verbose | tee "$trpth"/"${log[$i]}"
+    else
+    
+      # diagnostic message
+      printf "${bold}$(date):${normal} Trimmed 16S data file available for \"$(basename "$trpth"/"${inpth[$i]}")\", skipping.\n"
+  
+    fi
+    
 done
 
 # run trimming script for 16S 
@@ -134,9 +149,13 @@ revcut[2]='GWATTACCGCGGCKGCTG'
 adpfcut[2]='CAGCMGCCGCGGTAATWC'
 adprcut[2]='CTGAGCCAKGATCAAACTCT'
 
-for ((i=5;i<=6;i++)); do
-    printf "Trimming 16S data from file \"$trpth/${inpth[$i]}\".\n"
-    qiime cutadapt trim-paired \
+for ((i=1;i<=5;i++)); do
+
+    # call import only if output file isn't already there
+    if [ ! -f "$trpth"/"${otpth[$i]}" ]; then
+
+      printf "${bold}$(date):${normal} Trimming 16S data file \"$trpth/${inpth[$i]}\".\n"
+      qiime cutadapt trim-paired \
         --i-demultiplexed-sequences "$trpth"/"${inpth[$i]}" \
         --p-cores "$cores" \
         --p-front-f "${fwdcut[2]}" \
@@ -146,5 +165,11 @@ for ((i=5;i<=6;i++)); do
         --p-error-rate 0.1 \
         --o-trimmed-sequences "$trpth"/"${otpth[$i]}" \
         --verbose | tee "$trpth"/"${log[$i]}"
-done
+      else
+    
+        # diagnostic message
+        printf "${bold}$(date):${normal} Trimmed 18S file available for \"$(basename "$trpth"/"${inpth[$i]}")\", skipping.\n" 
 
+    fi
+ 
+done

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# 08.05.2019 - Paul Czechowski - paul.czechowski@gmail.com 
+# 10.05.2019 - Paul Czechowski - paul.czechowski@gmail.com 
 # ========================================================
 # Import files to Qiime
 
@@ -14,10 +14,15 @@ if [[ "$HOSTNAME" != "pc683.eeb.cornell.edu" ]]; then
     printf "Execution on remote...\n"
     trpth="/workdir/pc683/AAD_combined"
     cores="$(nproc --all)"
+    bold=$(tput bold)
+    normal=$(tput sgr0)
+
 elif [[ "$HOSTNAME" == "pc683.eeb.cornell.edu" ]]; then
     printf "Execution on local...\n"
     trpth="/Users/paul/Documents/AAD_combined"
     cores='2'
+    bold=$(tput bold)
+    normal=$(tput sgr0)
 fi
 
 # input file array - 16S
@@ -53,26 +58,28 @@ otpth[11]='Zenodo/Qiime/040_18S_import_run_5'
 otpth[12]='Zenodo/Qiime/040_18S_import_run_6'
 
 # output file array
-sf[1]='PairedEndFastqManifestPhred33'
-sf[2]='PairedEndFastqManifestPhred33'
-sf[3]='PairedEndFastqManifestPhred33'
-sf[4]='PairedEndFastqManifestPhred33'
-sf[5]='PairedEndFastqManifestPhred33'
-sf[6]='PairedEndFastqManifestPhred33'
-sf[7]='PairedEndFastqManifestPhred33'
-sf[8]='PairedEndFastqManifestPhred33'
-sf[9]='PairedEndFastqManifestPhred33'
-sf[10]='PairedEndFastqManifestPhred33'
-sf[11]='PairedEndFastqManifestPhred33'
-sf[12]='PairedEndFastqManifestPhred33'
+sf='PairedEndFastqManifestPhred33'
 
 # Run import script - adjust `i` starting number! 
 # -----------------------------------------------
-for ((i=5;i<=6;i++)); do
-  qiime tools import \
-    --type 'SampleData[PairedEndSequencesWithQuality]' \
-    --input-path  "$trpth"/"${inpth[$i]}" \
-    --output-path "$trpth"/"${otpth[$i]}" \
-    --input-format "${sf[$i]}" 2>&1 | tee -a "$trpth"/"Zenodo/Qiime"/"$(basename ${otpth[$i]} .qza)_import_log.txt" || \
-  printf "Import failed at "$(date)" on \"${otpth[$i]}\". \n"
+for ((i=1;i<=12;i++)); do
+    
+    # call import only if output file isn't already there
+    if [ ! -f "$trpth"/"${otpth[$i]}.qza" ]; then
+    
+      # diagnostic message
+      printf "${bold}$(date):${normal} Starting importing from \"$(basename "$trpth"/"${inpth[$i]}")\"...\n"
+      qiime tools import \
+        --type 'SampleData[PairedEndSequencesWithQuality]' \
+        --input-path  "$trpth"/"${inpth[$i]}" \
+        --output-path "$trpth"/"${otpth[$i]}" \
+        --input-format "$sf" 2>&1 | tee -a "$trpth"/"Zenodo/Qiime"/"$(basename ${otpth[$i]} .qza)_import_log.txt" || \
+      printf "Import failed at "$(date)" on \"${otpth[$i]}\". \n"
+    
+    else
+    
+      # diagnostic message
+      printf "${bold}$(date):${normal} Import available for \"$(basename "$trpth"/"${inpth[$i]}")\", skipping.\n"
+  
+    fi
 done

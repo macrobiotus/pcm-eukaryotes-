@@ -192,9 +192,18 @@
   * preparing denoising
     * `/Users/paul/Documents/AAD_combined/Github/055_dns_paired_dada2.sh` - adjusting to check for presence of output files, not run yet.
   * adjusted `/Users/paul/Documents/AAD_combined/Github/055_dns_paired_dada2.sh` - commit
-`
+  * todo
+    * rewrite and run `/Users/paul/Documents/AAD_combined/Github/040_imp_qiime.sh` - ok, skips readily available output files. (But not fully tested.)
+    * rewrite and run `/Users/paul/Documents/AAD_combined/Github/045_cut_adapt.sh` - ok, skips readily available output files. (But not fully tested.)
+    * rewrite and run `/Users/paul/Documents/AAD_combined/Github/050_chk_demux.sh` - ok, skips readily available output files. (But not fully tested.)
+    * run and check logs of `/Users/paul/Documents/AAD_combined/Github/055_dns_paired_dada2.sh` - ok, reads in using array, skips available files. (But not fully tested.)
+    * step further through pipeline
+  * commit
+
 
 ## Todo
+* rewrite
+
 * later dissolve `/Users/paul/Documents/AAD_Davis_station`
 * later dissolve `/Users/paul/Documents/AAD_Davis_station`
 * export 16S and 18S primers and align to reference data in Geneious
