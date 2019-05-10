@@ -137,7 +137,7 @@
         * `Users/paul/Documents/AAD_combined/Zenodo/Manifest/035_manifest_18S_fastq_list_unwanted_1.txt`
         * `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/035_manifest_18S_fastq_list_unwanted_2.txt`
         * run drafted `/Users/paul/Documents/AAD_combined/Github/040_imp_qiime.sh`
-* ***08.05.2019*** - creating manifest files
+* ***08.05.2019*** - creating manifest files and running cutadapt
   * revised and ran `/Users/paul/Documents/AAD_combined/Github/035_create_manifests.sh` - ok
   * manually checking manifests with unwanted files with Edens files - using these files instead of "unwanted" lists
     * `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/02_16S_fastq_list_new_controls.txt`
@@ -171,8 +171,14 @@
   * import finished
   * starting to work on `/Users/paul/Documents/AAD_combined/Github/045_cut_adapt.sh`
     * draft moved over - draft complete - setting x flag - testing on local
-    * commit - moving to cluster - pending
-
+    * commit - moving to cluster - finished - pulled from cluster
+* ***10.05.2019*** - stepping further through pipeline
+  * copied over for adjustment subsequent script files
+    * `/Users/paul/Documents/AAD_combined/Github/050_chk_demux.sh` - adjusted and running. 
+    * `/Users/paul/Documents/AAD_combined/Github/055_dns_paired_dada2.sh` - adjusted.  
+    * `/Users/paul/Documents/AAD_combined/Github/060_16S_check_merging_results.gnu` - so far untouched.
+    * `/Users/paul/Documents/AAD_combined/Github/060_18S_check_merging_results.gnu` - so far untouched.
+  * commit
 
 `
 

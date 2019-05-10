@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # 08.05.2019 - Paul Czechowski - paul.czechowski@gmail.com 
 # ========================================================
@@ -147,3 +147,4 @@ for ((i=1;i<=5;i++)); do
         --o-trimmed-sequences "$trpth"/"${otpth[$i]}" \
         --verbose | tee "$trpth"/"${log[$i]}"
 done
+
