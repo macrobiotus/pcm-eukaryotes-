@@ -42,8 +42,8 @@ IFS=$'\n' data_tab=($(sort <<<"${inpth_data_unsorted[*]}"))
 unset IFS
 
 # for debugging -  print sorted tables - ok!
-printf '%s\n'
-printf '%s\n' "$(basename ${data_tab[@]})"
+# printf '%s\n'
+# printf '%s\n' "$(basename $data_tab)"
 
 
 # loop over input data files
@@ -51,31 +51,31 @@ printf '%s\n' "$(basename ${data_tab[@]})"
 for i in "${!data_tab[@]}"; do
 
   # create output file names
-  trunc=$(basename "$data_tab")
+  trunc=$(basename "${data_tab[$i]}")
   # for debugging 
-  # echo $(dirname "$data_tab")
+  # echo $(dirname "${data_tab[$i]")
   # echo ${trunc:4:-4}
-  
-  otpth_seq="$(dirname "$data_tab")/055_"${trunc:4:-4}"_denoised_seq.qza"
-  otpth_tab="$(dirname "$data_tab")/055_"${trunc:4:-4}"_denoised_tab.qza"
-  otpth_stat="$(dirname "$data_tab")/055_"${trunc:4:-4}"_denoised_stat.qza"
-  otpth_statv="$(dirname "$data_tab")/055_"${trunc:4:-4}"_denoised_stat.qzv"
-  output_log="$(dirname "$data_tab")/055_"${trunc:4:-4}"_denoised_log.txt"
-  
+
+  otpth_seq="$(dirname "${data_tab[$i]}")/055_"${trunc:4:-4}"_denoised_seq.qza"
+  otpth_tab="$(dirname "${data_tab[$i]}")/055_"${trunc:4:-4}"_denoised_tab.qza"
+  otpth_stat="$(dirname "${data_tab[$i]}")/055_"${trunc:4:-4}"_denoised_stat.qza"
+  otpth_statv="$(dirname "${data_tab[$i]}")/055_"${trunc:4:-4}"_denoised_stat.qzv"
+  output_log="$(dirname "${data_tab[$i]}")/055_"${trunc:4:-4}"_denoised_log.txt"
+
   # echo "$otpth_seq"
   # echo "$otpth_tab"
   # echo "$otpth_stat"
   # echo "$otpth_statv"
   # echo "$output_log"
-  
+
   # call denoising only if output file isn't already there
   if [ ! -f "$otpth_seq" ]; then
-    
+
     # diagnostic message
-    printf "${bold}$(date):${normal} Starting denoising of \"$(basename "$data_tab")\"...\n"
-    
+    printf "${bold}$(date):${normal} Starting denoising of \"$(basename "${data_tab[$i]}")\"...\n"
+
     # setting processing parameters
-    case "$data_tab" in
+    case "${data_tab[$i]}" in
       *"045_16S_trimmed_"* )
         lenf='145'
         lenr='145'
@@ -93,11 +93,10 @@ for i in "${!data_tab[@]}"; do
         exit
         ;;
     esac
-       
+   
    # qiime calls
-   printf "${bold}$(date):${normal} Starting denoising of \"$(basename "$data_tab")\"...\n"
    qiime dada2 denoise-paired \
-      --i-demultiplexed-seqs "$data_tab" \
+      --i-demultiplexed-seqs "${data_tab[$i]}" \
       --p-trunc-len-f "$lenf" \
       --p-trunc-len-r "$lenr" \
       --p-n-threads "$cores" \
@@ -106,17 +105,18 @@ for i in "${!data_tab[@]}"; do
       --o-denoising-stats "$otpth_stat" \
       --o-table "$otpth_tab" \
       --verbose  2>&1 | tee -a "$output_log"
-    printf "${bold}$(date):${normal} ...finished denoising of \"$(basename "$data_tab")\".\n"
+    printf "${bold}$(date):${normal} ...finished denoising of \"$(basename "${data_tab[$i]}")\".\n"
         
     # export stats file for manual inspection and gnuplot
     qiime metadata tabulate \
       --m-input-file "$otpth_stat" \
       --o-visualization "$otpth_statv"
-  
+
   else
-    
+
     # diagnostic message
-    printf "${bold}$(date):${normal} Analysis already done for \"$(basename "$data_tab")\"...\n"
+    printf "${bold}$(date):${normal} Analysis already done for \"$(basename "${data_tab[$i]}")\"...\n"
+
   fi
 
 done

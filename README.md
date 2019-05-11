@@ -201,12 +201,14 @@
     * step further through pipeline - plotting
   * working off above todo - check logs - while iterating
     * `./040_imp_qiime.sh` - ok 
-    * `./045_cut_adapt.sh` - running 
+    * `./045_cut_adapt.sh` - running - commit `a3a9a577e4042165fd9a6c09e3efe55f7c5f9212`
     * `./050_chk_demux.sh` - queued on local
+* **11.5.2019** stepping further through pipline
+   * script ``./045_cut_adapt.sh`` finished -  but not checking logs from remote
+   * syncing data to cluster to run denoise with script `./050_chk_demux` on available data, before troubleshooting the other two data sets - uploading to cluster
+   * `050_chk_demux` needed fixing on cluster - done remotely and restarted on cluster.
 
 ## Todo
-* rewrite
-
 * later dissolve `/Users/paul/Documents/AAD_Davis_station`
 * later dissolve `/Users/paul/Documents/AAD_Davis_station`
 * export 16S and 18S primers and align to reference data in Geneious
