@@ -212,7 +212,7 @@
    * checking error logs:
      * remove file pointer `585A_S40_L001_R_001_150_L001_R*` from `16S_trimmed_run_5` manifest  - ok
      * erase imports - `rm *16S_*_run_5*` and `rm *18S_*_run_1*` - ok 
-     * and restart pipeline
+     * and restart pipeline `040_imp_qiime.sh && 045_cut_adapt.sh && 050_chk_demux.sh`
      
 
 
