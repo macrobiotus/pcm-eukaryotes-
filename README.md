@@ -207,6 +207,14 @@
    * script ``./045_cut_adapt.sh`` finished -  but not checking logs from remote
    * syncing data to cluster to run denoise with script `./050_chk_demux` on available data, before troubleshooting the other two data sets - uploading to cluster
    * `050_chk_demux` needed fixing on cluster - done remotely and restarted on cluster.
+* **13.5.2019**
+   * yesterday: retrieved denoising results from cluster
+   * checking error logs:
+     * remove file pointer `585A_S40_L001_R_001_150_L001_R*` from `16S_trimmed_run_5` manifest  - ok
+     * erase imports - `rm *16S_*_run_5*` and `rm *18S_*_run_1*` - ok 
+     * and restart pipeline
+     
+
 
 ## Todo
 * later dissolve `/Users/paul/Documents/AAD_Davis_station`
