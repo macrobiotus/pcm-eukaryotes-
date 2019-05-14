@@ -204,16 +204,74 @@
     * `./045_cut_adapt.sh` - running - commit `a3a9a577e4042165fd9a6c09e3efe55f7c5f9212`
     * `./050_chk_demux.sh` - queued on local
 * **11.5.2019** stepping further through pipline
-   * script ``./045_cut_adapt.sh`` finished -  but not checking logs from remote
-   * syncing data to cluster to run denoise with script `./050_chk_demux` on available data, before troubleshooting the other two data sets - uploading to cluster
-   * `050_chk_demux` needed fixing on cluster - done remotely and restarted on cluster.
-* **13.5.2019**
-   * yesterday: retrieved denoising results from cluster
-   * checking error logs:
-     * remove file pointer `585A_S40_L001_R_001_150_L001_R*` from `16S_trimmed_run_5` manifest  - ok
-     * erase imports - `rm *16S_*_run_5*` and `rm *18S_*_run_1*` - ok 
-     * and restart pipeline `040_imp_qiime.sh && 045_cut_adapt.sh && 050_chk_demux.sh`
-     
+  * script ``./045_cut_adapt.sh`` finished -  but not checking logs from remote
+  * syncing data to cluster to run denoise with script `./050_chk_demux` on available data, before troubleshooting the other two data sets - uploading to cluster
+  * `050_chk_demux` needed fixing on cluster - done remotely and restarted on cluster.
+* **13.5.2019** - trouble shooting
+  * yesterday - retrieved denoising results from cluster
+  * trouble shoot iteration 1
+    * checking error logs:
+    * remove file pointer `585A_S40_L001_R_001_150_L001_R*` from `16S_run_5` manifest  - ok
+    * erase imports - `rm *16S_*_run_5*` and `rm *18S_*_run_1*` - ok
+    * deleting error logs
+    * restarting pipeline `./040_imp_qiime.sh && ./045_cut_adapt.sh && ./050_chk_demux.sh`
+  * trouble shoot iteration 2
+    * checking error logs
+    * remove file pointers `586A_S84_L001_R_001` and `586A_S84_L001_R_001` from manifest from `16S_run_5` manifest  - ok
+    * deleting error logs
+    * erase imports - `rm *16S_*_run_5*` and `rm *18S_*_run_1*` - ok
+    * restarting pipeline `./040_imp_qiime.sh && ./045_cut_adapt.sh && ./050_chk_demux.sh`
+* **14.5.2019** - trouble shooting
+  * trouble shoot iteration 3
+    * checking error logs (pending)
+      * errors in `/Users/paul/Documents/AAD_combined/Zenodo/Qiime/045_18S_trimmed_run_1.txt` - deleting file
+        * erasing entries in manifest `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/035_manifest_18S_fastq_list_run_1.txt`
+          * `19383_1_18S_AGRF_CCTCTACCTACG_AER6L_S25_L001_R`
+      * errors in `/Users/paul/Documents/AAD_combined/Zenodo/Qiime/045_16S_trimmed_run_5.txt`
+        * erasing entries in manifest
+          * `587B_S83_L001_R_001,/Users/paul/Sequences/Raw/181212_AAD_The_Ridge/16S_The_Ridge/587B_S83_L001_R1_001.fastq.gz,forward`
+          * `587B_S83_L001_R_001,/Users/paul/Sequences/Raw/181212_AAD_The_Ridge/16S_The_Ridge/587B_S83_L001_R2_001.fastq.gz,reverse
+        * erasing log file
+      * erase imports - `rm *16S_*_run_5*` and `rm *18S_*_run_1*` - ok
+      * restarting pipeline  `./040_imp_qiime.sh && ./045_cut_adapt.sh && ./050_chk_demux.sh`
+  * trouble shoot iteration 4
+    * 18S data was trimmed and visualized successfully - erasing logs
+    * cant't find error in 16S - restarting pipeline - `rm  *16S_*_run_5*`, and `./040_imp_qiime.sh && ./045_cut_adapt.sh && ./050_chk_demux.sh`
+  * trouble shoot iteration 5
+    * removing from `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/035_manifest_16S_fastq_list_run_5.txt`
+      * `589C_S23_L001_R_001,/Users/paul/Sequences/Raw/181212_AAD_The_Ridge/16S_The_Ridge/589C_S23_L001_R1_001.fastq.gz,forward`
+      * `589C_S23_L001_R_001,/Users/paul/Sequences/Raw/181212_AAD_The_Ridge/16S_The_Ridge/589C_S23_L001_R2_001.fastq.gz,reverse`
+    * restarting pipeline - `rm  *16S_*_run_5*`, and `./040_imp_qiime.sh && ./045_cut_adapt.sh && ./050_chk_demux.sh`
+  * trouble shoot iteration 6
+    * removing from `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/035_manifest_16S_fastq_list_run_5.txt`
+      * `590B_S93_L001_R_001,/Users/paul/Sequences/Raw/181212_AAD_The_Ridge/16S_The_Ridge/590B_S93_L001_R1_001.fastq.gz,forward
+      * `590B_S93_L001_R_001,/Users/paul/Sequences/Raw/181212_AAD_The_Ridge/16S_The_Ridge/590B_S93_L001_R2_001.fastq.gz,reverse`
+    * restarting pipeline - `rm  *16S_*_run_5*`, and `./040_imp_qiime.sh && ./045_cut_adapt.sh && ./050_chk_demux.sh`
+  * trouble shoot iteration 7
+    * removing from `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/035_manifest_16S_fastq_list_run_5.txt`
+      * `591C_S89_L001_R_001,/Users/paul/Sequences/Raw/181212_AAD_The_Ridge/16S_The_Ridge/591C_S89_L001_R1_001.fastq.gz,forward
+      * `591C_S89_L001_R_001,/Users/paul/Sequences/Raw/181212_AAD_The_Ridge/16S_The_Ridge/591C_S89_L001_R2_001.fastq.gz,reverse`
+    * restarting pipeline - `rm  *16S_*_run_5*`, and `./040_imp_qiime.sh && ./045_cut_adapt.sh && ./050_chk_demux.sh`
+ * trouble shoot iteration 8
+   * removing from `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/035_manifest_16S_fastq_list_run_5.txt`
+      * `613C_S47_L001_R_001,/Users/paul/Sequences/Raw/181212_AAD_The_Ridge/16S_The_Ridge/613C_S47_L001_R1_001.fastq.gz,forward`
+      * `613C_S47_L001_R_001,/Users/paul/Sequences/Raw/181212_AAD_The_Ridge/16S_The_Ridge/613C_S47_L001_R2_001.fastq.gz,reverse`
+    * restarting pipeline - `rm  *16S_*_run_5*`, and `./040_imp_qiime.sh && ./045_cut_adapt.sh && ./050_chk_demux.sh`
+  * trouble shoot iteration 9
+   * removing from `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/035_manifest_16S_fastq_list_run_5.txt`
+      * `833A_S86_L001_R_001,/Users/paul/Sequences/Raw/181212_AAD_The_Ridge/16S_The_Ridge/833A_S86_L001_R1_001.fastq.gz,forward`
+      * `833A_S86_L001_R_001,/Users/paul/Sequences/Raw/181212_AAD_The_Ridge/16S_The_Ridge/833A_S86_L001_R2_001.fastq.gz,reverse`
+   * restarting pipeline - `rm  *16S_*_run_5*`, and `./040_imp_qiime.sh && ./045_cut_adapt.sh && ./050_chk_demux.sh`
+
+
+
+
+
+833A_S86_L001_R
+
+
+
+
 
 
 ## Todo

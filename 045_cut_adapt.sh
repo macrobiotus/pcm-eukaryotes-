@@ -19,7 +19,7 @@ if [[ "$HOSTNAME" != "pc683.eeb.cornell.edu" ]]; then
 elif [[ "$HOSTNAME" == "pc683.eeb.cornell.edu" ]]; then
     printf "Execution on local...\n"
     trpth="/Users/paul/Documents/AAD_combined"
-    cores='2'
+    cores='1'
     bold=$(tput bold)
     normal=$(tput sgr0)
 fi

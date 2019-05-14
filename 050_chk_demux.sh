@@ -19,7 +19,7 @@ if [[ "$HOSTNAME" != "pc683.eeb.cornell.edu" ]]; then
 elif [[ "$HOSTNAME" == "pc683.eeb.cornell.edu" ]]; then
     printf "Execution on local...\n"
     trpth="/Users/paul/Documents/AAD_combined"
-    cores='2'
+    cores='1'
     bold=$(tput bold)
     normal=$(tput sgr0)
 fi
@@ -69,7 +69,7 @@ for ((i=1;i<=5;i++)); do
   else
   
     # diagnostic message
-    printf "${bold}$(date):${normal} Trimmed 16S data file available for \"$(basename "$trpth"/"${inpth[$i]}")\", skipping.\n"
+    printf "${bold}$(date):${normal} Visualized 16S data file available for \"$(basename "$trpth"/"${inpth[$i]}")\", skipping.\n"
   
   fi
 
@@ -89,7 +89,7 @@ for ((i=6;i<=12;i++)); do
   else
   
     # diagnostic message
-    printf "${bold}$(date):${normal} Trimmed 16S data file available for \"$(basename "$trpth"/"${inpth[$i]}")\", skipping.\n"
+    printf "${bold}$(date):${normal} Visualized 18S data file available for \"$(basename "$trpth"/"${inpth[$i]}")\", skipping.\n"
   
   fi
 
