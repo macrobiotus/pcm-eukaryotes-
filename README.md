@@ -253,22 +253,38 @@
       * `591C_S89_L001_R_001,/Users/paul/Sequences/Raw/181212_AAD_The_Ridge/16S_The_Ridge/591C_S89_L001_R2_001.fastq.gz,reverse`
     * restarting pipeline - `rm  *16S_*_run_5*`, and `./040_imp_qiime.sh && ./045_cut_adapt.sh && ./050_chk_demux.sh`
  * trouble shoot iteration 8
-   * removing from `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/035_manifest_16S_fastq_list_run_5.txt`
+    * removing from `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/035_manifest_16S_fastq_list_run_5.txt`
       * `613C_S47_L001_R_001,/Users/paul/Sequences/Raw/181212_AAD_The_Ridge/16S_The_Ridge/613C_S47_L001_R1_001.fastq.gz,forward`
       * `613C_S47_L001_R_001,/Users/paul/Sequences/Raw/181212_AAD_The_Ridge/16S_The_Ridge/613C_S47_L001_R2_001.fastq.gz,reverse`
     * restarting pipeline - `rm  *16S_*_run_5*`, and `./040_imp_qiime.sh && ./045_cut_adapt.sh && ./050_chk_demux.sh`
   * trouble shoot iteration 9
-   * removing from `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/035_manifest_16S_fastq_list_run_5.txt`
+    * removing from `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/035_manifest_16S_fastq_list_run_5.txt`
       * `833A_S86_L001_R_001,/Users/paul/Sequences/Raw/181212_AAD_The_Ridge/16S_The_Ridge/833A_S86_L001_R1_001.fastq.gz,forward`
       * `833A_S86_L001_R_001,/Users/paul/Sequences/Raw/181212_AAD_The_Ridge/16S_The_Ridge/833A_S86_L001_R2_001.fastq.gz,reverse`
    * restarting pipeline - `rm  *16S_*_run_5*`, and `./040_imp_qiime.sh && ./045_cut_adapt.sh && ./050_chk_demux.sh`
-
-
-
-
-
-833A_S86_L001_R
-
+   * trouble shoot iteration 10
+    * removing from `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/035_manifest_16S_fastq_list_run_5.txt`
+      * `834A_S7_L001_R_001,/Users/paul/Sequences/Raw/181212_AAD_The_Ridge/16S_The_Ridge/834A_S7_L001_R1_001.fastq.gz,forward`
+      * `834A_S7_L001_R_001,/Users/paul/Sequences/Raw/181212_AAD_The_Ridge/16S_The_Ridge/834A_S7_L001_R2_001.fastq.gz,reverse`
+   * restarting pipeline - `rm  *16S_*_run_5*`, and `./040_imp_qiime.sh && ./045_cut_adapt.sh && ./050_chk_demux.sh`
+   * trouble shoot iteration 11
+    * removing from `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/035_manifest_16S_fastq_list_run_5.txt`
+      * `835A_S50_L001_R_001,/Users/paul/Sequences/Raw/181212_AAD_The_Ridge/16S_The_Ridge/835A_S50_L001_R1_001.fastq.gz,forward`
+      * `835A_S50_L001_R_001,/Users/paul/Sequences/Raw/181212_AAD_The_Ridge/16S_The_Ridge/835A_S50_L001_R2_001.fastq.gz,reverse`
+   * restarting pipeline - `rm  *16S_*_run_5*`, and `./040_imp_qiime.sh && ./045_cut_adapt.sh && ./050_chk_demux.sh`
+* **15.5.2019** - trouble shooting
+   * trouble shoot iteration 12
+    * removing from `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/035_manifest_16S_fastq_list_run_5.txt`
+      * `836C_S31_L001_R_001,/Users/paul/Sequences/Raw/181212_AAD_The_Ridge/16S_The_Ridge/836C_S31_L001_R1_001.fastq.gz,forward`
+      * `836C_S31_L001_R_001,/Users/paul/Sequences/Raw/181212_AAD_The_Ridge/16S_The_Ridge/836C_S31_L001_R2_001.fastq.gz,reverse`
+   * restarting pipeline - `rm  *16S_*_run_5*`, and `./040_imp_qiime.sh && ./045_cut_adapt.sh && ./050_chk_demux.sh`
+      * trouble shoot iteration 13
+   * removing from `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/035_manifest_16S_fastq_list_run_5.txt`
+      * `535A_S49_L001_R_001,/Users/paul/Sequences/Raw/181212_AAD_The_Ridge/16S_The_Ridge/535A_S49_L001_R1_001.fastq.gz,forward`
+      * `535A_S49_L001_R_001,/Users/paul/Sequences/Raw/181212_AAD_The_Ridge/16S_The_Ridge/535A_S49_L001_R2_001.fastq.gz,reverse`
+   * restarting pipeline - `rm  *16S_*_run_5*`, and `./040_imp_qiime.sh && ./045_cut_adapt.sh && ./050_chk_demux.sh`
+   * finished successfully - commit
+   * starting denoisng
 
 
 
