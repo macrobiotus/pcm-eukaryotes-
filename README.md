@@ -284,7 +284,7 @@
       * `535A_S49_L001_R_001,/Users/paul/Sequences/Raw/181212_AAD_The_Ridge/16S_The_Ridge/535A_S49_L001_R2_001.fastq.gz,reverse`
    * restarting pipeline - `rm  *16S_*_run_5*`, and `./040_imp_qiime.sh && ./045_cut_adapt.sh && ./050_chk_demux.sh`
    * finished successfully - commit
-   * starting denoisng
+   * starting denoising once cluster becomes available
 
 
 
