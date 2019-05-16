@@ -285,6 +285,9 @@
    * restarting pipeline - `rm  *16S_*_run_5*`, and `./040_imp_qiime.sh && ./045_cut_adapt.sh && ./050_chk_demux.sh`
    * finished successfully - commit
    * starting denoising once cluster becomes available
+* **16.5.2019** - trouble shooting
+  * finished denoising - requested metadata
+
 
 
 
