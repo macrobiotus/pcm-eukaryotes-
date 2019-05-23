@@ -285,8 +285,31 @@
    * restarting pipeline - `rm  *16S_*_run_5*`, and `./040_imp_qiime.sh && ./045_cut_adapt.sh && ./050_chk_demux.sh`
    * finished successfully - commit
    * starting denoising once cluster becomes available
-* **16.5.2019** - trouble shooting
+* **16.5.2019**
   * finished denoising - requested metadata
+* **23.5.2019** - getting merging stats and combining data set
+  * received metadata
+    * file `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/035_18S_mappingfile.txt` - `a5f696d9878a1dd5a1228a9f727b9443`
+    * file `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/035_16S_mappingfile.txt` - `ebd78c1921b3a3d00836f51cec96e172`
+  * checking merging statistics - omitting graphics creation - using `qiime2-2019.4`
+    * `qiime tools view /Users/paul/Documents/AAD_combined/Zenodo/Qiime/055_18S_trimmed_run_6_denoised_stat.qzv` - low yield, much filtered out, repeat
+    * `qiime tools view /Users/paul/Documents/AAD_combined/Zenodo/Qiime/055_18S_trimmed_run_5_denoised_stat.qzv` - low yield, much filtered out, repeat
+    * `qiime tools view /Users/paul/Documents/AAD_combined/Zenodo/Qiime/055_18S_trimmed_run_4_denoised_stat.qzv` - low yield, much filtered out, repeat
+    * `qiime tools view /Users/paul/Documents/AAD_combined/Zenodo/Qiime/055_18S_trimmed_run_3_denoised_stat.qzv` - low yield, much filtered out, repeat
+    * `qiime tools view /Users/paul/Documents/AAD_combined/Zenodo/Qiime/055_18S_trimmed_run_2_b_denoised_stat.qzv` - low yield, much filtered out, repeat
+    * `qiime tools view /Users/paul/Documents/AAD_combined/Zenodo/Qiime/055_18S_trimmed_run_2_a_denoised_stat.qzv` - low yield, much filtered out, repeat
+    * `qiime tools view /Users/paul/Documents/AAD_combined/Zenodo/Qiime/055_18S_trimmed_run_1_denoised_stat.qzv` - low yield, much filtered out, repeat
+    * `qiime tools view /Users/paul/Documents/AAD_combined/Zenodo/Qiime/055_16S_trimmed_run_5_denoised_stat.qzv` - low yield, little merged, repeat
+    * `qiime tools view /Users/paul/Documents/AAD_combined/Zenodo/Qiime/055_16S_trimmed_run_4_denoised_stat.qzv` - low yield, little merged, repeat
+    * `qiime tools view /Users/paul/Documents/AAD_combined/Zenodo/Qiime/055_16S_trimmed_run_3_denoised_stat.qzv` - low yield, little merged, repeat
+    * `qiime tools view /Users/paul/Documents/AAD_combined/Zenodo/Qiime/055_16S_trimmed_run_2_denoised_stat.qzv` - low yield, little merged, repeat
+    * `qiime tools view /Users/paul/Documents/AAD_combined/Zenodo/Qiime/055_16S_trimmed_run_1_denoised_stat.qzv` - low yield, little merged, repeat
+  * adjusting `/Users/paul/Documents/AAD_combined/Github/055_dns_paired_dada2.sh`
+    * therein relaxing trimming and error filtering parameters
+    * removing failed files in Qiime folder before repetition: `rm 055_*`
+    * commit
+    * uploading files to Biohpc home to restart denoising on cluster - pending
+
 
 
 

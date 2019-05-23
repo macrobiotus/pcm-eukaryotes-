@@ -77,15 +77,22 @@ for i in "${!data_tab[@]}"; do
     # setting processing parameters
     case "${data_tab[$i]}" in
       *"045_16S_trimmed_"* )
-        lenf='145'
-        lenr='145'
-        ee='5'
+         lenf='0'
+         lenr='0'
+         ee='15'
+#        lenf='145'
+#        lenr='145'
+#        ee='5'
         echo "${bold}Parameters for 16S set to:${normal} lenf = $lenf, lenr = $lenr, ee = $ee. "
         ;;
       *"045_18S_trimmed_"* )
-        lenf='145'
-        lenr='145'
-        ee='9'
+         lenf='0'
+         lenr='0'
+         ee='5'
+
+#        lenf='145'
+#        lenr='145'
+#        ee='9'
         echo "${bold}Parameters for 18S set to:${normal} lenf = $lenf, lenr = $lenr, ee = $ee."
         ;;
       *)
