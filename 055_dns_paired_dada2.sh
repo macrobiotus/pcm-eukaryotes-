@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# 10.05.2019 - Paul Czechowski - paul.czechowski@gmail.com 
+# 23.05.2019 - Paul Czechowski - paul.czechowski@gmail.com 
 # ========================================================
 # https://docs.qiime2.org/2017.10/tutorials/moving-pictures/
 # Citing this plugin: DADA2: High-resolution sample inference from Illumina
