@@ -325,16 +325,26 @@
     * `qiime tools view /Users/paul/Documents/AAD_combined/Zenodo/Qiime/055_16S_trimmed_run_1_denoised_stat.qzv` - ok, perhaps too low yield
   * omitting adjustment and execution of `/Users/paul/Documents/AAD_combined/Github/060_16S_check_merging_results.gnu`
   * omitting adjustment and execution of `/Users/paul/Documents/AAD_combined/Github/060_18S_check_merging_results.gnu`
-  * adjusting and running `/Users/paul/Documents/AAD_combined/Github/065_merge_data.sh`- **ATTENTION** Using sample and feature summing - ok
+  * adjusting and running `/Users/paul/Documents/AAD_combined/Github/065_merge_data.sh`- **WARNING** using sample and feature summing - ok
     * **WARNING** for 18S data: `Same samples are present in some of the provided tables: 121052_S271_L001_R_001, 119910_S16_L001_R_001, 121057_S286_L001_R_001, 121081_S239_L001_R_001, 120511_S73_L001_R_001, 121031_S203_L001_R_001, 121017_S157_L001_R_001, 121048_S259_L001_R_001, 120504_S50_L001_R_001, 120512_S76_L001_R_001, 121046_S253_L001_R_001, 121040_S232_L001_R_001, 120523_S103_L001_R_001, 121074_S130_L001_R_001, 121060_S295_L001_R_001, 121072_S122_L001_R_001, 121044_S246_L001_R_001, 121056_S283_L001_R_001, 120494_S28_L001_R_001, 121070_S87_L001_R_001, 121029_S196_L001_R_001, 121037_S223_L001_R_001, 121066_S44_L001_R_001, 120505_S54_L001_R_001, 121033_S211_L001_R_001, 121010_S136_L001_R_001, 121064_S8_L001_R_001, 120508_S64_L001_R_001, 121039_S229_L001_R_001, 120489_S11_L001_R_001, 121020_S168_L001_R_001, 120517_S82_L001_R_001, 120492_S22_L001_R_001, 121047_S256_L001_R_001, 121067_S48_L001_R_001, 120496_S34_L001_R_001, 120522_S100_L001_R_001, 121080_S208_L001_R_001, 121083_S247_L001_R_001, 120529_S121_L001_R_001, 120513_S79_L001_R_001, 121032_S207_L001_R_001, 120493_S25_L001_R_001, 121018_S160_L001_R_001, 120507_S61_L001_R_001, 121027_S190_L001_R_001, 121034_S214_L001_R_001, 120487_S3_L001_R_001, 121051_S268_L001_R_001, 121014_S148_L001_R_001, 121061_S298_L001_R_001, 120503_S47_L001_R_001, 121050_S265_L001_R_001, 121054_S277_L001_R_001, 121036_S220_L001_R_001, 120510_S70_L001_R_001, 120519_S90_L001_R_001, 120506_S58_L001_R_001, 121049_S262_L001_R_001, 121013_S145_L001_R_001, 121075_S161_L001_R_001, 121009_S133_L001_R_001, 120528_S118_L001_R_001, 121016_S154_L001_R_001, 121078_S200_L001_R_001, 120520_S94_L001_R_001, 120497_S37_L001_R_001, 120502_S43_L001_R_001, 120490_S15_L001_R_001, 121055_S280_L001_R_001, 120526_S112_L001_R_001, 120509_S67_L001_R_001, 121012_S142_L001_R_001, 121063_S4_L001_R_001, 120531_S129_L001_R_001, 121079_S204_L001_R_001, 121043_S242_L001_R_001, 121024_S181_L001_R_001, 121082_S243_L001_R_001, 121062_S301_L001_R_001, 120518_S86_L001_R_001, 121011_S139_L001_R_001, 121025_S184_L001_R_001, 121042_S238_L001_R_001, 121015_S151_L001_R_001, 121041_S235_L001_R_001, 121068_S51_L001_R_001, 121045_S250_L001_R_001, 121058_S289_L001_R_001, 121022_S175_L001_R_001, 120525_S109_L001_R_001, 120527_S115_L001_R_001, 120488_S7_L001_R_001, 120521_S97_L001_R_001, 121065_S12_L001_R_001, 121071_S91_L001_R_001, 121030_S199_L001_R_001, 121021_S172_L001_R_001, 121073_S126_L001_R_001, 120491_S19_L001_R_001, 121059_S292_L001_R_001, 121026_S187_L001_R_001, 121077_S169_L001_R_001, 121076_S165_L001_R_001, 121038_S226_L001_R_001, 121069_S83_L001_R_001, 120498_S40_L001_R_001, 121028_S193_L001_R_001, 121035_S217_L001_R_001, 120495_S31_L001_R_001, 121053_S274_L001_R_001, 121023_S178_L001_R_001, 120524_S106_L001_R_001, 121019_S164_L001_R_001, 120530_S125_L001_R_001`
   * started to adjust `/Users/paul/Documents/AAD_combined/Github/070_classify_reads.sh`
-    * commit for today
+  * commit for today
+* **29.5.2019** - preparing taxonomi classification
+  * copying 16S reference taxonomy `cp /Users/paul/Sequences/References/gg_13_8_otus/taxonomy/99_otu_taxonomy.txt /Users/paul/Documents/AAD_combined/Zenodo/Reference/`
+  * copying 16S reference sequences `cp /Users/paul/Sequences/References/gg_13_8_otus/rep_set/99_otus.fasta /Users/paul/Documents/AAD_combined/Zenodo/Reference/`
+  * copying 18S reference taxonomy `cp /Users/paul/Sequences/References/SILVA_128_QIIME_release/taxonomy/18S_only/99/majority_taxonomy_7_levels.txt /Users/paul/Documents/AAD_combined/Zenodo/Reference/`
+  * copying 18S reference sequences `cp /Users/paul/Sequences/References/SILVA_128_QIIME_release/rep_set/rep_set_18S_only/99/99_otus_18S.fasta /Users/paul/Documents/AAD_combined/Zenodo/Reference/`
+  * adjusted `/Users/paul/Documents/AAD_combined/Github/070_classify_reads.sh`
+  * commit and upload to cluster for execution
+
 
 ## Todo
-* 23.05.2019:
-  * perhaps repeat denoising with even more and less lenient setting - see 23.05.2019
-  * summing counts of duplicated sample names during merging steps, assuming re-sequencing - abundances will be meaningless unless this is resolved 
 
+* **28.05.2019**
+  * perhaps repeat denoising with even more and less lenient setting - see 23.05.2019
+  * summed counts of duplicated sample names during merging steps
+    * abundances will be meaningless unless this is resolved
+    * need to repeat later with intact pipeline and revised manifest files
 * later dissolve `/Users/paul/Documents/AAD_Davis_station`
 * later dissolve `/Users/paul/Documents/AAD_Davis_station`
 * export 16S and 18S primers and align to reference data in Geneious
