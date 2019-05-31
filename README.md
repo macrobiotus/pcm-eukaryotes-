@@ -335,21 +335,34 @@
   * copying 18S reference taxonomy `cp /Users/paul/Sequences/References/SILVA_128_QIIME_release/taxonomy/18S_only/99/majority_taxonomy_7_levels.txt /Users/paul/Documents/AAD_combined/Zenodo/Reference/`
   * copying 18S reference sequences `cp /Users/paul/Sequences/References/SILVA_128_QIIME_release/rep_set/rep_set_18S_only/99/99_otus_18S.fasta /Users/paul/Documents/AAD_combined/Zenodo/Reference/`
   * adjusted `/Users/paul/Documents/AAD_combined/Github/070_classify_reads.sh`
-  * commit and upload to cluster for execution
-
-
+  * commit and upload to cluster for execution - calling `./200_overwrite_remote_push.sh`
+* **30.5.2019** - data is arriving on cluster
+ * adjusted and executing `070_classify_reads.sh`
+   * `Thu May 30 11:58:59 EDT 2019: Running Vsearch Classifier on 18S data...` 
+* **30.5.2019** - tax assignment evaluation 
+ * correcting syntax in script - manually sorting files - ok
+ * very low yield
+   * 18S -  overwrote log file but was ~32% 
+   * 16S - `Matching query sequences: 4387 of 26142 (16.78%)`
+   * repeat with query coverage 0.75 instead of 0.90
+   * renaming and keeping older tax assignments and log files, by adding string `_coverage90`
+   * adjusting `/Users/paul/Documents/AAD_combined/Github/070_classify_reads.sh`
+   * creating `/Users/paul/Documents/AAD_combined/Github/075_export_queries_for_inspection.sh`
+ * commit, push to cluster and re-run `/Users/paul/Documents/AAD_combined/Github/070_classify_reads.sh` - pending
+ 
 ## Todo
 
-* **28.05.2019**
+## high importance
+* **low sequence yield**
   * perhaps repeat denoising with even more and less lenient setting - see 23.05.2019
-  * summed counts of duplicated sample names during merging steps
-    * abundances will be meaningless unless this is resolved
-    * need to repeat later with intact pipeline and revised manifest files
+* **summed counts of duplicated sample names during merging steps**
+  * abundances will be meaningless unless this is resolved
+  * need to repeat later with intact pipeline and revised manifest files
+* **low taxonomic assignment success**
+  * repeat assignment
+  * export 16S and 18S primers and align to reference data in Geneious
+
+
+## low importance
 * later dissolve `/Users/paul/Documents/AAD_Davis_station`
 * later dissolve `/Users/paul/Documents/AAD_Davis_station`
-* export 16S and 18S primers and align to reference data in Geneious
-* export 16s and 18S repsets and match to reference data in Geneious
-* representative sequences - adapter content and length distribution
-* re-import
-* re-classify without bad trimming parameter
-* create new files consider silenced next steps allow 2x8h work time

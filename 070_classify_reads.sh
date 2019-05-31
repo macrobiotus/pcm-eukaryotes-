@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# 28.05.2019 - Paul Czechowski - paul.czechowski@gmail.com 
+# 30.05.2019 - Paul Czechowski - paul.czechowski@gmail.com 
 # ========================================================
 
 # activate Qiime manually 
@@ -16,12 +16,10 @@
 
 # Paths need to be adjusted for remote execution
 # ----------------------------------------------
-# paths need to be adjusted for remote execution
-# ----------------------------------------------
 if [[ "$HOSTNAME" != "pc683.eeb.cornell.edu" ]]; then
     printf "Execution on remote...\n"
-    trpth="/data/AAD_combined"
-    cores='40'
+    trpth="/workdir/pc683/AAD_combined"
+    cores="$(nproc --all)"
     bold=$(tput bold)
     normal=$(tput sgr0)
 elif [[ "$HOSTNAME" == "pc683.eeb.cornell.edu" ]]; then
@@ -36,12 +34,12 @@ fi
 # --------------
 
 # SILVA128 (99% clustered)
-refdbseq[1]="Zenodo/Reference/99_otus_18S.fasta"
-refdbtax[1]="Zenodo/Reference/majority_taxonomy_7_levels.txt"
+refdbseq[1]='Zenodo/Reference/99_otus_18S.fasta'
+refdbtax[1]='Zenodo/Reference/majority_taxonomy_7_levels.txt'
 
 # GreenGenes 13.8 (99% clustered)
-refdbseq[2]="Zenodo/Reference/99_otus.fasta"
-refdbtax[2]="Zenodo/Reference/99_otu_taxonomy.txt"
+refdbseq[2]='Zenodo/Reference/99_otus.fasta'
+refdbtax[2]='Zenodo/Reference/99_otu_taxonomy.txt'
 
 # export to 
 # ---------
@@ -63,8 +61,8 @@ tax_assignemnts[1]='Zenodo/Qiime/070_18S_denoised_seq_taxonomy_assignments.qza'
 tax_assignemnts[2]='Zenodo/Qiime/070_16S_denoised_seq_taxonomy_assignments.qza'
 
 # rolling log
-qiime_assign_log[1]="Zenodo/Qiime/070_18S_denoised_seq_taxonomy_assignments_log.txt"
-qiime_assign_log[2]="Zenodo/Qiime/070_18S_denoised_seq_taxonomy_assignments_log.txt"
+qiime_assign_log[1]='Zenodo/Qiime/070_18S_denoised_seq_taxonomy_assignments_log.txt'
+qiime_assign_log[2]='Zenodo/Qiime/070_16S_denoised_seq_taxonomy_assignments_log.txt'
 
 # Run scripts
 # ------------
@@ -102,7 +100,7 @@ echo qiime feature-classifier classify-consensus-vsearch \
   --p-maxaccepts 1 \
   --p-perc-identity 0.875 \
   --p-min-consensus 0.51 \
-  --p-query-cov 0.9 \
+  --p-query-cov 0.75 \
   --p-threads "$cores" \
   --o-classification "$trpth"/"${tax_assignemnts[1]}" \
   --verbose 2>&1 | tee -a "$trpth"/"${qiime_assign_log[1]}" || { echo 'Taxonomy assigment failed' ; exit 1; }
@@ -115,7 +113,8 @@ echo qiime feature-classifier classify-consensus-vsearch \
   --p-maxaccepts 1 \
   --p-perc-identity 0.97 \
   --p-min-consensus 0.51 \
-  --p-query-cov 0.9 \
+  --p-query-cov 0.75 \
   --p-threads "$cores" \
   --o-classification "$trpth"/"${tax_assignemnts[2]}" \
   --verbose 2>&1 | tee -a "$trpth"/"${qiime_assign_log[2]}" || { echo 'Taxonomy assigment failed' ; exit 1; }
+
