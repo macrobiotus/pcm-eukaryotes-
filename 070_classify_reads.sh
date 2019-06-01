@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# 30.05.2019 - Paul Czechowski - paul.czechowski@gmail.com 
+# 31.05.2019 - Paul Czechowski - paul.czechowski@gmail.com 
 # ========================================================
 
 # activate Qiime manually 
@@ -93,7 +93,7 @@ for i in "${!query[@]}"; do
 done
 
 printf "\n${bold}$(date):${normal} Running Vsearch Classifier on 18S data...\n"
-echo qiime feature-classifier classify-consensus-vsearch \
+qiime feature-classifier classify-consensus-vsearch \
   --i-query              "$trpth"/"${query[1]}" \
   --i-reference-reads    "$trpth"/"${qiime_import_seq[1]}" \
   --i-reference-taxonomy "$trpth"/"${qiime_import_tax[1]}" \
@@ -106,7 +106,7 @@ echo qiime feature-classifier classify-consensus-vsearch \
   --verbose 2>&1 | tee -a "$trpth"/"${qiime_assign_log[1]}" || { echo 'Taxonomy assigment failed' ; exit 1; }
 
 printf "\n${bold}$(date):${normal} Running Vsearch Classifier on 16S data...\n"
-echo qiime feature-classifier classify-consensus-vsearch \
+qiime feature-classifier classify-consensus-vsearch \
   --i-query              "$trpth"/"${query[2]}" \
   --i-reference-reads    "$trpth"/"${qiime_import_seq[2]}" \
   --i-reference-taxonomy "$trpth"/"${qiime_import_tax[2]}" \
@@ -117,4 +117,3 @@ echo qiime feature-classifier classify-consensus-vsearch \
   --p-threads "$cores" \
   --o-classification "$trpth"/"${tax_assignemnts[2]}" \
   --verbose 2>&1 | tee -a "$trpth"/"${qiime_assign_log[2]}" || { echo 'Taxonomy assigment failed' ; exit 1; }
-

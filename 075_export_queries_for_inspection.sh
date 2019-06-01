@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# 30.05.2019 - Paul Czechowski - paul.czechowski@gmail.com 
+# 01.06.2019 - Paul Czechowski - paul.czechowski@gmail.com 
 # ========================================================
 # Export alignments, e.g. for pretty printing
 
@@ -34,7 +34,7 @@ fi
 inpth_seq_unsorted=()
 while IFS=  read -r -d $'\0'; do
     inpth_seq_unsorted+=("$REPLY")
-done < <(find "$trpth/Zenodo/Qiime" -name '125_18S_*_alignment_masked.qza' -print0)
+done < <(find "$trpth/Zenodo/Qiime" -name '065_*_merged_seq.qza' -print0)
 
 # Sort array 
 # (https://stackoverflow.com/questions/7442417/how-to-sort-an-array-in-bash)
@@ -53,7 +53,7 @@ for k in "${!inpth_seq[@]}"; do
   # deconstruct string
   directory="$(dirname "$inpth_seq[$k]")"
   input_qza_tmp="$(basename "${inpth_seq[$k]%.*}")"
-  input_qza="130_${input_qza_tmp:4}"
+  input_qza="075_${input_qza_tmp:4}"
   extension=".fasta"
   
   # reconstruct string
@@ -67,17 +67,17 @@ for k in "${!inpth_seq[@]}"; do
   printf "\n${bold}$(date):${normal} Exporting file ${inpth_seq[$k]}...\n"
   
   # erase possibly existing  tempfile
-  [ -f "$TMPDIR"/aligned-dna-sequences.fasta ] && rm "$TMPDIR"/aligned-dna-sequences.fasta
+  [ -f "$TMPDIR"/dna-sequences.fasta ] && rm "$TMPDIR"/dna-sequences.fasta
   
   # export file
   qiime tools export \
     --input-path  "${inpth_seq[$k]}" \
     --output-path "$TMPDIR" 
   
-  mv "$TMPDIR"aligned-dna-sequences.fasta "${otpth_seq[$k]}"
+  mv "$TMPDIR"dna-sequences.fasta "${otpth_seq[$k]}"
   pigz "${otpth_seq[$k]}"
   
   # erase tempfile
-  [ -f "$TMPDIR"/aligned-dna-sequences.fasta ] && rm "$TMPDIR"/aligned-dna-sequences.fasta
+  [ -f "$TMPDIR"/dna-sequences.fasta ] && rm "$TMPDIR"/dna-sequences.fasta
 
 done

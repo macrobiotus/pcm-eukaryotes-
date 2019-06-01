@@ -339,7 +339,7 @@
 * **30.5.2019** - data is arriving on cluster
  * adjusted and executing `070_classify_reads.sh`
    * `Thu May 30 11:58:59 EDT 2019: Running Vsearch Classifier on 18S data...` 
-* **30.5.2019** - tax assignment evaluation 
+* **31.5.2019** - tax assignment evaluation 
  * correcting syntax in script - manually sorting files - ok
  * very low yield
    * 18S -  overwrote log file but was ~32% 
@@ -348,9 +348,21 @@
    * renaming and keeping older tax assignments and log files, by adding string `_coverage90`
    * adjusting `/Users/paul/Documents/AAD_combined/Github/070_classify_reads.sh`
    * creating `/Users/paul/Documents/AAD_combined/Github/075_export_queries_for_inspection.sh`
- * commit, push to cluster and re-run `/Users/paul/Documents/AAD_combined/Github/070_classify_reads.sh` - pending
- 
+* **01.06.2019** - tax assignment evaluation and summary, export
+  * commit, push to cluster and re-run `/Users/paul/Documents/AAD_combined/Github/070_classify_reads.sh` - ok, pulled from cluster
+  * very low yield
+    * 18S - reference: `82540729 nt in 48294 seqs, min 900, max 3718, avg 1709` - `Matching query sequences: 2523 of 7665 (32.92%)`
+    * 16S - reference: `291294869 nt in 203452 seqs, min 1254, max 2368, avg 1432` and `Matching query sequences: 4504 of 26142 (17.23%)`
+  * adjusted and ran `/Users/paul/Documents/AAD_combined/Github/075_export_queries_for_inspection.sh` - ok, but script may be unnecessary
+  * adjusted and ran `/Users/paul/Documents/AAD_combined/Github/080_smr_features_and_table.sh` - ok 
+  * adjusted and ran `/Users/paul/Documents/AAD_combined/Github/085_export_all_qiime_artifacts.sh` - ok
+  * moving un-needed scripts to scratch for later, reuse as in `CU_combined`
+  * commit
+
 ## Todo
+
+## next step
+* create R objects
 
 ## high importance
 * **low sequence yield**
@@ -361,7 +373,8 @@
 * **low taxonomic assignment success**
   * repeat assignment
   * export 16S and 18S primers and align to reference data in Geneious
-
+* **alignment masking removes sequences**
+  * omit alignment, tree buildingm, and other steps, can following export if desirable
 
 ## low importance
 * later dissolve `/Users/paul/Documents/AAD_Davis_station`
