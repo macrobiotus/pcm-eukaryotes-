@@ -363,7 +363,8 @@ as per `https://creativecommons.org/licenses/by/4.0/legalcode`
   * commit
 * **05.06.2019** - export R objects and check alignment / reference overlap
   * adjusting and running `/Users/paul/Documents/AAD_combined/Github/090_get_full_ps_obj.R`
-  * commit and mail off. 
+  * commit and mail off.
+  * uploaded to cluster `./200_overwrite_remote_push.sh`
 
 ## Todo
 
