@@ -1,67 +1,68 @@
 #' ---
 #' title: "Importing complete Phyloseq objects."
 #' author: "Paul Czechowski"
-#' date: "February 8, 2018"
+#' date: "Jun 5, 2019"
 #' output: pdf_document
 #' toc: true
 #' highlight: zenburn
 #' ---
 
 #' This code commentary is included in the R code itself and can be rendered at
-#' any stage using  `rmarkdown::render ("/Users/paul/Documents/AAD_combined/Github/200_import_to_phyloseq.R")`.
+#' any stage using  `rmarkdown::render ("/Users/paul/Documents/AAD_combined/Github/090_get_full_ps_obj.R")`.
 #' (The path may have to be adjusted.)
 #' Please check the session info at the end of the document for further 
 #' notes on the coding environment.
+#'
+#' # Prepare Environment
+#'
+#' ## Empty Buffer
 
-
-# empty buffer
-# ============
 rm(list=ls())
 
-# load packages
-# =============
+#' ## Load Packages
+
 library("ape")          # read tree file
 library("Biostrings")   # read fasta file
 library("phyloseq")     # filtering and utilities for such objects
-library("biomformat")   # perhaps unnecessary
 library("data.table")   # fast and convenient handling of large tables
 library("tidyverse")    # useful, but mainly loading for `dplyr`
 library("data.table")
 
-# functions
-# =========
+#' # Construct 16S Object  
+#'
+#' ## Set Paths
 
-# none
+bim_fpath = "/Users/paul/Documents/AAD_combined/Zenodo/Qiime/085_16S_merged_qiime_artefacts/features-tax-meta.biom" 
+# tre_fpath = ""
+seq_fpath = "/Users/paul/Documents/AAD_combined/Zenodo/Qiime/085_16S_merged_qiime_artefacts/dna-sequences.fasta"
 
-# data read in 16S
-# ================
-# adjust these - perhaps use lists, too
-bim_fpath = "/Users/paul/Documents/AAD_combined/Zenodo/Qiime/180_16S_097_cl_q1exp/features-tax-meta.biom" 
-tre_fpath = "/Users/paul/Documents/AAD_combined/Zenodo/Qiime/180_16S_097_cl_q1exp/180_16S_097_cl_tree_rooted.tre/tree.nwk"
-seq_fpath = "/Users/paul/Documents/AAD_combined/Zenodo/Qiime/180_16S_097_cl_q1exp/dna-sequences.fasta"
-
-# read data into R 
+#' ## Import
+ 
 phsq <- import_biom (bim_fpath)
-tre <- ape::read.tree(tre_fpath)
+# tre <- ape::read.tree(tre_fpath)
 fas <- Biostrings::readDNAStringSet(seq_fpath)  
 
-# construct object  
+#' ## Construct Object and Export
+
 bak_phsq <- merge_phyloseq(phsq, tre, fas)
 save(bak_phsq, file = "/Users/paul/Documents/AAD_combined/Zenodo/R/16S_physeq_obj.Rdata")
 
-# data read in 18S
-# =================
-# adjust these - perhaps use lists, too
-bim_fpath = "/Users/paul/Documents/AAD_combined/Zenodo/Qiime/180_18S_097_cl_q1exp/features-tax-meta.biom" 
-tre_fpath = "/Users/paul/Documents/AAD_combined/Zenodo/Qiime/180_18S_097_cl_q1exp/180_18S_097_cl_tree_rooted.tre/tree.nwk"
-seq_fpath = "/Users/paul/Documents/AAD_combined/Zenodo/Qiime/180_18S_097_cl_q1exp/dna-sequences.fasta"
+#' # Construct 18S Object  
+#'
+#' ## Set Paths
 
-# read data into R 
+bim_fpath = "/Users/paul/Documents/AAD_combined/Zenodo/Qiime/085_18S_merged_qiime_artefacts/features-tax-meta.biom" 
+# tre_fpath = ""
+seq_fpath = "/Users/paul/Documents/AAD_combined/Zenodo/Qiime/085_18S_merged_qiime_artefacts/dna-sequences.fasta"
+
+#' ## Import
+
 phsq <- import_biom (bim_fpath)
-tre <- ape::read.tree(tre_fpath)
+# tre <- ape::read.tree(tre_fpath)
 fas <- Biostrings::readDNAStringSet(seq_fpath)  
 
-# construct object  
+#' ## Construct Object and Export
+
 euk_phsq <- merge_phyloseq(phsq, tre, fas)
 save(euk_phsq, file = "/Users/paul/Documents/AAD_combined/Zenodo/R/18S_physeq_obj.Rdata")
 

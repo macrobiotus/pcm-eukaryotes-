@@ -1,6 +1,9 @@
 
 # Analysing 16S and 18S data from ***The Ridge*** and ***Davis Station*** in combination.
 
+Paul Czechowski 2017-2019, Material released with Creative Commons Attribution 4.0 International Public License
+as per `https://creativecommons.org/licenses/by/4.0/legalcode`
+
 ## Progress notes
 
 * ***14.12.2018*** - creating folder structure, no Git repository yet
@@ -358,11 +361,17 @@
   * adjusted and ran `/Users/paul/Documents/AAD_combined/Github/085_export_all_qiime_artifacts.sh` - ok
   * moving un-needed scripts to scratch for later, reuse as in `CU_combined`
   * commit
+* **05.06.2019** - export R objects and check alignment / reference overlap
+  *  adjusting and running `/Users/paul/Documents/AAD_combined/Github/090_get_full_ps_obj.R`
+  * commit
 
 ## Todo
 
 ## next step
-* create R objects
+* check overlap between queries and reference data - likely limited
+* likley - get more taxonomic assignments, e.g using Blast
+* check that headings in in mapping files are identical
+* consider points below as wells
 
 ## high importance
 * **low sequence yield**
@@ -375,7 +384,8 @@
   * export 16S and 18S primers and align to reference data in Geneious
 * **alignment masking removes sequences**
   * omit alignment, tree buildingm, and other steps, can following export if desirable
+* **sample headers must be identical in both mapping files**
+  * otherwise adjust `/Users/paul/Documents/AAD_combined/Github/085_export_all_qiime_artifacts.sh` 
 
 ## low importance
-* later dissolve `/Users/paul/Documents/AAD_Davis_station`
-* later dissolve `/Users/paul/Documents/AAD_Davis_station`
+* nothing

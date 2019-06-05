@@ -4,7 +4,7 @@
 # ================== 
 # set -x
 
-# 01.06.2019 - Paul Czechowski - paul.czechowski@gmail.com 
+# 05.06.2019 - Paul Czechowski - paul.czechowski@gmail.com 
 # ========================================================
 # Visualising reads after denoising and merging procedure.
 
@@ -39,7 +39,6 @@ inpth_map[2]='Zenodo/Manifest/035_18S_mappingfile.txt'
 tax_assignemnts[1]='Zenodo/Qiime/070_16S_denoised_seq_taxonomy_assignments.qza'
 tax_assignemnts[2]='Zenodo/Qiime/070_18S_denoised_seq_taxonomy_assignments.qza'
 
-
 inpth_features[1]='Zenodo/Qiime/065_16S_merged_tab.qza'
 inpth_features[2]='Zenodo/Qiime/065_18S_merged_tab.qza'
 
@@ -64,7 +63,7 @@ for i in "${!inpth_features[@]}"; do
     
     # create path for output directory
     results_tmp=$(basename "${inpth_features[$i]}".qza)
-    results_tmp=${results_tmp:4}
+    results_tmp=${results_tmp:4:-12}
     results_dir="$trpth/Zenodo/Qiime/085_"$results_tmp"_qiime_artefacts"
     # echo "$results_dir"
     mkdir -p "$results_dir"
@@ -98,7 +97,7 @@ for i in "${!inpth_features[@]}"; do
       -o "$results_dir"/features-tax-meta.biom \
       -m "$trpth"/"${inpth_map[$i]}" \
       --observation-header OTUID,taxonomy,confidence \
-      --sample-header SampleID,BarcodeSequence,LinkerPrimerSequence,Port,Location,Type,Temp,Sali,Lati,Long,Run,Facility,CollYear || { echo 'Metadata addition failed' ; exit 1; }
+      --sample-header sample-ID,USRCD,TYPE,RUN,SEQ,SITE,MSL,LATI,LONG,ELEV,SLPE,ASPC,DMF,COND,PH,TC,TN,TP,PHOSCO,CL,NO2,BR,NO3,PO4,SO4,NH4,P,K,CA,MG,ZN,B,S,CU,FE,MN,NA,AL,M3PSR,CECe,CAMEQ,MGMEQ,KMEQ,NAMEQ,BSESAT,CECCA,CECMG,CECK,CECNA,MUD,SAND,GRVL,MIN,MAX,MEAN,QPD,SO,GRSKW,IGS,KURT,SIO2,TIO2,AL2O3,FE2O3,MNO,MGO,CAO,NA2O,K2O,P2O5,SO3,CLPPM,QRTZ,PLAG,ORTH,AMPH,PYRO,GRNT,MGNTE,BIOT,CHLO,DOLO,CALC,HALI,APAT,BASSA,MUSC || { echo 'Metadata addition failed' ; exit 1; }
   
     # Exporting .biom file to .tsv
     printf "${bold}$(date):${normal} Exporting to .tsv file...\n"
