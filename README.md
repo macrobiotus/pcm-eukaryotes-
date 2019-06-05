@@ -362,8 +362,8 @@ as per `https://creativecommons.org/licenses/by/4.0/legalcode`
   * moving un-needed scripts to scratch for later, reuse as in `CU_combined`
   * commit
 * **05.06.2019** - export R objects and check alignment / reference overlap
-  *  adjusting and running `/Users/paul/Documents/AAD_combined/Github/090_get_full_ps_obj.R`
-  * commit
+  * adjusting and running `/Users/paul/Documents/AAD_combined/Github/090_get_full_ps_obj.R`
+  * commit and mail off. 
 
 ## Todo
 
