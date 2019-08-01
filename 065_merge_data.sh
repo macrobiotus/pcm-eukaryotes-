@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# 28.05.2019 - Paul Czechowski - paul.czechowski@gmail.com 
+# 01.08.2019 - Paul Czechowski - paul.czechowski@gmail.com 
 # ========================================================
 # https://docs.qiime2.org/2017.10/tutorials/moving-pictures/
 # merging data from different runs, after denoising
@@ -12,11 +12,11 @@
 
 # paths need to be adjusted for remote execution
 # ----------------------------------------------
-if [[ "$HOSTNAME" != "pc683.eeb.cornell.edu" ]]; then
+if [[ "$HOSTNAME" != "macmini.staff.uod.otago.ac.nz" ]]; then
     printf "Execution on remote...\n"
     trpth="/data/AAD_combined"
     thrds='40'
-elif [[ "$HOSTNAME" == "pc683.eeb.cornell.edu" ]]; then
+elif [[ "$HOSTNAME" == "macmini.staff.uod.otago.ac.nz" ]]; then
     printf "Execution on local...\n"
     trpth="/Users/paul/Documents/AAD_combined"
     thrds='2'
@@ -35,11 +35,10 @@ seq[5]='Zenodo/Qiime/055_16S_trimmed_run_5_denoised_seq.qza'
 # 18S data
 seq[6]='Zenodo/Qiime/055_18S_trimmed_run_1_denoised_seq.qza'
 seq[7]='Zenodo/Qiime/055_18S_trimmed_run_2_a_denoised_seq.qza'
-seq[8]='Zenodo/Qiime/055_18S_trimmed_run_2_b_denoised_seq.qza'
-seq[9]='Zenodo/Qiime/055_18S_trimmed_run_3_denoised_seq.qza'
-seq[10]='Zenodo/Qiime/055_18S_trimmed_run_4_denoised_seq.qza'
-seq[11]='Zenodo/Qiime/055_18S_trimmed_run_5_denoised_seq.qza'
-seq[12]='Zenodo/Qiime/055_18S_trimmed_run_6_denoised_seq.qza'
+seq[8]='Zenodo/Qiime/055_18S_trimmed_run_3_denoised_seq.qza'
+seq[9]='Zenodo/Qiime/055_18S_trimmed_run_4_denoised_seq.qza'
+seq[10]='Zenodo/Qiime/055_18S_trimmed_run_5_denoised_seq.qza'
+seq[11]='Zenodo/Qiime/055_18S_trimmed_run_6_denoised_seq.qza'
 
 
 # 16S data
@@ -52,11 +51,10 @@ tab[5]='Zenodo/Qiime/055_16S_trimmed_run_5_denoised_tab.qza'
 # 18S data
 tab[6]='Zenodo/Qiime/055_18S_trimmed_run_1_denoised_tab.qza'
 tab[7]='Zenodo/Qiime/055_18S_trimmed_run_2_a_denoised_tab.qza'
-tab[8]='Zenodo/Qiime/055_18S_trimmed_run_2_b_denoised_tab.qza'
-tab[9]='Zenodo/Qiime/055_18S_trimmed_run_3_denoised_tab.qza'
-tab[10]='Zenodo/Qiime/055_18S_trimmed_run_4_denoised_tab.qza'
-tab[11]='Zenodo/Qiime/055_18S_trimmed_run_5_denoised_tab.qza'
-tab[12]='Zenodo/Qiime/055_18S_trimmed_run_6_denoised_tab.qza'
+tab[8]='Zenodo/Qiime/055_18S_trimmed_run_3_denoised_tab.qza'
+tab[9]='Zenodo/Qiime/055_18S_trimmed_run_4_denoised_tab.qza'
+tab[10]='Zenodo/Qiime/055_18S_trimmed_run_5_denoised_tab.qza'
+tab[11]='Zenodo/Qiime/055_18S_trimmed_run_6_denoised_tab.qza'
 
 
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# 31.05.2019 - Paul Czechowski - paul.czechowski@gmail.com 
+# 01.08.2019 - Paul Czechowski - paul.czechowski@gmail.com 
 # ========================================================
 
 # activate Qiime manually 
@@ -16,13 +16,13 @@
 
 # Paths need to be adjusted for remote execution
 # ----------------------------------------------
-if [[ "$HOSTNAME" != "pc683.eeb.cornell.edu" ]]; then
+if [[ "$HOSTNAME" != "macmini.staff.uod.otago.ac.nz" ]]; then
     printf "Execution on remote...\n"
     trpth="/workdir/pc683/AAD_combined"
     cores="$(nproc --all)"
     bold=$(tput bold)
     normal=$(tput sgr0)
-elif [[ "$HOSTNAME" == "pc683.eeb.cornell.edu" ]]; then
+elif [[ "$HOSTNAME" == "macmini.staff.uod.otago.ac.nz" ]]; then
     printf "Execution on local...\n"
     trpth="/Users/paul/Documents/AAD_combined"
     cores='2'
@@ -33,21 +33,21 @@ fi
 # database files
 # --------------
 
-# SILVA128 (99% clustered)
-refdbseq[1]='Zenodo/Reference/99_otus_18S.fasta'
-refdbtax[1]='Zenodo/Reference/majority_taxonomy_7_levels.txt'
+# SILVA132 (99% clustered - 18S)
+refdbseq[1]='Zenodo/Reference/Silva132_18S/silva_132_99_18S.fna'
+refdbtax[1]='Zenodo/Reference/Silva132_18S/majority_taxonomy_7_levels.txt'
 
-# GreenGenes 13.8 (99% clustered)
-refdbseq[2]='Zenodo/Reference/99_otus.fasta'
-refdbtax[2]='Zenodo/Reference/99_otu_taxonomy.txt'
+# SILVA132 (99% clustered - 16S)
+refdbseq[2]='Zenodo/Reference/Silva132_16S/silva_132_99_16S.fna'
+refdbtax[2]='Zenodo/Reference/Silva132_16S/majority_taxonomy_7_levels.txt'
 
 # export to 
 # ---------
-qiime_import_seq[1]="Zenodo/Qiime/070_Silva128_Qiime_sequence_import.qza"
-qiime_import_tax[1]="Zenodo/Qiime/070_Silva128_Qiime_taxonomy_import.qza"
+qiime_import_seq[1]="Zenodo/Qiime/070_Silva132_18S_Qiime_sequence_import.qza"
+qiime_import_tax[1]="Zenodo/Qiime/070_Silva132_18S_Qiime_taxonomy_import.qza"
 
-qiime_import_seq[2]="Zenodo/Qiime/070_GreenGenes13-8_Qiime_sequence_import.qza"
-qiime_import_tax[2]="Zenodo/Qiime/070_GreenGenes13-8_Qiime_taxonomy_import.qza"
+qiime_import_seq[2]="Zenodo/Qiime/070_Silva132_16S_Qiime_sequence_import.qza"
+qiime_import_tax[2]="Zenodo/Qiime/070_Silva132_16S_Qiime_taxonomy_import.qza"
 
 # query and assignment files
 # --------------------------

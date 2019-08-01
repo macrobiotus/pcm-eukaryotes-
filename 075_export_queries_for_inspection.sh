@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# 01.06.2019 - Paul Czechowski - paul.czechowski@gmail.com 
+# 01.08.2019 - Paul Czechowski - paul.czechowski@gmail.com 
 # ========================================================
 # Export alignments, e.g. for pretty printing
 
@@ -10,13 +10,13 @@
 
 # Paths need to be adjusted for remote execution
 # ----------------------------------------------
-if [[ "$HOSTNAME" != "pc683.eeb.cornell.edu" ]]; then
+if [[ "$HOSTNAME" != "macmini.staff.uod.otago.ac.nz" ]]; then
     printf "Execution on remote...\n"
     trpth="/workdir/pc683/AAD_combined"
     cores="$(nproc --all)"
     bold=$(tput bold)
     normal=$(tput sgr0)
-elif [[ "$HOSTNAME" == "pc683.eeb.cornell.edu" ]]; then
+elif [[ "$HOSTNAME" == "macmini.staff.uod.otago.ac.nz" ]]; then
     printf "Execution on local...\n"
     trpth="/Users/paul/Documents/AAD_combined"
     cores='2'
