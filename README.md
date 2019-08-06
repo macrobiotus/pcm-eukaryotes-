@@ -458,38 +458,23 @@ Command: vsearch --usearch_global /tmp/qiime2-archive-bm85y4cj/fb5f83e2-e32e-4e8
 
 Saved FeatureData[Taxonomy] to: /workdir/pc683/AAD_combined/Zenodo/Qiime/070_18S_denoised_seq_taxonomy_assignments.qza
 ````
+
   * adjusting and running `/Users/paul/Documents/AAD_combined/Github/075_export_queries_for_inspection.sh`  - ok
   * adjusting and running `/Users/paul/Documents/AAD_combined/Github/080_smr_features_and_table.sh` - ok
   * adjusting and running `/Users/paul/Documents/AAD_combined/Github/085_export_all_qiime_artifacts.sh` - ok
   * adjusting and running `/Users/paul/Documents/AAD_combined/Github/090_get_full_ps_obj.R` - ok
-  * send off results to Eden and commit 
-
+  * send off results to Eden and commit (`c15acaedefdb4f2900a01d30a01dbd34bbf2013`)
+  * delegated: check overlap between queries and reference data - likely limited*
 
 ## Todo
 
-## next step
+### high importance
 
-* check overlap between queries and reference data - likely limited
-* read papers
-* likley - get more taxonomic assignments, e.g using Blast
-* check that headings in in mapping files are identical
-* consider points below as wells
-
-## high importance
-* **summed counts of duplicated sample names during merging steps**
-  * abundances will be meaningless unless this is resolved
-  * need to repeat later with intact pipeline and revised manifest files
-* **low sequence yield**
-  * perhaps repeat denoising with even more and less lenient setting - see 23.05.2019
-* **low taxonomic assignment success**
-  * export 16S and 18S primers and align to reference data in Geneious
-  * repeat assignment
-* **alignment masking removes sequences**
-  * omit alignment, tree buildingm, and other steps, can following export if desirable
-* **sample headers must be identical in both mapping files**
-  * otherwise adjust `/Users/paul/Documents/AAD_combined/Github/085_export_all_qiime_artifacts.sh`
 * **manuscript work**
 * review Eden's manuscript 
 
-## low importance
+### low importance
 * nothing
+
+## keep in mind
+* **sample headers must be identical in both mapping files** (they are right now ) - otherwise adjust `/Users/paul/Documents/AAD_combined/Github/085_export_all_qiime_artifacts.sh`
