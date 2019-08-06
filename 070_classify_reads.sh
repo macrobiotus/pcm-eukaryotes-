@@ -100,7 +100,7 @@ qiime feature-classifier classify-consensus-vsearch \
   --p-maxaccepts 1 \
   --p-perc-identity 0.875 \
   --p-min-consensus 0.51 \
-  --p-query-cov 0.75 \
+  --p-query-cov 0.66 \
   --p-threads "$cores" \
   --o-classification "$trpth"/"${tax_assignemnts[1]}" \
   --verbose 2>&1 | tee -a "$trpth"/"${qiime_assign_log[1]}" || { echo 'Taxonomy assigment failed' ; exit 1; }
@@ -113,7 +113,7 @@ qiime feature-classifier classify-consensus-vsearch \
   --p-maxaccepts 1 \
   --p-perc-identity 0.97 \
   --p-min-consensus 0.51 \
-  --p-query-cov 0.75 \
+  --p-query-cov 0.66 \
   --p-threads "$cores" \
   --o-classification "$trpth"/"${tax_assignemnts[2]}" \
   --verbose 2>&1 | tee -a "$trpth"/"${qiime_assign_log[2]}" || { echo 'Taxonomy assigment failed' ; exit 1; }

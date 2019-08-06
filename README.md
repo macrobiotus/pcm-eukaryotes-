@@ -408,17 +408,68 @@ in `/Users/paul/Documents/AAD_combined/Scratch/190731_manifests_for_correction.z
     * updating hostname in files - ok
     * updating hostname in Transport scripts and commit - ok
     * committing repository and uploading - ok
-    * running all script after, and including `/Users/paul/Documents/AAD_combined/Github/065_merge_data.sh` on cluster - pending
-    
+    * running all script after, and including `/Users/paul/Documents/AAD_combined/Github/065_merge_data.sh` on cluster - see subsequent
+    * on cluster running `065_merge_data.sh` - ok
+    * on cluster running `070_classify_reads.sh` - pending
+      * checking `070_18S_denoised_seq_taxonomy_assignments_log.txt`:
+      * `matching query sequences: 2704 of 7665 (35.28%)` - only marginally better then previous results (~32%) 
+**02.08.2019**
+  * 16S taxonomy assignment is still running
+**06.08.2019**
+  * taxonomy assignments are completed
+  * 16S results:
+  
+````
+vsearch v2.7.0_linux_x86_64, 251.6GB RAM, 40 cores
+https://github.com/torognes/vsearch
+
+Reading file /tmp/qiime2-archive-fmcdad5e/7e2a05fe-03f1-4ac6-a539-8669fe19f33a/data/dna-sequences.fasta 100%
+521145303 nt in 369953 seqs, min 900, max 2961, avg 1409
+Masking 100%
+Counting k-mers 100%
+Creating k-mer index 100%
+Searching 100%
+Matching query sequences: 5029 of 26142 (19.24%)
+Running external command line application. This may print messages to stdout and/or stderr.
+The command being run is below. This command cannot be manually re-run as it will depend on temporary files that no longer exist.
+
+Command: vsearch --usearch_global /tmp/qiime2-archive-t0ca2u5g/3309212d-6060-4e3f-97f0-86e7db310126/data/dna-sequences.fasta --id 0.97 --query_cov 0.66 --strand both --maxaccepts 1 --maxrejects 0 --output_no_hits --db /tmp/qiime2-archive-fmcdad5e/7e2a05fe-03f1-4ac6-a539-8669fe19f33a/data/dna-sequences.fasta --threads 40 --blast6out /tmp/tmpluxg1h12
+
+Saved FeatureData[Taxonomy] to: /workdir/pc683/AAD_combined/Zenodo/Qiime/070_16S_denoised_seq_taxonomy_assignments.qza
+````
+
+  * 18S results:
+
+````
+vsearch v2.7.0_linux_x86_64, 251.6GB RAM, 40 cores
+https://github.com/torognes/vsearch
+
+Reading file /tmp/qiime2-archive-hljp26d1/51cfc9f8-bf0f-4672-ae2c-1101c762cc17/data/dna-sequences.fasta 100%
+94427932 nt in 55145 seqs, min 900, max 3718, avg 1712
+Masking 100%
+Counting k-mers 100%
+Creating k-mer index 100%
+Searching 100%
+Matching query sequences: 2704 of 7665 (35.28%)
+Running external command line application. This may print messages to stdout and/or stderr.
+The command being run is below. This command cannot be manually re-run as it will depend on temporary files that no longer exist.
+
+Command: vsearch --usearch_global /tmp/qiime2-archive-bm85y4cj/fb5f83e2-e32e-4e85-93b0-baf06c8e9cda/data/dna-sequences.fasta --id 0.875 --query_cov 0.66 --strand both --maxaccepts 1 --maxrejects 0 --output_no_hits --db /tmp/qiime2-archive-hljp26d1/51cfc9f8-bf0f-4672-ae2c-1101c762cc17/data/dna-sequences.fasta --threads 40 --blast6out /tmp/tmpaajl801p
+
+Saved FeatureData[Taxonomy] to: /workdir/pc683/AAD_combined/Zenodo/Qiime/070_18S_denoised_seq_taxonomy_assignments.qza
+````
+  * adjusting and running `/Users/paul/Documents/AAD_combined/Github/075_export_queries_for_inspection.sh`  - ok
+  * adjusting and running `/Users/paul/Documents/AAD_combined/Github/080_smr_features_and_table.sh` - ok
+  * adjusting and running `/Users/paul/Documents/AAD_combined/Github/085_export_all_qiime_artifacts.sh` - ok
+  * adjusting and running `/Users/paul/Documents/AAD_combined/Github/090_get_full_ps_obj.R` - ok
+  * send off results to Eden and commit 
 
 
 ## Todo
 
 ## next step
-* mail off manifest file and retrieve well formatted file
-* read papers mende by Belinda Ferrari
+
 * check overlap between queries and reference data - likely limited
-* email Qiime team for new reference data
 * read papers
 * likley - get more taxonomic assignments, e.g using Blast
 * check that headings in in mapping files are identical

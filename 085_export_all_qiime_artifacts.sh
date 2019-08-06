@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-# for debugging only
-# ================== 
-# set -x
-
 # 01.08.2019 - Paul Czechowski - paul.czechowski@gmail.com 
 # ========================================================
 # Visualising reads after denoising and merging procedure.

@@ -14,7 +14,7 @@
 # ----------------------------------------------
 if [[ "$HOSTNAME" != "macmini.staff.uod.otago.ac.nz" ]]; then
     printf "Execution on remote...\n"
-    trpth="/data/AAD_combined"
+    trpth="/workdir/pc683/AAD_combined"
     thrds='40'
 elif [[ "$HOSTNAME" == "macmini.staff.uod.otago.ac.nz" ]]; then
     printf "Execution on local...\n"
@@ -86,7 +86,6 @@ qiime feature-table merge-seqs \
   --i-data "$trpth"/"${seq[9]}" \
   --i-data "$trpth"/"${seq[10]}" \
   --i-data "$trpth"/"${seq[11]}" \
-  --i-data "$trpth"/"${seq[12]}" \
   --o-merged-data "$trpth"/"${otpth_seq[2]}"
 
 
@@ -109,6 +108,4 @@ qiime feature-table merge \
   --i-tables "$trpth"/"${tab[9]}" \
   --i-tables "$trpth"/"${tab[10]}" \
   --i-tables "$trpth"/"${tab[11]}" \
-  --i-tables "$trpth"/"${tab[12]}" \
-  --p-overlap-method 'sum' \
   --o-merged-table "$trpth"/"${otpth_tab[2]}"
