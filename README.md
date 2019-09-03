@@ -466,6 +466,83 @@ Saved FeatureData[Taxonomy] to: /workdir/pc683/AAD_combined/Zenodo/Qiime/070_18S
   * send off results to Eden and commit (`c15acaedefdb4f2900a01d30a01dbd34bbf2013`)
   * delegated: check overlap between queries and reference data - likely limited*
 
+**09.08.2019** - check merging statistics
+ * create empty files for saving, easier then manually - ok 
+
+```
+touch \
+  /Users/paul/Documents/AAD_combined/Zenodo/Qiime/060_16S_trimmed_run_1_denoised_stat.tsv \
+  /Users/paul/Documents/AAD_combined/Zenodo/Qiime/060_16S_trimmed_run_2_denoised_stat.tsv \
+  /Users/paul/Documents/AAD_combined/Zenodo/Qiime/060_16S_trimmed_run_3_denoised_stat.tsv \
+  /Users/paul/Documents/AAD_combined/Zenodo/Qiime/060_16S_trimmed_run_4_denoised_stat.tsv \
+  /Users/paul/Documents/AAD_combined/Zenodo/Qiime/060_16S_trimmed_run_5_denoised_stat.tsv \
+  /Users/paul/Documents/AAD_combined/Zenodo/Qiime/060_18S_trimmed_run_1_denoised_stat.tsv \
+  /Users/paul/Documents/AAD_combined/Zenodo/Qiime/060_18S_trimmed_run_2_a_denoised_stat.tsv \
+  /Users/paul/Documents/AAD_combined/Zenodo/Qiime/060_18S_trimmed_run_3_denoised_stat.tsv \
+  /Users/paul/Documents/AAD_combined/Zenodo/Qiime/060_18S_trimmed_run_4_denoised_stat.tsv \
+  /Users/paul/Documents/AAD_combined/Zenodo/Qiime/060_18S_trimmed_run_5_denoised_stat.tsv \
+  /Users/paul/Documents/AAD_combined/Zenodo/Qiime/060_18S_trimmed_run_6_denoised_stat.tsv
+```
+
+ * check and export merging statistics to above files- ok 
+
+```
+qiime tools view /Users/paul/Documents/AAD_combined/Zenodo/Qiime/055_16S_trimmed_run_1_denoised_stat.qzv  && \
+qiime tools view /Users/paul/Documents/AAD_combined/Zenodo/Qiime/055_16S_trimmed_run_2_denoised_stat.qzv  && \
+qiime tools view /Users/paul/Documents/AAD_combined/Zenodo/Qiime/055_16S_trimmed_run_3_denoised_stat.qzv  && \
+qiime tools view /Users/paul/Documents/AAD_combined/Zenodo/Qiime/055_16S_trimmed_run_4_denoised_stat.qzv  && \
+qiime tools view /Users/paul/Documents/AAD_combined/Zenodo/Qiime/055_16S_trimmed_run_5_denoised_stat.qzv  && \
+
+qiime tools view /Users/paul/Documents/AAD_combined/Zenodo/Qiime/055_18S_trimmed_run_1_denoised_stat.qzv  && \
+qiime tools view /Users/paul/Documents/AAD_combined/Zenodo/Qiime/055_18S_trimmed_run_2_a_denoised_stat.qzv  && \
+qiime tools view /Users/paul/Documents/AAD_combined/Zenodo/Qiime/055_18S_trimmed_run_3_denoised_stat.qzv  && \
+qiime tools view /Users/paul/Documents/AAD_combined/Zenodo/Qiime/055_18S_trimmed_run_4_denoised_stat.qzv  && \
+qiime tools view /Users/paul/Documents/AAD_combined/Zenodo/Qiime/055_18S_trimmed_run_5_denoised_stat.qzv  && \
+qiime tools view /Users/paul/Documents/AAD_combined/Zenodo/Qiime/055_18S_trimmed_run_6_denoised_stat.qzv
+```
+
+ * adjusting plotting script `/Users/paul/Documents/AAD_combined/Github/060_16S_check_merging_results.gnu`
+ * running plotting script
+
+**02.10.2019** - checking primer overlap
+ * importing files to Geneious to check project primers on reference data
+   * `/Users/paul/Documents/AAD_combined/Zenodo/Reference/Silva132_16S/silva_132_99_16S.fna`
+   * `/Users/paul/Documents/AAD_combined/Zenodo/Reference/Silva132_18S/silva_132_99_18S.fna`
+   * randomly subsampling 10000 sequences
+ * including primers from `/Users/paul/Documents/AAD_combined/Github/045_cut_adapt.sh`
+ * testing primers against references sequences - 3 mismatches - at least one primer match - done
+ * not yet committed this file
+**02.10.2019** - checking primer overlap
+* finished Geneious analysis - created files:
+  * `/Users/paul/Documents/AAD_combined/Zenodo/Reference/primer_match_silva_132_99_16S.png`
+  * `/Users/paul/Documents/AAD_combined/Zenodo/Reference/primer_match_silva_132_99_18S.png`
+* The 16S insert should be 500 bp (see first screenshot), and you’d only get
+  this reliably merged if you do 2 * 300 paired end runs. Did you do that?
+  Otherwise we should try to not merge reads and only look at the forward reads.
+  Does the Bioanalyszer trace show a ~600 bp fragment length for the finished
+  library? Also note that in and ideal case we’d yield 2 * 10 0000 annotations, so
+  across all reference species the amplification would only amplify 30 - 60% of
+  species (total annotations 15974). I’d filter this data more stringently in the
+  next iteration, and would only merge if that makes sense. How many cycles did
+  the PCRs run? More then ~30-35 could impair quality and lead to chimeras. The 18
+  insert length can’t be estimated in-silico using the reference data, as the
+  primers appear to amplify a fragment that is only within the reference data for
+  the last 150 base pairs (see second screen shot). Once you have checked the 18S
+  library trace (i.e. length distribution) from the bioanalyser and you can
+  confirm that you 18S reads fragments can be merged because you chose the
+  appropriate sequencing kit we need to adjust the "query coverage" tax assignment
+  parameter to a value so that 150bp are the maximum query coverage that is being
+  looked at - expressed as a percentage of your actual insert length. Also note
+  that in and ideal case we’d yield 2 * 10 0000 annotations, but here only one
+  primer matched consistently (but 9000 times), thus we should be able to expect a
+  higher success with 18S the with 16S from what I can see here, one the taxonomy
+  assignment is adjusted.  Once you have investigated the matters outlined here
+  and let me know how you’d like to proceed, please feel free to contact me again,
+  and I’ll re-run the processing accordingly. I’d encourage you also to discuss
+  these matters with one of you local researchers, if you’d like a second opinion.
+* committed
+
+
 ## Todo
 
 ### high importance
