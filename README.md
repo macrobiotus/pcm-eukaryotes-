@@ -1,11 +1,30 @@
+# Analysing 18S data from ***Prince Charles Mountains***
 
-# Analysing 16S and 18S data from ***The Ridge*** and ***Davis Station*** in combination.
-
-Paul Czechowski 2017-2019, Material released with Creative Commons Attribution 4.0 International Public License
-as per `https://creativecommons.org/licenses/by/4.0/legalcode`
+ Using **Gradient Forrest Techniques** to analyse abiotic predictor affect on
+eukaryotic soil biodiversity. Paul Czechowski 2011-2020, Material released with
+Creative Commons Attribution 4.0 International Public License as per
+`https://creativecommons.org/licenses/by/4.0/legalcode`
 
 ## Progress notes
+* ***12.20.2020*** - adjusting repository for analysis restart
+  * commit `4e8dccdaa9ac0501b6bf0655bef4b5d2fe91ae3d` in GitHub folder
+  * commit `0ec21a12a03aa416ffd159cd3020f46a9437e510` in Transport folder.
+  * removing `x` flags in Github and Transport folders
+  * erasing unneeded file in project tree or marking them `red`.
+  * collating sequence metadata
+    * `cp /Users/paul/Archive/PhD_Thesis/07_agrf_library_prep/140319_AGRF_plate_layout_actual_pooling.xlsx /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Metadata/200212_18S_pooling.xlsx`
+    * `cp /Users/paul/Archive/PhD_Thesis/06_sequence_runs/phd_140401_Illumina_run_18S_Antarctic_pools/140401_barcode_and_primer_info/*  /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Metadata/`
+  * finding 18S sequnece data - merged reads are available at `/Users/paul/Sequences/Raw/140401_18S_Illumina_Adelaide`
+    * `/Users/paul/Sequences/Raw/140401_18S_Illumina_Adelaide/18S3_PC_merged.Index.fastq.gz`
+    * `/Users/paul/Sequences/Raw/140401_18S_Illumina_Adelaide/18S3_PC_merged.Read.fastq.gz
+    * `/Users/paul/Sequences/Raw/140401_18S_Illumina_Adelaide/18S4_PC_merged.Index.fastq.gz
+    * `/Users/paul/Sequences/Raw/140401_18S_Illumina_Adelaide/18S4_PC_merged.Read.fastq.gz
+  * find old Qiime mapping file - **pending**
+  * find predictor data - formatted or unformatted **pending**
+  * commit ``
 
+
+* ***old notes below****
 * ***14.12.2018*** - creating folder structure, no Git repository yet
   * moving scripts over from `/Users/paul/Documents/AAD_The_Ridge`
   * copying project folder structure from `/Users/paul/Documents/AAD_The_Ridge`
