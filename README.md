@@ -1,12 +1,12 @@
-# Analysing 18S data from ***Prince Charles Mountains***
+# Analysing 18S data from **Prince Charles Mountains**
 
- Using **Gradient Forrest Techniques** to analyse abiotic predictor affect on
+Using **Gradient Forrest Techniques** to analyse abiotic predictor affect on
 eukaryotic soil biodiversity. Paul Czechowski 2011-2020, Material released with
 Creative Commons Attribution 4.0 International Public License as per
 `https://creativecommons.org/licenses/by/4.0/legalcode`
 
 ## Progress notes
-* ***12.20.2020*** - adjusting repository for analysis restart
+* **12.20.2020** - adjusting repository for analysis restart
   * commit `4e8dccdaa9ac0501b6bf0655bef4b5d2fe91ae3d` in GitHub folder
   * commit `0ec21a12a03aa416ffd159cd3020f46a9437e510` in Transport folder.
   * removing `x` flags in Github and Transport folders
@@ -21,15 +21,62 @@ Creative Commons Attribution 4.0 International Public License as per
     * `/Users/paul/Sequences/Raw/140401_18S_Illumina_Adelaide/18S4_PC_merged.Read.fastq.gz
   * find old Qiime mapping file - **pending**
   * find predictor data - formatted or unformatted **pending**
-  * commit ``
+  * commit `4e8dccdaa9ac0501b6bf0655bef4b5d2fe91ae3d`
+* * **13.02.2020** - adjusting repository for analysis restart
+  * `cp /Users/paul/Archive/PhD_Thesis/09_pcm_2011_sample_information/150901_PCM_data_with_ages.xlsm /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Predictors/200213_PCM_predictors.xlsm`
+  * edited file to have stable hashes (hashes not generated in sheet anymore by VBA function, but saved within:)
+    * `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Predictors/200213_PCM_predictors.xlsx`
+  * started R script - **pending**
+    * to read in `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Predictors/200213_PCM_predictors.xlsx`
+    * import function doesn't handle column names correctly, needs correction
+    * check `set_names()` function in script context, as a starting point
+* **14.04.2020** - re-start sequencing processing
+  * continuing on `/Users/paul/Documents/OU_pcm_eukaryotes/Github/05_join_predictors.R` - **aborted**
+  * mapping file drafts already available at
+    * `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Predictors/200213_PCM_predictors.xlsx`
+  * moving to scratch folder
+    * `/Users/paul/Documents/OU_pcm_eukaryotes/Github/05_join_predictors.R`
+  * getting sequence data to MacbookPro
+    * sequence data is at:
+      * `/Users/paul/Sequences/Raw/140401_18S_Illumina_Adelaide/18S3_PC_merged.Index.fastq.gz`
+      * `/Users/paul/Sequences/Raw/140401_18S_Illumina_Adelaide/18S3_PC_merged.Read.fastq.gz`
+      * `/Users/paul/Sequences/Raw/140401_18S_Illumina_Adelaide/18S4_PC_merged.Index.fastq.gz`
+      * `/Users/paul/Sequences/Raw/140401_18S_Illumina_Adelaide/18S4_PC_merged.Read.fastq.gz`
+  * adjusting scripts at `/Users/paul/Documents/OU_pcm_eukaryotes/Github`
+    * adjusting `/Users/paul/Documents/OU_pcm_eukaryotes/Github/020_check_fastq_files.sh`  - **aborted**
+       * check commit for earlier version
+    * moving files to scratch
+      * `/Users/paul/Documents/OU_pcm_eukaryotes/Github/020_check_fastq_files.sh`
+      * `/Users/paul/Documents/OU_pcm_eukaryotes/Github/025_collate_qc_reports.sh`
+      * `/Users/paul/Documents/OU_pcm_eukaryotes/Github/030_parse_fastqc_logs.sh`
+      * `/Users/paul/Documents/OU_pcm_eukaryotes/Github/035_create_manifests.sh`
+    * adjusting and running `/Users/paul/Documents/OU_pcm_eukaryotes/Github/040_imp_qiime.sh`
+  * still not working - checking old files
+  * obtained original analysis files from 2016 and earlier, from:
+    * `/Volumes/Macintosh HD-1/Users/paul/Archive/Papers/Czechowski_et_al_2017/analyses/5_mapping_files`
+    * `/Volumes/Macintosh HD-1/Users/paul/Archive/Papers/Czechowski_et_al_2017/analyses`
+  * copied to 
+    * `/Users/paul/Documents/OU_pcm_eukaryotes/Scratch/160127_data_analysis_1a_18S.sh`
+    * `/Users/paul/Documents/OU_pcm_eukaryotes/Manifest/160202_18S_MF.txt`
+  * restoring from commit `4e8dccdaa9ac0501b6bf0655bef4b5d2fe91ae3d`
+    * `/Users/paul/Documents/OU_pcm_eukaryotes/Github/040_imp_qiime.sh`
+  * moving all script to `scratch` folder
+  * adjusting `/Users/paul/Documents/OU_pcm_eukaryotes/Github/050_imp_qiime.sh` to work with old Qiime 1 code and mapping files.
+    
 
 
-* ***old notes below****
-* ***14.12.2018*** - creating folder structure, no Git repository yet
+
+
+
+    
+
+
+* **old notes below***
+* **14.12.2018** - creating folder structure, no Git repository yet
   * moving scripts over from `/Users/paul/Documents/AAD_The_Ridge`
   * copying project folder structure from `/Users/paul/Documents/AAD_The_Ridge`
   * adjusting file paths in `Transport` folder `find /Users/paul/Documents/AAD_The_Ridge/Transport -type f \( -iname "*.sh" \) -exec sed -i 's#/AAD_Davis_station#/AAD_The_Ridge#g' {} \; 
-* ***03.02.2019*** - stepping through scripts
+* **03.02.2019** - stepping through scripts
   * adjusting and running `/Users/paul/Documents/AAD_combined/Github/065_merge_data.sh` - ok.
   * formatting metadata files in `/Users/paul/Documents/AAD_combined/Zenodo/Manifest`
      * using `/Users/paul/Documents/AAD_Davis_station/Eden/metadata_combined.csv` as source file, which was copied over to `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/00_metadata_combined.csv`
@@ -42,7 +89,7 @@ Creative Commons Attribution 4.0 International Public License as per
      * using sample ids for The Ridge data as in file `/Users/paul/Documents/AAD_The_Ridge/Zenodo/Manifest/05_16S_manifest_sorted.txt`
      * using sample ids for The Ridge data as in file `/Users/paul/Documents/AAD_The_Ridge/Zenodo/Manifest/05_18S_manifest_sorted.txt`
      * assign sample ids from manifest files above to field ids using this file  `/Users/paul/Documents/AAD_The_Ridge/Zenodo/Manifest/00_sample_mapping_file.xlsx`
-* ***06.02.2019*** - stepping through scripts
+* **06.02.2019** - stepping through scripts
   * received new metadata in file `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/00_Davis_and_TheRidge_metdata_curated.csv`
   * matching manifest files from David and The Ridge data with new metadata file
      * creating `~/Documents/AAD_combined/Github/070_check_sample_ids.r` which reads files from outside project tree and may not work later
@@ -51,7 +98,7 @@ Creative Commons Attribution 4.0 International Public License as per
   * running: `/Users/paul/Documents/AAD_combined/Github/075_smr_features_and_table.sh` - ok
   * running: `/Users/paul/Documents/AAD_combined/Github/085_train_16S_classifier.sh` - ok 
   * running: `/Users/paul/Documents/AAD_combined/Github/095_train_18S_classifier.sh` - ok
-* ***06.02.2019*** - stepping through scripts
+* **06.02.2019** - stepping through scripts
   * running: `/Users/paul/Documents/AAD_combined/Github/100_classify_reads.sh` - ok
   * running: `/Users/paul/Documents/AAD_combined/Github/110_cluster_sequences.sh` - ok
   * for script `/Users/paul/Documents/AAD_combined/Github/120_summarize_clusters.sh`
@@ -64,7 +111,7 @@ Creative Commons Attribution 4.0 International Public License as per
     * `/Users/paul/Documents/AAD_combined/Github/150_mask_clustered_alignment.sh`
     * `/Users/paul/Documents/AAD_combined/Github/160_build_clustered_trees.sh`
     * pushing to cluster - do not work locally
-* ***08.02.2019*** - stepping through scripts
+* **08.02.2019** - stepping through scripts
     * data arrived on `cbsumm21`
     * adjusting file paths
     * running: `140_align_clustered_repseqs.sh` - ok
@@ -82,11 +129,11 @@ Creative Commons Attribution 4.0 International Public License as per
        * Committing then changing syntax in tree import request of script `180...`
        * re-running script `180...`
     * full Phyloseq objects available for review of taxonomy strings, committing.
-* ***11.03.2018*** - update
+* **11.03.2018** - update
    * results should be usable but can be improved:
      * trim 5' end of all sequences to be imported (Not only 3'. Started this but not finished.)
      * Classify using Blast as done for CU data. (Not only 3'. Started this but not finished.)
-* ***11.03.2018*** - checking  primer location in full and filtered reference databases
+* **11.03.2018** - checking  primer location in full and filtered reference databases
   * updating todo list (see below)
   * opening all relevant files and save as BBedit project
   * check if primers can principally be found in referenece data
@@ -130,7 +177,7 @@ Creative Commons Attribution 4.0 International Public License as per
        * `grep "GTAGGTGAACCTGCAGAAGGATCA" /Users/paul/Sequences/References/SILVA_119_QIIME_release/Silva_119_provisional_release/rep_set_eukaryotes/99/Silva_119_rep_set99_18S.fna`
          * 48294 seqs in db, 4 occurrences ?
   * 16S data is ok, but cannot define region in 18S data - commit repository for now
-* ***18.04.2019*** - restart
+* **18.04.2019** - restart
   * work in this directory from now on for all data
   * received sorted file lists at `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/input_file_lists_reviewed.zip`
   * edited files and stored backup at `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/input_file_lists_reviewed_bak.zip`
@@ -140,10 +187,10 @@ Creative Commons Attribution 4.0 International Public License as per
   * started `/Users/paul/Documents/AAD_combined/Github/025_collate_qc_reports.sh` - not done
   * started `/Users/paul/Documents/AAD_combined/Github/030_parse_fastqc_logs.sh` - not done
   * committed repository
-* ***23.04.2019*** - collating FastQC reports
+* **23.04.2019** - collating FastQC reports
   * created and committed `/Users/paul/Documents/AAD_combined/Github/025_collate_qc_reports.sh` (comit `44e6f4a48c20d0777ee88af8447dc15c7031c517`)
   * running and finished
-* ***07.05.2019*** - creating manifest files
+* **07.05.2019** - creating manifest files
   * erased all files in `/Users/paul/Documents/AAD_combined/Zenodo/Qiime`
   * last backup is `/Volumes/Time Machine Backups/Backups.backupdb/macmini/2019-05-07-18391`
   * created and ran `/Users/paul/Documents/AAD_combined/Github/030_parse_fastqc_logs.sh`
@@ -159,7 +206,7 @@ Creative Commons Attribution 4.0 International Public License as per
         * `Users/paul/Documents/AAD_combined/Zenodo/Manifest/035_manifest_18S_fastq_list_unwanted_1.txt`
         * `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/035_manifest_18S_fastq_list_unwanted_2.txt`
         * run drafted `/Users/paul/Documents/AAD_combined/Github/040_imp_qiime.sh`
-* ***08.05.2019*** - creating manifest files and running cutadapt
+* **08.05.2019** - creating manifest files and running cutadapt
   * revised and ran `/Users/paul/Documents/AAD_combined/Github/035_create_manifests.sh` - ok
   * manually checking manifests with unwanted files with Edens files - using these files instead of "unwanted" lists
     * `/Users/paul/Documents/AAD_combined/Zenodo/Manifest/02_16S_fastq_list_new_controls.txt`
@@ -194,7 +241,7 @@ Creative Commons Attribution 4.0 International Public License as per
   * starting to work on `/Users/paul/Documents/AAD_combined/Github/045_cut_adapt.sh`
     * draft moved over - draft complete - setting x flag - testing on local
     * commit - moving to cluster - finished - pulled from cluster
-* ***10.05.2019*** - stepping further through pipeline
+* **10.05.2019** - stepping further through pipeline
   * copied over for adjustment subsequent script files
     * `/Users/paul/Documents/AAD_combined/Github/050_chk_demux.sh` - adjusted and running. 
     * `/Users/paul/Documents/AAD_combined/Github/055_dns_paired_dada2.sh` - adjusted - upload to cluster pending - after all data is imported.  
