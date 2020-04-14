@@ -61,13 +61,18 @@ Creative Commons Attribution 4.0 International Public License as per
   * restoring from commit `4e8dccdaa9ac0501b6bf0655bef4b5d2fe91ae3d`
     * `/Users/paul/Documents/OU_pcm_eukaryotes/Github/040_imp_qiime.sh`
   * moving all script to `scratch` folder
-  * adjusting `/Users/paul/Documents/OU_pcm_eukaryotes/Github/050_imp_qiime.sh` to work with old Qiime 1 code and mapping files.
+  * commit `ed26ec6e134a61ee0bb64c620e825d99d2fe43e0`
+  * adjusting `/Users/paul/Documents/OU_pcm_eukaryotes/Github/050_imp_qiime.sh` - **ok**
+     * uses Qiime 1 code and mapping files
+
     
 
 
 
 
-
+* todo
+  * call `split_sequence_file_on_sample_ids.py` as per
+  * follow `https://benjjneb.github.io/dada2/faq.html`
     
 
 
