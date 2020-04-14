@@ -63,20 +63,17 @@ Creative Commons Attribution 4.0 International Public License as per
   * moving all script to `scratch` folder
   * commit `ed26ec6e134a61ee0bb64c620e825d99d2fe43e0`
   * adjusting `/Users/paul/Documents/OU_pcm_eukaryotes/Github/050_imp_qiime.sh` - **ok**
+    * check documentation for further information `http://qiime.org/scripts/split_libraries_fastq.html`
     * uses Qiime 1 code and mapping files
-
-    
-
-
-
+    * writes Fastq's
 
 * todo
   * call `split_sequence_file_on_sample_ids.py` as per
-  * follow `https://benjjneb.github.io/dada2/faq.html`
+  * `https://benjjneb.github.io/dada2/faq.html`
     
 
 
-* **old notes below***
+* **old notes below**
 * **14.12.2018** - creating folder structure, no Git repository yet
   * moving scripts over from `/Users/paul/Documents/AAD_The_Ridge`
   * copying project folder structure from `/Users/paul/Documents/AAD_The_Ridge`

@@ -65,7 +65,9 @@ for ((i=1;i<=2;i++)); do
       -q "${prmqual[$i]}" \
       -s "${prmidx[$i]}" \
       --store_qual_scores \
+      --store_demultiplexed_fastq \
       --rev_comp_mapping_barcodes \
+      --retain_unassigned_reads \
       2>&1 | tee -a "${outlog[$i]}" || \
     printf "Import failed at "$(date)" on \"${outseq[$i]}\". \n"
     
