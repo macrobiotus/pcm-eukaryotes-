@@ -2,8 +2,7 @@
 
 # 14.04.2020 - Paul Czechowski - paul.czechowski@gmail.com 
 # ========================================================
-# Import ancient files using Qiime 1 so as to use DADA2
-#  pipline
+# Import ancient files using Qiime 1 so as to use DADA2 pipeline
 
 # set -x
 set -e
@@ -72,10 +71,9 @@ for ((i=1;i<=2;i++)); do
     
   else
     
-  # diagnostic message
-   printf "${bold}$(date):${normal} Import available for \""${inseq[$i]}"\", skipping.\n"
+    # diagnostic message
+    printf "${bold}$(date):${normal} Import available for \""${inseq[$i]}"\", skipping.\n"
   
   fi
 
 done
-

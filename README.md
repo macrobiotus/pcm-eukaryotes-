@@ -63,7 +63,7 @@ Creative Commons Attribution 4.0 International Public License as per
   * moving all script to `scratch` folder
   * commit `ed26ec6e134a61ee0bb64c620e825d99d2fe43e0`
   * adjusting `/Users/paul/Documents/OU_pcm_eukaryotes/Github/050_imp_qiime.sh` - **ok**
-     * uses Qiime 1 code and mapping files
+    * uses Qiime 1 code and mapping files
 
     
 
