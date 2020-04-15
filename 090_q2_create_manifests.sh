@@ -2,7 +2,7 @@
 
 # 15.04.2020 - Paul Czechowski - paul.czechowski@gmail.com 
 # ========================================================
-# Remove adapter remnants before downstream processing.
+# Create Qiime 2 manifest files.
 
 # set -x
 set -e
@@ -46,46 +46,40 @@ IFS=$'\n' inpth_plt2=($(sort <<<"${inpth_plt2_unsorted[*]}"))
 unset IFS
 
 
-# combine file name arrays for looping
-# ------------------------------------
+# define input directories
+# -----------------------
+manifests='Zenodo/Manifest'
 
-fastqgzs=("${inpth_plt1[@]}" "${inpth_plt2[@]}")
+# write manifest files from sorted arrays
+# ---------------------------------------
 
+# erase old file - to not get duplicate headers later 
+rm -f "$trpth/$manifests/090_q2_plate?_manifest.txt"
 
-# define output directories
-# -------------------------
-destdir="$trpth/Zenodo/Processing/070_cutadapt"
-
-# Defining sequences to be cut out:
-# ---------------------------------
-#  Keep in mind this configuration:
-#  *  forward read(5'-3'): - 5' adapter , pad and linker:
-#     `AATGATACGGCGACCACCGAGATCTACAC GACTGCACTGA CG`
-#  *  reverse read(5'-3'): - 3' adapter, barcode, pad and linker:
-#     `CAAGCAGAAGACGGCATACGAGAT NNNNNNNNNNNN GTCTGCTCGCTCAGT CA`
+printf "%s\n" "${inpth_plt1[@]}" > "$trpth/$manifests/090_q2_plate1_manifest.txt"
+printf "%s\n" "${inpth_plt2[@]}" > "$trpth/$manifests/090_q2_plate2_manifest.txt"
  
-# 5'-3' forward (p1391fF)
-fwdcut='GTACACACCGCCCGTC'
-# 5'-3' reverse (pEukBrR)
-revcut='TGATCCTTCTGCAGGTTCACCTAC'
-# 
-# reverse-complement of of 5'-3' reverse (pEukBrR)
-adpfcut='GTAGGTGAACCTGCAGAAGGATCA'
-# reverse-complement of of 5'-3' forward (p1391fF)
-adprcut='GACGGGCGGTGTGTAC'
-
-# run trimming script
-# -------------------
-mkdir -p "$destdir"
-
-for fastqgz in "${fastqgzs[@]}"; do
+# loop over newly created files
+# ------------------------------
+for filename in "$trpth/$manifests/090_q2_plate1_manifest.txt"; do
     
-  cutadapt \
-    -g "$adprcut" \
-    -a "$revcut" \
-    -j "$cores" \
-    -o "$destdir"/$(basename "$fastqgz") \
-    "$fastqgz" \
-     2>&1 | tee -a "$destdir/070_cutadapt_log.txt"
+  # diagnostic message
+  printf "Processing \"$filename\"...\n"
+
+   
+    # writing sample identifiers - filename after last slash minus 9 characters (to get rid of file extesnions)
+    #  see https://unix.stackexchange.com/questions/305190/remove-last-character-from-string-captured-with-awk?rq=1
+    /usr/local/bin/gawk -i inplace -F '/' 'BEGIN { OFS = "," } {fmt = substr($NF, 1, length($NF)-9); $0=fmt OFS $0; print}' "$filename"
+    
+   #   writing sample read directions
+   #   gsed -i '/_R1/ s/$/,forward/' "$manifest"
+   #   gsed -i '/_R2/ s/$/,reverse/' "$manifest"
+   
+   #   adjusting sample ids, since could not be achieved with awk above
+   #   gsed -i 's/R1/R/' "$manifest"
+   #   gsed -i 's/R2/R/' "$manifest"
+
+   # adding headers
+   /usr/local/bin/gsed -i '1s;^;'sample-id','absolute-filepath'\n;' "$filename"
 
 done

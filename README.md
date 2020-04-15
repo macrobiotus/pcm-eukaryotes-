@@ -85,7 +85,11 @@ Creative Commons Attribution 4.0 International Public License as per
   * script `/Users/paul/Documents/OU_pcm_eukaryotes/Github/080_bash_cutadapt.sh`
     * creating
     * checking primers in Geneious
-  *  commit ``
+  *  commit `b7ac2c2b37e06ee238349673b3432854e84084cc`
+  * checked DADA2 - too complicated - adjusting old Qiime2 scripts
+  * created and ran `/Users/paul/Documents/OU_pcm_eukaryotes/Github/090_q2_create_manifests.sh`
+  * installing Qiime 2019-10 for cluster compatibility
+  * adjusting and running `/Users/paul/Documents/OU_pcm_eukaryotes/Github/100_q2_import.sh` - **pending**
 
 
 
