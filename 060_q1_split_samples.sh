@@ -31,11 +31,11 @@ prmtp[1]="fastq"
 prmtp[2]="fastq"
 
 # output locations
-outdir[1]="$trpth/Zenodo/Qiime/050_plate_1"
-outdir[2]="$trpth/Zenodo/Qiime/050_plate_2"
+outdir[1]="$trpth/Zenodo/Processing/050_plate_1"
+outdir[2]="$trpth/Zenodo/Processing/050_plate_2"
 
-outlog[1]="$trpth/Zenodo/Qiime/050_plate_1/050_plate_1_log.txt"
-outlog[2]="$trpth/Zenodo/Qiime/050_plate_2/050_plate_2_log.txt"
+outlog[1]="$trpth/Zenodo/Processing/050_plate_1/050_plate_1_log.txt"
+outlog[2]="$trpth/Zenodo/Processing/050_plate_2/050_plate_2_log.txt"
 
 # Run import script - adjust `i` starting number! 
 # -----------------------------------------------

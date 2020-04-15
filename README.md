@@ -75,7 +75,17 @@ Creative Commons Attribution 4.0 International Public License as per
     * `/Users/paul/Documents/OU_pcm_eukaryotes/Github/070_bash_check_quality.sh`
       * creating and running
       * update `Zenodo/Manifest/fastqc_adapter_reference.tsv`
-  * commit
+  * commit `41d2a297a6bc5eb3404fc4328550e8222c2fde5f`
+  * erasing all files in `/Users/paul/Sequences/Raw/`
+  * compressing imports:
+    * `pigz /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/050_plate_1/seqs.*`
+    * `pigz /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/050_plate_2/seqs.*`
+    * `pigz /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/050_plate_1/*.fastq`
+    * `pigz /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/050_plate_2/*.fastq`
+  * script `/Users/paul/Documents/OU_pcm_eukaryotes/Github/080_bash_cutadapt.sh`
+    * creating
+    * checking primers in Geneious
+  *  commit ``
 
 
 

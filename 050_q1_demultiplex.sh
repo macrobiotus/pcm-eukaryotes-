@@ -41,11 +41,11 @@ prmidx[1]='100000000'
 prmidx[2]='200000000'
 
 # output locations
-outseq[1]='/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Qiime/050_plate_1'
-outseq[2]='/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Qiime/050_plate_2'
+outseq[1]='/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/050_plate_1'
+outseq[2]='/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/050_plate_2'
 
-outlog[1]='/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Qiime/050_plate_1/050_plate_1_log.txt'
-outlog[2]='/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Qiime/050_plate_2/050_plate_2_log.txt'
+outlog[1]='/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/050_plate_1/050_plate_1_log.txt'
+outlog[2]='/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/050_plate_2/050_plate_2_log.txt'
 
 
 # Run import script - adjust `i` starting number! 

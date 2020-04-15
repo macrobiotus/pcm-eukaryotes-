@@ -2,7 +2,7 @@
 
 # 15.04.2020 - Paul Czechowski - paul.czechowski@gmail.com 
 # ========================================================
-# Import ancient files using Qiime 1 so as to use DADA2 pipeline
+# Check quality of fastq files.
 
 # set -x
 set -e
@@ -26,10 +26,10 @@ fi
 
 # define input file for plate 1, and sort
 # ---------------------------------------
-inpth_seq_unsorted=()
+inpth_plt1_unsorted=()
 while IFS=  read -r -d $'\0'; do
     inpth_plt1_unsorted+=("$REPLY")
-done < <(find "$trpth/Zenodo/Qiime/050_plate_1/" -name '18S.1.*.fastq' -print0)
+done < <(find "$trpth/Zenodo/Processing/050_plate_1/" -name '18S.1.*.fastq' -print0)
 
 IFS=$'\n' inpth_plt1=($(sort <<<"${inpth_plt1_unsorted[*]}"))
 unset IFS
@@ -37,10 +37,10 @@ unset IFS
 
 # define input file for plate 2, and sort
 # ---------------------------------------
-inpth_seq_unsorted=()
+inpth_plt2_unsorted=()
 while IFS=  read -r -d $'\0'; do
-    inpth_plt1_unsorted+=("$REPLY")
-done < <(find "$trpth/Zenodo/Qiime/050_plate_2/" -name '18S.2.*.fastq' -print0)
+    inpth_plt2_unsorted+=("$REPLY")
+done < <(find "$trpth/Zenodo/Processing/050_plate_2/" -name '18S.2.*.fastq' -print0)
 
 IFS=$'\n' inpth_plt2=($(sort <<<"${inpth_plt2_unsorted[*]}"))
 unset IFS
@@ -77,12 +77,12 @@ mkdir -p "$trpth"/"${fstqc[1]}"
 
 for fastq in "${inpth_plt1[@]}"
   do
-    fastqc -o "$trpth"/"${fstqc[1]}" --threads "$cores" --adapters "$trpth"/"${adpts[1]}" \
+    /usr/local/bin/fastqc -o "$trpth"/"${fstqc[1]}" --threads "$cores" --adapters "$trpth"/"${adpts[1]}" \
       "$fastq"
   done
 
 
-mkdir -p "$trpth"/"${mltqc[1}" 
+mkdir -p "$trpth"/"${mltqc[1]}" 
 multiqc --fullnames --verbose --force --title "${ttl[1]}" \
     --outdir "$trpth"/"${mltqc[1]}" "$trpth"/"${fstqc[1]}"
 
@@ -94,10 +94,10 @@ mkdir -p "$trpth"/"${fstqc[2]}"
 
 for fastq in "${inpth_plt2[@]}"
   do
-    fastqc -o "$trpth"/"${fstqc[2]}" --threads "$cores" --adapters "$trpth"/"${adpts[2]}" \
+    /usr/local/bin/fastqc -o "$trpth"/"${fstqc[2]}" --threads "$cores" --adapters "$trpth"/"${adpts[2]}" \
       "$fastq"
   done
 
-mkdir -p "$trpth"/"${mltqc[1}" 
+mkdir -p "$trpth"/"${mltqc[2]}" 
 multiqc --fullnames --verbose --force --title "${ttl[2]}" \
     --outdir "$trpth"/"${mltqc[2]}" "$trpth"/"${fstqc[2]}"
