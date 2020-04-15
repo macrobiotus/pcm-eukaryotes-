@@ -92,8 +92,15 @@ Creative Commons Attribution 4.0 International Public License as per
   * adjusting and running `/Users/paul/Documents/OU_pcm_eukaryotes/Github/100_q2_import.sh` - **pending**
   * commit `9caed66a0551c4268e24d9640ee48e6ac8b8e68c`
   * adjusting and running `/Users/paul/Documents/OU_pcm_eukaryotes/Github/100_q2_import.sh` - **ok**
-  * also rec-created valid manifest file
-  * commit ``
+  * also re-created valid manifest file
+  * commit `cd88ed0e0836bb26c3aae2a185ed6890e2db0438`
+* **15.04.2020** - re-start sequencing processing
+  * adjusted `/Users/paul/Documents/OU_pcm_eukaryotes/Github/110_q2_denoise.sh`
+
+* **todo** - re-start sequencing processing
+  * taxonomic assignment using Blast
+  * optimize using insect controls
+
 
 * **old notes below**
 * **14.12.2018** - creating folder structure, no Git repository yet
