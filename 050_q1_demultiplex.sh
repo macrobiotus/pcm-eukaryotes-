@@ -40,7 +40,7 @@ prmqual[2]='19'
 prmidx[1]='100000000'
 prmidx[2]='200000000'
 
-# output file array - 16S
+# output locations
 outseq[1]='/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Qiime/050_plate_1'
 outseq[2]='/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Qiime/050_plate_2'
 
@@ -56,7 +56,7 @@ for ((i=1;i<=2;i++)); do
   if [ ! -f "${outseq[$i]}" ]; then
     
     # diagnostic message
-    printf "${bold}$(date):${normal} Starting importing from \""${inseq[$i]}"\"...\n"
+    printf "${bold}$(date):${normal} Demultiplexing file \""${inseq[$i]}"\"...\n"
     split_libraries_fastq.py \
       -i "${inseq[$i]}" \
       -b "${inidx[$i]}" \

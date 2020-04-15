@@ -66,10 +66,26 @@ Creative Commons Attribution 4.0 International Public License as per
     * check documentation for further information `http://qiime.org/scripts/split_libraries_fastq.html`
     * uses Qiime 1 code and mapping files
     * writes Fastq's
+* **15.04.2020** - re-start sequencing processing
+  * running and adjusting:
+    * `/Users/paul/Documents/OU_pcm_eukaryotes/Github/050_q1_demultiplex.sh`
+      * syntax corrections  
+    * `/Users/paul/Documents/OU_pcm_eukaryotes/Github/060_q1_split_samples.sh`
+      * creation and running
+    * `/Users/paul/Documents/OU_pcm_eukaryotes/Github/070_bash_check_quality.sh`
+      * creating and running
+      * update `Zenodo/Manifest/fastqc_adapter_reference.tsv`
+  * commit
+
+
 
 * todo
+  * for denoising on cluster consider import into Qiime 2 as per `https://docs.qiime2.org/2019.7/tutorials/importing/#fastq-manifest-formats`   * for denoising on cluster consider import into Qiime 2 as per `https://docs.qiime2.org/2019.7/tutorials/importing/#fastq-manifest-formats`
+  * for denoising on cluster consider import into Qiime 2 as per `https://forum.qiime2.org/t/qiime1demuxformat-is-not-compatible-with-fastq-files/1603`
   * call `split_sequence_file_on_sample_ids.py` as per
-  * `https://benjjneb.github.io/dada2/faq.html`
+    * `https://benjjneb.github.io/dada2/faq.html`
+  
+  
     
 
 
