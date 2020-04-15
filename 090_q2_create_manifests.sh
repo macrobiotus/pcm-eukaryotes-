@@ -61,7 +61,7 @@ printf "%s\n" "${inpth_plt2[@]}" > "$trpth/$manifests/090_q2_plate2_manifest.txt
  
 # loop over newly created files
 # ------------------------------
-for filename in "$trpth/$manifests/090_q2_plate1_manifest.txt"; do
+for filename in "$trpth"/"$manifests"/090_q2_plate*_manifest.txt; do
     
   # diagnostic message
   printf "Processing \"$filename\"...\n"
@@ -71,15 +71,14 @@ for filename in "$trpth/$manifests/090_q2_plate1_manifest.txt"; do
     #  see https://unix.stackexchange.com/questions/305190/remove-last-character-from-string-captured-with-awk?rq=1
     /usr/local/bin/gawk -i inplace -F '/' 'BEGIN { OFS = "," } {fmt = substr($NF, 1, length($NF)-9); $0=fmt OFS $0; print}' "$filename"
     
-   #   writing sample read directions
-   #   gsed -i '/_R1/ s/$/,forward/' "$manifest"
-   #   gsed -i '/_R2/ s/$/,reverse/' "$manifest"
-   
+   # writing sample read directions
+   gsed -i '/.gz/ s/$/,forward/' "$filename"
+
    #   adjusting sample ids, since could not be achieved with awk above
    #   gsed -i 's/R1/R/' "$manifest"
    #   gsed -i 's/R2/R/' "$manifest"
 
    # adding headers
-   /usr/local/bin/gsed -i '1s;^;'sample-id','absolute-filepath'\n;' "$filename"
+   /usr/local/bin/gsed -i '1s;^;'sample-id','absolute-filepath','direction'\n;' "$filename"
 
 done

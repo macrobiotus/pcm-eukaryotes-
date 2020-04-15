@@ -31,9 +31,6 @@ inpth[2]='Zenodo/Manifest/090_q2_plate2_manifest.txt'
 otpth[1]='Zenodo/Processing/100_18S_import_run_1'
 otpth[2]='Zenodo/Processing/100_18S_import_run_2'
 
-# output file array
-sf='SingleEndFastqManifestPhred33'
-
 # Run import script - adjust `i` starting number! 
 # -----------------------------------------------
 for ((i=1;i<=2;i++)); do
@@ -44,10 +41,10 @@ for ((i=1;i<=2;i++)); do
       # diagnostic message
       printf "${bold}$(date):${normal} Starting importing from \"$(basename "$trpth"/"${inpth[$i]}")\"...\n"
       qiime tools import \
-        --type 'SampleData[SingleEndSequencesWithQuality]' \
+        --type "SampleData[SequencesWithQuality]" \
         --input-path  "$trpth"/"${inpth[$i]}" \
         --output-path "$trpth"/"${otpth[$i]}" \
-        --input-format "$sf" 2>&1 | tee -a "$trpth"/"Zenodo/Processing"/"$(basename ${otpth[$i]} .qza)_import_log.txt" || \
+        --input-format "SingleEndFastqManifestPhred33" 2>&1 | tee -a "$trpth"/"Zenodo/Processing"/"$(basename ${otpth[$i]} .qza)_import_log.txt" || \
       printf "Import failed at "$(date)" on \"${otpth[$i]}\". \n"
     
     else

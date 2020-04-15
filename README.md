@@ -90,18 +90,10 @@ Creative Commons Attribution 4.0 International Public License as per
   * created and ran `/Users/paul/Documents/OU_pcm_eukaryotes/Github/090_q2_create_manifests.sh`
   * installing Qiime 2019-10 for cluster compatibility
   * adjusting and running `/Users/paul/Documents/OU_pcm_eukaryotes/Github/100_q2_import.sh` - **pending**
-
-
-
-* todo
-  * for denoising on cluster consider import into Qiime 2 as per `https://docs.qiime2.org/2019.7/tutorials/importing/#fastq-manifest-formats`   * for denoising on cluster consider import into Qiime 2 as per `https://docs.qiime2.org/2019.7/tutorials/importing/#fastq-manifest-formats`
-  * for denoising on cluster consider import into Qiime 2 as per `https://forum.qiime2.org/t/qiime1demuxformat-is-not-compatible-with-fastq-files/1603`
-  * call `split_sequence_file_on_sample_ids.py` as per
-    * `https://benjjneb.github.io/dada2/faq.html`
-  
-  
-    
-
+  * commit `9caed66a0551c4268e24d9640ee48e6ac8b8e68c`
+  * adjusting and running `/Users/paul/Documents/OU_pcm_eukaryotes/Github/100_q2_import.sh` - **ok**
+  * also rec-created valid manifest file
+  * commit ``
 
 * **old notes below**
 * **14.12.2018** - creating folder structure, no Git repository yet
