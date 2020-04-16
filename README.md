@@ -103,7 +103,8 @@ Creative Commons Attribution 4.0 International Public License as per
     * `/Users/paul/Documents/OU_pcm_eukaryotes/Github/115_gnu_plot_denoise_plate1.gnu`
     * `/Users/paul/Documents/OU_pcm_eukaryotes/Github/115_gnu_plot_denoise_plate2.gnu`
     * results in `svgs` look well
-  * starting to work on `/Users/paul/Documents/OU_pcm_eukaryotes/Github/120_q2_summary.sh`
+  * wrote and ran `/Users/paul/Documents/OU_pcm_eukaryotes/Github/120_q2_merge.sh`
+  * wrote and ran  `/Users/paul/Documents/OU_pcm_eukaryotes/Github/130_q2_summary.sh`
   * 
 
 * **todo** - re-start sequencing processing

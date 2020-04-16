@@ -23,28 +23,25 @@ elif [[ "$HOSTNAME" == "Pauls-MacBook-Pro.local" ]]  || [[ "$HOSTNAME" == "macmi
     cores="2"
 fi
 
-
-# define relative input and output locations
+# define input and output locations
 # ---------------------------------
+tab[1]="$trpth/Zenodo/Processing/110_18S_denoised-tab_run_1.qza"
+tab[2]="$trpth/Zenodo/Processing/110_18S_denoised-tab_run_2.qza"
 
-inpth_map[1]='Zenodo/Manifest/05_18S_mock_metadata.tsv'
+seq[1]="$trpth/Zenodo/Processing/110_18S_denoised-seq_run_1.qza"
+seq[2]="$trpth/Zenodo/Processing/110_18S_denoised-seq_run_2.qza"
 
-inpth_tab[1]='Zenodo/Qiime/050_18S_mock-trimmed-tab.qza'
-inpth_seq[1]='Zenodo/Qiime/050_18S_mock-trimmed-seq.qza'
+otpth_tab='Zenodo/Processing/120_18S_merged-tab.qza'
+otpth_seq='Zenodo/Processing/120_18S_merged-seq.qza'
 
-otpth_tab[1]='Zenodo/Qiime/075_18S_mock-trimmed-tab.qzv'
-otpth_seq[1]='Zenodo/Qiime/075_18S_mock-trimmed-seq.qzv'
+# run script
+# -----------
+qiime feature-table merge \
+  --i-tables "${tab[1]}" \
+  --i-tables "${tab[2]}" \
+  --o-merged-table "$trpth"/"$otpth_tab"
 
-
-# run script for 18S
-# --------------------------
-
-for ((i=1;i<=1;i++)); do
-   qiime feature-table summarize \
-      --i-table "$trpth"/"${inpth_tab[$i]}" \
-      --o-visualization "$trpth"/"${otpth_tab[$i]}" \
-      --m-sample-metadata-file "$trpth"/"${inpth_map[$i]}"
-   qiime feature-table tabulate-seqs \
-      --i-data "$trpth"/"${inpth_seq[$i]}" \
-      --o-visualization "$trpth"/"${otpth_seq[$i]}"
-done
+qiime feature-table merge-seqs \
+  --i-data "${seq[1]}" \
+  --i-data "${seq[2]}" \
+  --o-merged-data "$trpth"/"$otpth_seq"
