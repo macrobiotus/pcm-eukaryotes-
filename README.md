@@ -96,6 +96,8 @@ Creative Commons Attribution 4.0 International Public License as per
   * commit `cd88ed0e0836bb26c3aae2a185ed6890e2db0438`
 * **15.04.2020** - re-start sequencing processing
   * adjusted `/Users/paul/Documents/OU_pcm_eukaryotes/Github/110_q2_denoise.sh`
+  * commit `fbf6117688023906d86ca83fd7a308f052500620`
+  * denoising started, finishes quite soon
 
 * **todo** - re-start sequencing processing
   * taxonomic assignment using Blast
