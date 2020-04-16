@@ -94,7 +94,7 @@ Creative Commons Attribution 4.0 International Public License as per
   * adjusting and running `/Users/paul/Documents/OU_pcm_eukaryotes/Github/100_q2_import.sh` - **ok**
   * also re-created valid manifest file
   * commit `cd88ed0e0836bb26c3aae2a185ed6890e2db0438`
-* **15.04.2020** - re-start sequencing processing
+* **16.04.2020** - re-start sequencing processing
   * adjusted `/Users/paul/Documents/OU_pcm_eukaryotes/Github/110_q2_denoise.sh`
   * commit `fbf6117688023906d86ca83fd7a308f052500620`
   * denoising started after syntax corrections, finishes quite soon
@@ -105,7 +105,17 @@ Creative Commons Attribution 4.0 International Public License as per
     * results in `svgs` look well
   * wrote and ran `/Users/paul/Documents/OU_pcm_eukaryotes/Github/120_q2_merge.sh`
   * wrote and ran  `/Users/paul/Documents/OU_pcm_eukaryotes/Github/130_q2_summary.sh`
-  * 
+  * commit `fb06ccb18f8f00c936e6a5ca4728f5f5970266e3`
+  * exporting sequences for BLAST taxonomy annotation on cluster
+    * `qiime tools export --input-path /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/120_18S_merged-seq.qza --output-path /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/120_18S_merged-seq.fasta`
+    * `pigz /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/120_18S_merged-seq.fasta`
+  * copying environmental definition file for BLAST script
+    * `cp ~/Documents/CU_combined/Zenodo/Blast/190718_gi_list_environmental.txt ../Zenodo/Blast/`
+  * preparing blast on cluster by reviewing
+    * `/Users/paul/Documents/OU_pcm_eukaryotes/Transport/050_sync_ncbi_nt_to_scratch.sh`
+    * `/Users/paul/Documents/OU_pcm_eukaryotes/Github/140_bash_fasta_blast.sh`
+    
+  
 
 * **todo** - re-start sequencing processing
   * taxonomic assignment using Blast
