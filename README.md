@@ -97,7 +97,14 @@ Creative Commons Attribution 4.0 International Public License as per
 * **15.04.2020** - re-start sequencing processing
   * adjusted `/Users/paul/Documents/OU_pcm_eukaryotes/Github/110_q2_denoise.sh`
   * commit `fbf6117688023906d86ca83fd7a308f052500620`
-  * denoising started, finishes quite soon
+  * denoising started after syntax corrections, finishes quite soon
+    * using Qiime 2019-10 to stay compatible with Cornell cluster
+  * adjusted and ran:
+    * `/Users/paul/Documents/OU_pcm_eukaryotes/Github/115_gnu_plot_denoise_plate1.gnu`
+    * `/Users/paul/Documents/OU_pcm_eukaryotes/Github/115_gnu_plot_denoise_plate2.gnu`
+    * results in `svgs` look well
+  * starting to work on `/Users/paul/Documents/OU_pcm_eukaryotes/Github/120_q2_summary.sh`
+  * 
 
 * **todo** - re-start sequencing processing
   * taxonomic assignment using Blast

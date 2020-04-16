@@ -40,18 +40,20 @@ otpth_stat[1]='Zenodo/Processing/110_18S_denoised-stt_run_1.qza'
 otpth_stat[2]='Zenodo/Processing/110_18S_denoised-stt_run_2.qza'
 
 otpth_vis[1]='Zenodo/Processing/110_18S_denoised-vis_run_1.qzv'
-otpth_vis[1]='Zenodo/Processing/110_18S_denoised-vis_run_2.qzv'
+otpth_vis[2]='Zenodo/Processing/110_18S_denoised-vis_run_2.qzv'
 
 # trimming parameters 18S - reads already filtered for Phred 20 
 # --------------------------------------------------------------
 # amplicon should be at least 85 bp 
 trnc[1]='85'
+trnc[2]='85'
 # allow no more then "5" errors in sequence,  default is "2"
 eerr[1]='5'
+eerr[2]='5'
 
 # run script
 # ----------
-for ((i=1;i<=2;i++)); do
+for ((i=2;i<=2;i++)); do
 
    # denoising
    qiime dada2 denoise-single \
