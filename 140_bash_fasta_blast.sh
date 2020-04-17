@@ -10,7 +10,6 @@
 # If executed on cluster install reference db via script in "Transport" folder.
 # As parser use  "http://sing-group.org/blasterjs/" and '-outfmt "0"' or '-outfmt "5"' 
 
-
 # for debugging only
 # ------------------ 
 # set -x
@@ -63,7 +62,7 @@ for fasta in "${inpth_seq[@]}";do
   # create target file  names
   filename=$(dirname "$fasta")
   src_dir=$(basename "$fasta")
-  tmp_file="110${src_dir:3}"
+  tmp_file="140${src_dir:3}"
   # old call using complete data:
   # `tgt_file="${tmp_file%%.*}_blast_result.txt"`
   # for adjusted blast call 18.07.2019 using

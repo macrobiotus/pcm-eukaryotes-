@@ -114,13 +114,27 @@ Creative Commons Attribution 4.0 International Public License as per
   * preparing blast on cluster by reviewing
     * `/Users/paul/Documents/OU_pcm_eukaryotes/Transport/050_sync_ncbi_nt_to_scratch.sh`
     * `/Users/paul/Documents/OU_pcm_eukaryotes/Github/140_bash_fasta_blast.sh`
+  * blast taxonomy assignment ongoing on cluster - finished after 6 h **ok**
+    * `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/110_18S_merged-seq_blast-noenv.xml.gz`
+* **16.04.2020** - sequence processing - get taxonomy table
+  * get `.tsv` from Blast results 
+    * at `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/140_18S_merged-seq.fasta.gz`
+    * column headers are:
+     * `#OTUID`, `taxonomy`, `confidence`
+    * example taxonomy table at  `/Users/paul/Documents/CU_combined/Zenodo/Qiime/180_18S_eDNA_samples_clustered99_tab_Eukaryote-shallow_qiime_artefacts_non_phylogenetic/taxonomy.tsv`
+    * starting to work on `/Users/paul/Documents/OU_pcm_eukaryotes/Github/150_r_get_q2_tax-tab.r`
+      * installed all packages
+      * updated paths to database on external external drive
+      * waiting for xml input to finish (since 15:15)
+    * commit ``
     
-  
+     
+ 
 
 * **todo** - re-start sequencing processing
-  * taxonomic assignment using Blast
-  * optimize using insect controls
-
+  * format taxonomy table in R
+  * **either:** import taxonomy table to qiime for control filtering
+  * **or:** continue processing in R - merge in response data
 
 * **old notes below**
 * **14.12.2018** - creating folder structure, no Git repository yet
