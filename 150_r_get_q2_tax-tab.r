@@ -29,22 +29,21 @@ blast_results_pattern <- "*.xml$"
 # read all file into lists for `lapply()` usage
 blast_results_files <- list.files(path=blast_results_folder, pattern = blast_results_pattern, full.names = TRUE)
 
-plan(multiprocess) # enable 
+# enable multithreading - only useful for multiple files
+plan(multiprocess) 
 
-blast_results_list <- furrr::future_map(blast_results_files, blastxml_dump, form = "tibble", .progress = TRUE) # takes 7-10 hours on four cores - avoid by reloading full object from disk 
+# takes 7-10 hours on four cores - avoid by reloading full object from disk 
+# blast_results_list <- furrr::future_map(blast_results_files, blastxml_dump, form = "tibble", .progress = TRUE) 
 
-# ***********************************
-# ** continue here after 17-4-2020 **
-# ***********************************
+# save(blast_results_list, file="/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_blast-noenv.Rdata")
+# load(file="/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_blast-noenv.Rdata", verbose = TRUE)
 
-# save(blast_results_list, file="/Users/paul/Documents/CU_combined/Zenodo/R_Objects/191009_main_results_calculations__blast_results_list.Rdata")
-# load(file="/Users/paul/Documents/CU_combined/Zenodo/R_Objects/191009_main_results_calculations__blast_results_list.Rdata", verbose = TRUE)
 names(blast_results_list) <- blast_results_files # works
 
 # save object and some time by reloading it - comment in if necessary
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# save(blast_results_list, file="/Users/paul/Documents/CU_combined/Zenodo/R_Objects/190917_main_results_calculations__blast_results_list.Rdata")
-# load(file="/Users/paul/Documents/CU_combined/Zenodo/R_Objects/190917_main_results_calculations__blast_results_list.Rdata", verbose = TRUE)
+# save(blast_results_list, file="/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_blast-noenv.Rdata")
+load(file="/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_blast-noenv.Rdata", verbose = TRUE)
 
 # create one large item from many few, while keeping source file info fo grouping or subsetting
 blast_results_list %>% bind_rows(, .id = "src" ) %>%        # add source file names as column elements
@@ -54,9 +53,9 @@ blast_results_list %>% bind_rows(, .id = "src" ) %>%        # add source file na
 
 # save object and some time by reloading it - comment in if necessary
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# save(blast_results, file="/Users/paul/Documents/CU_combined/Zenodo/R_Objects/191009_main_results_calculations__blast_results_list_sliced.Rdata")
-# load(file="/Users/paul/Documents/CU_combined/Zenodo/R_Objects/191009_main_results_calculations__blast_results_list_sliced.Rdata", verbose = TRUE)
-nrow(blast_results) # 17586
+# save(blast_results, file="/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_blast-noenv_sliced.Rdata")
+# load(file="/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_blast-noenv_sliced.Rdata", verbose = TRUE)
+nrow(blast_results) # 11675
 
 # prepareDatabase not needed to be run multiple times
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -74,14 +73,19 @@ get_strng <- function(x) {getTaxonomy(x,"/Volumes/HGST1TB/Users/paul/Sequences/R
 # add tax ids to table for string lookup - probably takes long time
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 blast_results_appended <- blast_results %>% mutate(tax_id = get_taxid(hit_accession)) # takes some time... 
-# save(blast_results_appended, file="/Users/paul/Documents/CU_combined/Zenodo/R_Objects/191009_main_results_calculations__blast_results_with_taxid.Rdata")
-# load(file="/Users/paul/Documents/CU_combined/Zenodo/R_Objects/191009_main_results_calculations__blast_results_with_taxid.Rdata", verbose=TRUE)
 
-length(blast_results_appended$tax_id) # 17586
+# save(blast_results_appended, file="/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_blast-noenv_with-taxid.Rdata")
+# load(file="/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_blast-noenv_with-taxid.Rdata", verbose=TRUE)
 
-# look up taxonomy table
+length(blast_results_appended$tax_id) # 11675
+
+# look up taxonomy table - takes a long time, needs external database.
 tax_table <- as_tibble(get_strng(blast_results_appended$tax_id), rownames = "tax_id") %>% mutate(tax_id= as.numeric(tax_id))
-nrow(tax_table) # 17586
+nrow(tax_table) # 11675
+
+# *****************************************
+# * continue here on or after 18-Apr-2020 * 
+# *****************************************
 
 # getting a tax table without duplicates to enable proper join command later
 tax_table <- tax_table %>% arrange(tax_id) %>% distinct(tax_id, superkingdom, phylum, class, order, family, genus, species, .keep_all= TRUE)

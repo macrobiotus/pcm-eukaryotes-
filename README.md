@@ -116,7 +116,7 @@ Creative Commons Attribution 4.0 International Public License as per
     * `/Users/paul/Documents/OU_pcm_eukaryotes/Github/140_bash_fasta_blast.sh`
   * blast taxonomy assignment ongoing on cluster - finished after 6 h **ok**
     * `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/110_18S_merged-seq_blast-noenv.xml.gz`
-* **16.04.2020** - sequence processing - get taxonomy table
+* **17.04.2020** - sequence processing - get taxonomy table
   * get `.tsv` from Blast results 
     * at `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/140_18S_merged-seq.fasta.gz`
     * column headers are:
@@ -125,16 +125,19 @@ Creative Commons Attribution 4.0 International Public License as per
     * starting to work on `/Users/paul/Documents/OU_pcm_eukaryotes/Github/150_r_get_q2_tax-tab.r`
       * installed all packages
       * updated paths to database on external external drive
-      * waiting for xml input to finish (since 15:15)
-    * commit ``
-    
-     
- 
+      * waiting for `.xml` input to finish (since 15:15)
+    * commit ` 8a5d9d565cb7f0f5398e2d1a0308c9b3d78cf9eb`
+* **18.04.2020** - getting taxonomy table
+  * progressed passed `.xml` import as indicated in script
+  * commit ``
+  
 
 * **todo** - re-start sequencing processing
   * format taxonomy table in R
   * **either:** import taxonomy table to qiime for control filtering
   * **or:** continue processing in R - merge in response data
+  * erase `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/110_18S_merged-seq_blast-noenv.xml`
+  * 
 
 * **old notes below**
 * **14.12.2018** - creating folder structure, no Git repository yet
