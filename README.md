@@ -129,16 +129,15 @@ Creative Commons Attribution 4.0 International Public License as per
     * commit ` 8a5d9d565cb7f0f5398e2d1a0308c9b3d78cf9eb`
 * **18.04.2020** - getting taxonomy table
   * progressed passed `.xml` import as indicated in script
-  * commit ``
-  
+  * commit `e657584f98d43f73e715b2eb7c0bd4968c64`
+  * taxonomy table now available at
+    * `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_q2taxtable.tsv` 
 
 * **todo** - re-start sequencing processing
-  * format taxonomy table in R
-  * **either:** import taxonomy table to qiime for control filtering
-  * **or:** continue processing in R - merge in response data
-  * erase `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/110_18S_merged-seq_blast-noenv.xml`
-  * 
-
+  * import taxonomy table to qiime for control filtering
+  * merge metadata with mapping file and import
+    * possibly re-call summary script (number 130)
+ 
 * **old notes below**
 * **14.12.2018** - creating folder structure, no Git repository yet
   * moving scripts over from `/Users/paul/Documents/AAD_The_Ridge`
