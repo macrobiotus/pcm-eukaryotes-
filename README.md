@@ -132,11 +132,36 @@ Creative Commons Attribution 4.0 International Public License as per
   * commit `e657584f98d43f73e715b2eb7c0bd4968c64`
   * taxonomy table now available at
     * `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_q2taxtable.tsv` 
+  * commit `dc91a5f4d69bdfa1e3219293774d654aaff38a8`
+* **19.04.2020** - combining metadata for Qiime import
+  * script `/Users/paul/Documents/OU_pcm_eukaryotes/Github/160_r_prep_q2_predictor-tab.r`
+  * mapping file `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Manifest/160202_18S_MF.txt`
+  * predictor source `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Metadata/200213_PCM_predictors.xlsx`
+    * exported predictors `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Metadata/200419_pcm_atp.csv`
+      * reviewed for import - **ok**
+    * exported predictors `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Metadata/200419_pcm_geog.csv`
+       * reviewed for import - **ok**   
+    * exported predictors `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Metadata/200419_pcm_xrd.csv`
+      * reviewed for import - **ok**    
+    * exported predictors `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Metadata/200419_pcm_csbp.csv`
+       * reviewed for import - **ok** 
+* **20.04.2020** - data verification
+  * checking number formats in above `csv` files - **ok**
+  * checking hash formats via `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Metadata/200420_hash_correction.xlsm`
+    * exporting new mapping files with checked hash keys
+      * `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Manifest/200420_18S_MF_corrected.txt`
+      * `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Manifest/200420_18S_MF_corrected.xlsx`
+    * checking all data files mentioned above for correct hash keys - **ok**
+    * re-insert hash character in `#SmpleID`
+  * in `* script /Users/paul/Documents/OU_pcm_eukaryotes/Github/160_r_prep_q2_predictor-tab.r`
+    * table import is done 
+  
+
 
 * **todo** - re-start sequencing processing
-  * import taxonomy table to qiime for control filtering
-  * merge metadata with mapping file and import
-    * possibly re-call summary script (number 130)
+  * merge metadata with mapping file and import 
+  * import taxonomy table to qiime
+  * possibly reposition and re-call summary script (number 130)
  
 * **old notes below**
 * **14.12.2018** - creating folder structure, no Git repository yet
