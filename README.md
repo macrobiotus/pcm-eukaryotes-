@@ -154,7 +154,15 @@ Creative Commons Attribution 4.0 International Public License as per
     * checking all data files mentioned above for correct hash keys - **ok**
     * re-insert hash character in `#SmpleID`
   * in `* script /Users/paul/Documents/OU_pcm_eukaryotes/Github/160_r_prep_q2_predictor-tab.r`
-    * table import is done 
+    * table import is done
+    * commit `f836ff3f885c6172720ffad4cf167930e4d32566`
+* **20.04.2020** - data merging finished
+  * finished `/Users/paul/Documents/OU_pcm_eukaryotes/Github/160_r_prep_q2_predictor-tab.r`
+    * writes to `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Manifest/210421_18S_MF_merged.txt`
+    * created `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Manifest/210421_18S_MF_merged_q2.txt`
+      * added `#` version for Qiime
+    
+
   
 
 

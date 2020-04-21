@@ -52,3 +52,41 @@ tib_xrd <- read_csv(p_xrd,
   col_types = cols(.default = "d", "SHA" = col_factor()),
   na = c("", "NA", "<NA>")
   )
+
+tib_xrd %>% 
+  mutate(row_sum = rowSums(select(., names(tib_xrd), -SHA))) %>% 
+  mutate_at(vars(names(tib_xrd), -SHA), ~ ./row_sum) %>% 
+  select(-row_sum) %>% 
+  print.data.frame()
+
+# merge tables, using hash keys
+# -----------------------------
+
+# testing for missing data 
+print.data.frame(anti_join(tib_mtd, tib_atp, by = c("XtrContent" = "SHA")))
+print.data.frame(anti_join(tib_mtd, tib_che, by = c("XtrContent" = "SHA")))
+print.data.frame(anti_join(tib_mtd, tib_geo, by = c("XtrContent" = "SHA")))
+print.data.frame(anti_join(tib_mtd, tib_xrd, by = c("XtrContent" = "SHA")))
+
+tib_compl <- tib_mtd %>%
+  left_join(tib_che, by = c("XtrContent" = "SHA")) %>%
+  left_join(tib_atp, by = c("XtrContent" = "SHA")) %>%
+  left_join(tib_xrd, by = c("XtrContent" = "SHA")) %>%
+  left_join(tib_geo, by = c("XtrContent" = "SHA")) %>%
+  mutate_at(vars(XtrContent), factor)
+
+
+# format predictor tables 
+# ----------------------
+
+# re-scale xrd values to yield a column sum of 1
+tib_compl <- tib_compl %>% 
+  mutate(row_sum = rowSums(select(., names(tib_xrd)[2:9]))) %>% 
+  mutate_at(vars(names(tib_xrd)[2:9]), ~ ./row_sum) %>% 
+  select(-row_sum) %>% arrange(SampleID)
+
+# write_merged tables
+# ----------------------
+
+p_compl <- "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Manifest/210421_18S_MF_merged.txt"
+write_tsv(tib_compl, p_compl, append = FALSE, col_names = TRUE)
