@@ -161,15 +161,31 @@ Creative Commons Attribution 4.0 International Public License as per
     * writes to `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Manifest/210421_18S_MF_merged.txt`
     * created `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Manifest/210421_18S_MF_merged_q2.txt`
       * added `#` version for Qiime
-    
+* **20.04.2020** - data merging finished
+  * finished `/Users/paul/Documents/OU_pcm_eukaryotes/Github/160_r_prep_q2_predictor-tab.r`
+    * writes to `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Manifest/210421_18S_MF_merged.txt`
+    * created `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Manifest/210421_18S_MF_merged_q2.txt`
+      * added `#` version for Qiime`
+  * commit `6bc9dd6dfb530aa4634f6ad08b29af39dd207a10`
+  * started to add code for transformations in `/Users/paul/Documents/OU_pcm_eukaryotes/Github/160_r_prep_q2_predictor-tab.r`
+    * **unfinished, see todo**
+* **24.04.2020** - correct data errors and implement transformation
+  * worked on script `/Users/paul/Documents/OU_pcm_eukaryotes/Github/160_r_prep_q2_predictor-tab.r`
+    * duplicate hash values in input tables have been resolved by going back to source tables
+    * implemented `clr` transformation for xrd data
 
+* **todo**
+  * in `/Users/paul/Documents/OU_pcm_eukaryotes/Github/160_r_prep_q2_predictor-tab.r`
+    * negative xrd values -  get input from Duanne...
+    * `yj` transformation
+    * remove co-correlated variables
+  * afterwards, likely
+    * import merged data into Qiime
+    * import taxonomy table to qiime
+    * possibly reposition and re-call summary script (number 130)
+    * abundance correction
+    * analysis
   
-
-
-* **todo** - re-start sequencing processing
-  * merge metadata with mapping file and import 
-  * import taxonomy table to qiime
-  * possibly reposition and re-call summary script (number 130)
  
 * **old notes below**
 * **14.12.2018** - creating folder structure, no Git repository yet
