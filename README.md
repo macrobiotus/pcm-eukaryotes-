@@ -173,12 +173,20 @@ Creative Commons Attribution 4.0 International Public License as per
   * worked on script `/Users/paul/Documents/OU_pcm_eukaryotes/Github/160_r_prep_q2_predictor-tab.r`
     * duplicate hash values in input tables have been resolved by going back to source tables
     * implemented `clr` transformation for xrd data
-
+    * commit `fa9ffdd3ba20b9bfe8abae9f1c4947d1aca0b8cd`
+* **01.05.2020** - working on `/Users/paul/Documents/OU_pcm_eukaryotes/Github/160_r_prep_q2_predictor-tab.r`
+  * preprocessing completed as in Czchowski 2016 RSOCOS
+  * **ok** - introduced plotting code
+  * **ok** - writing intermediate object for Michel de Lange
+  * **ok** - writing final object object as `.tsv` for Qiime import
+  * commit ``
+  
 * **todo**
   * in `/Users/paul/Documents/OU_pcm_eukaryotes/Github/160_r_prep_q2_predictor-tab.r`
     * negative xrd values -  get input from Duanne...
-    * `yj` transformation
-    * remove co-correlated variables
+    * adjust Caret package
+      * co-linearities
+      * dummy variables
   * afterwards, likely
     * import merged data into Qiime
     * import taxonomy table to qiime
@@ -186,7 +194,6 @@ Creative Commons Attribution 4.0 International Public License as per
     * abundance correction
     * analysis
   
- 
 * **old notes below**
 * **14.12.2018** - creating folder structure, no Git repository yet
   * moving scripts over from `/Users/paul/Documents/AAD_The_Ridge`
