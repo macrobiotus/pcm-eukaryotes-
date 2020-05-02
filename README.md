@@ -109,6 +109,9 @@ Creative Commons Attribution 4.0 International Public License as per
   * exporting sequences for BLAST taxonomy annotation on cluster
     * `qiime tools export --input-path /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/120_18S_merged-seq.qza --output-path /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/120_18S_merged-seq.fasta`
     * `pigz /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/120_18S_merged-seq.fasta`
+    * file names are:
+     * `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/140_18S_merged-seq.fasta`
+     * `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/140_18S_merged-seq.fasta.gz`
   * copying environmental definition file for BLAST script
     * `cp ~/Documents/CU_combined/Zenodo/Blast/190718_gi_list_environmental.txt ../Zenodo/Blast/`
   * preparing blast on cluster by reviewing
@@ -179,20 +182,45 @@ Creative Commons Attribution 4.0 International Public License as per
   * **ok** - introduced plotting code
   * **ok** - writing intermediate object for Michel de Lange
   * **ok** - writing final object object as `.tsv` for Qiime import
-  * commit ``
+  * commit `62951db4d44e135c7fea62a4ebd765bac5066359`
+* **02.05.2020** - working on `/Users/paul/Documents/OU_pcm_eukaryotes/Github/160_r_prep_q2_predictor-tab.r`
+  * save backup copy for later processing
+  * simplifying script and export
+  * rewrote `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Manifest/200501_18S_MF_merged.txt`
+  * adjusted `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Manifest/200501_18S_MF_merged_q2_import.txt`
+  * importing taxonomy file:
+        `qiime tools import \
+           --input-path  "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_q2taxtable.tsv" \
+           --output-path "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_q2taxtable.qza" \
+           --type 'FeatureData[Taxonomy]' \
+           --input-format HeaderlessTSVTaxonomyFormat || { echo 'Taxonomy import failed' ; exit 1; }`
+  * adjusting `/Users/paul/Documents/OU_pcm_eukaryotes/Github/170_q2_summary.sh`
+    * working, but Blast files incomplete:
+      * some ids in `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/140_18S_merged-seq.fasta`
+      * are not in `~/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_q2taxtable.tsv`
+      * converting `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/110_18S_merged-seq_blast-noenv.xml`
+      * for further inspection as `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/110_18S_merged-seq_blast-noenv.txt`
+      * sequence counts:
+        * 12399 in `.fasta` file `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/140_18S_merged-seq.fasta`
+        * 11675 in `.xml`:  (`awk '{print $1}'  /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/110_18S_merged-seq_blast-noenv.txt | sort | uniq | wc -l`)
+        * 11675 in q2 tax table: `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_q2taxtable.tsv` 
+   
+      
+
+  
   
 * **todo**
-  * in `/Users/paul/Documents/OU_pcm_eukaryotes/Github/160_r_prep_q2_predictor-tab.r`
-    * negative xrd values -  get input from Duanne...
+  * before publication
+    * see 02.05.2020 - find cause negative XRD values in `/Users/paul/Documents/OU_pcm_eukaryotes/Github/160_r_prep_q2_predictor-tab.r`
+    * see 02.05.2020 - find cause for missing sequences in `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/110_18S_merged-seq_blast-noenv.txt`
+   * filter sequences to match taxonomy table using
+    * `https://docs.qiime2.org/2018.8/plugins/available/feature-table/filter-seqs/`
+  * create Phyloseq object with (presence-absence-) corrected abundance values
+  * get long format for MdL
+  * in new version of predictor pre-processing
     * adjust Caret package
       * co-linearities
       * dummy variables
-  * afterwards, likely
-    * import merged data into Qiime
-    * import taxonomy table to qiime
-    * possibly reposition and re-call summary script (number 130)
-    * abundance correction
-    * analysis
   
 * **old notes below**
 * **14.12.2018** - creating folder structure, no Git repository yet
