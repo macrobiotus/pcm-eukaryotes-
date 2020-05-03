@@ -205,20 +205,24 @@ Creative Commons Attribution 4.0 International Public License as per
         * 11675 in `.xml`:  (`awk '{print $1}'  /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/110_18S_merged-seq_blast-noenv.txt | sort | uniq | wc -l`)
         * 11675 in q2 tax table: `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_q2taxtable.tsv`
   * commit `dea8784c3aa3004a7794a87ac79bf2629c14b699`
-* **02.05.2020** - extending taxonomy table with dropped blast hits
+* **03.05.2020** - extending taxonomy table with dropped blast hits
   * working on `/Users/paul/Documents/OU_pcm_eukaryotes/Github/150_r_get_q2_tax-tab.r`
   * re-wrote `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_q2taxtable.tsv`
   * rewrote `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_q2taxtable.qza` manually as above
   * now working: `/Users/paul/Documents/OU_pcm_eukaryotes/Github/170_q2_summary.sh`
   * taxonomy table corrected **ok**
+  * commit ` f8c36917a67326ee5bddc2f288025ffbf6d0ae05`
+  * started working on `/Users/paul/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
 
 * **todo**
   * **before publication**
     * see _02.05.2020_ - find cause negative XRD values in `/Users/paul/Documents/OU_pcm_eukaryotes/Github/160_r_prep_q2_predictor-tab.r`
     * see _02.05.2020_ - find cause for missing sequences in `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/110_18S_merged-seq_blast-noenv.txt`
-  * create Phyloseq object with (presence-absence-) corrected abundance values
-  * get long format for MdL
+  * in `200_r_get_phyloseq.r`
+    * create Phyloseq object with (presence-absence-) corrected abundance values
+    * get long format for MdL
   * in new version of predictor pre-processing
     * adjust Caret package
       * co-linearities
       * dummy variables
+  * get trees
