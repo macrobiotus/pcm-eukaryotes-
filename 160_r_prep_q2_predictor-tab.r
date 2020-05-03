@@ -1,12 +1,13 @@
 # *********************************************************
 # * Combine and correct sample descriptors and predictors *
 # ********************************************************* 
-# 02-May-2020
+# 03-May-2020
 
 # load packages
 # =============
 rm(list = ls(all.names = TRUE))
 gc()
+
 library("tidyverse")  # work using tibbles
 library("readxl")     # read excel sheets
 library("stringr")    # rename column names using dplyr
@@ -155,7 +156,7 @@ save(tib_compl, file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/160_soi
 save.image(file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/160_soil-data_corrected_image.Rdata")
 
 # write_merged tables - for Qiime import
-# --------------------------------------
+# ======================================
 
 p_compl <- tib_compl
 p_compl <- "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Manifest/200501_18S_MF_merged.txt"
