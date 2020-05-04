@@ -213,11 +213,16 @@ Creative Commons Attribution 4.0 International Public License as per
   * taxonomy table corrected **ok**
   * commit ` f8c36917a67326ee5bddc2f288025ffbf6d0ae05`
   * started working on `/Users/paul/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
+  * commit `63ff7efbe3caaa8f05bf077cb4e39108f90b05fa`
+* **04.05.2020** - testing `qiime2R`
+  * `qiime2R` import function (`qza_to_phyloseq()`) is buggy.
+  * `150_r_get_q2_tax-tab.r` should be yesterday's state. 
 
 * **todo**
   * **before publication**
     * see _02.05.2020_ - find cause negative XRD values in `/Users/paul/Documents/OU_pcm_eukaryotes/Github/160_r_prep_q2_predictor-tab.r`
     * see _02.05.2020_ - find cause for missing sequences in `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/110_18S_merged-seq_blast-noenv.txt`
+  * export qiime objects using shell script
   * in `200_r_get_phyloseq.r`
     * create Phyloseq object with (presence-absence-) corrected abundance values
     * get long format for MdL
@@ -225,4 +230,5 @@ Creative Commons Attribution 4.0 International Public License as per
     * adjust Caret package
       * co-linearities
       * dummy variables
-  * get trees
+  * get trees and add to Phyloseq
+  * add sequences to Phyloseq object

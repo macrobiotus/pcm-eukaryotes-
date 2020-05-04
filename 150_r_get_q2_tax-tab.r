@@ -164,5 +164,9 @@ q2taxtable$name <- NULL
 
 # Part VI: Export tsv  
 # -----------------------------------------------------
+
+# qiime2R compatibility, added 4-May-2020, doesn't help
+# names(q2taxtable) <- c("Feature.ID", "Taxon", "Confidence")
+
 write_tsv(q2taxtable, path = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_q2taxtable.tsv",
   append = FALSE, col_names = TRUE)
