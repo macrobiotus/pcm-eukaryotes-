@@ -217,18 +217,35 @@ Creative Commons Attribution 4.0 International Public License as per
 * **04.05.2020** - testing `qiime2R`
   * `qiime2R` import function (`qza_to_phyloseq()`) is buggy.
   * `150_r_get_q2_tax-tab.r` should be yesterday's state. 
+  * commit `61ecbb94869d87ecea2779db68368467628c5033`
+* **05.05.2020** - creating Phyloseqs objects
+  * working on `~/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
+  * using bash based conversion, as implemented in `/Users/paul/Documents/OU_pcm_eukaryotes/Github/190_q2_export_objects.sh`
+  * got long format for MdL
+  * created Phyloseq object
+  * rudimentary version working - create tape archive for Mdl
+        `gtar -cf /Users/paul/Documents/OU_pcm_eukaryotes/Tarballs/200_r_get_phyloseq.results.tar.gz \
+           /Users/paul/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r \
+           /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/200_all_data_long_export.Rdata \
+           /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/200_all_data_psob_export.Rdata \
+           /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data_psob_export-image.Rdata \
+           /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data_psob_import-image.Rdata \
+           /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data_psob_import.Rdata`
 
 * **todo**
   * **before publication**
     * see _02.05.2020_ - find cause negative XRD values in `/Users/paul/Documents/OU_pcm_eukaryotes/Github/160_r_prep_q2_predictor-tab.r`
     * see _02.05.2020_ - find cause for missing sequences in `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/110_18S_merged-seq_blast-noenv.txt`
   * export qiime objects using shell script
+  * in `160_r_prep_q2_predictor-tab.r`
+    * possibly: include variable sorting code and remove from `200_r_get_phyloseq.r`
   * in `200_r_get_phyloseq.r`
-    * create Phyloseq object with (presence-absence-) corrected abundance values
-    * get long format for MdL
+    * finish filtering
+    * possibly: adjust variable sorting code to match `160_r_prep_q2_predictor-tab.r`
   * in new version of predictor pre-processing
     * adjust Caret package
       * co-linearities
       * dummy variables
   * get trees and add to Phyloseq
-  * add sequences to Phyloseq object
+    * then use `phyloseq::tip_glom()` instead of `phyloseq::tax_glom()` in `/Users/paul/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
+  
