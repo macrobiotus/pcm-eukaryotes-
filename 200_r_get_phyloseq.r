@@ -137,3 +137,43 @@ save(psob_molten, file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Process
 # save state after export
 # -------------------------
 save.image(file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data_psob_export-image.Rdata")
+
+
+# 06.05.2020 - data check 
+# -----------------------
+# show data dimension as overview 
+psob_molten <- psob_molten %>% as_tibble(.)
+# A tibble: 2,256,618 x 48
+
+# compare Location strings with MdLs email 
+psob_molten %>% distinct(Location,  .keep_all = FALSE) 
+# A tibble: 8 x 1
+#   Location         
+#   <chr>            
+# 1 Mount_Menzies    
+# 2 Mawson_Escarpment
+# 3 Lake_Terrasovoe  
+# 4 E_Ant_coast      
+# 5 Reinbolt_Hills   
+# 6 Australia        
+# 7 EBU_lab          
+# 8 SARDI_lab   
+
+# summarize distinct values across the long data frame
+show_vars <- c("OTU", "Abundance", "Sample", "BarcodeSequence", "Location", "Description",
+  "superkingdom", "phylum", "class", "order", "family", "genus", "species")
+psob_molten %>% select(any_of(show_vars)) %>% summarize_all(n_distinct, na.rm = TRUE)
+# A tibble: 1 x 13
+#     OTU Abundance Sample Location Description superkingdom phylum class order family genus species BarcodeSequence
+#   <int>     <int>  <int>    <int>       <int>        <int>  <int> <int> <int>  <int> <int>   <int>           <int>
+# 1 12399      3102    182        8           6            6     64   181   477    929  1796    3042             182
+
+# check for correct length of taxon columns - needs to sum up to 2,256,618 - ok
+length(which(psob_molten$species=='undefined')) #    2184
+length(which(psob_molten$species!='undefined')) # 2254434
+
+length(which(psob_molten$genus=='undefined')) #  769314
+length(which(psob_molten$genus!='undefined')) # 1487304
+
+length(which(psob_molten$genus=='undefined')) #  769314
+length(which(psob_molten$genus!='undefined')) #  1487304

@@ -231,6 +231,9 @@ Creative Commons Attribution 4.0 International Public License as per
            /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data_psob_export-image.Rdata \
            /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data_psob_import-image.Rdata \
            /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data_psob_import.Rdata`
+  * commit `8ae070056cc00c5f61b98a9929c840f166cfe30d`
+* **06.05.2020** - creating Phyloseqs objects
+  * checking `~/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
 
 * **todo**
   * **before publication**
