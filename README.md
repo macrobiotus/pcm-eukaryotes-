@@ -234,7 +234,10 @@ Creative Commons Attribution 4.0 International Public License as per
   * commit `8ae070056cc00c5f61b98a9929c840f166cfe30d`
 * **06.05.2020** - creating Phyloseqs objects
   * checking `~/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
-
+* **07.05.2020** - working on obtaining trees
+  * creating and running `/Users/paul/Documents/OU_pcm_eukaryotes/Github/175_q2_seq_align.sh`  
+  * creating and running `/Users/paul/Documents/OU_pcm_eukaryotes/Github/177_q2_mask_align.sh`
+  * creating and running `/Users/paul/Documents/OU_pcm_eukaryotes/Github/180_q2_get_fastree.sh`
 * **todo**
   * **before publication**
     * see _02.05.2020_ - find cause negative XRD values in `/Users/paul/Documents/OU_pcm_eukaryotes/Github/160_r_prep_q2_predictor-tab.r`
@@ -249,6 +252,7 @@ Creative Commons Attribution 4.0 International Public License as per
     * adjust Caret package
       * co-linearities
       * dummy variables
-  * get trees and add to Phyloseq
+  * add trees to Phyloseq
     * then use `phyloseq::tip_glom()` instead of `phyloseq::tax_glom()` in `/Users/paul/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
+  * check masked alignment - adjust older sript
   

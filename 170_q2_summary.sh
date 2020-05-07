@@ -6,6 +6,7 @@
 
 # set -x
 set -e
+set -u
 
 # Adjust base paths
 # -----------------
@@ -32,7 +33,6 @@ inpth_tax='Zenodo/Blast/150_18S_merged-seq_q2taxtable.qza'
 # -----------------------------------------------------------
 
 # (https://stackoverflow.com/questions/23356779/how-can-i-store-the-find-command-results-as-an-array-in-bash)
-# (https://stackoverflow.com/questions/7442417/how-to-sort-an-array-in-bash)
 
 # Fill sequence array using find 
 inpth_seq_unsorted=()
