@@ -1,7 +1,7 @@
 # **********************************************
 # * Create, filter, and write Physloseq object *
 # **********************************************
-# 05-May-2020
+# 29-Jun-2020
 
 # load packages
 # =============
@@ -15,6 +15,9 @@ library("phyloseq")    # handle Qiime 2 data in R
 
 # functions
 # =========
+
+# Define new operator "not in"
+'%!in%' <- function(x,y)!('%in%'(x,y))
 
 # Create phyloseq object.
 # -----------------------
@@ -51,6 +54,56 @@ remove_empty <- function(phsq_ob){
   return (phsq_ob)
 }
 
+# Retain only Antarctic phylotypes
+# This function removes phylotypes contained in Australian controls from the entire data, and keeps only the Antarctic data
+
+subset_pcm <- function (ps_ob){
+  
+  require("phyloseq")
+  
+  # OTU table - remove zero count OTUs
+  ps_ob.p <- prune_taxa(taxa_sums(ps_ob) > 0, ps_ob)
+  
+  # isolate control samples
+  ps_ob.aac <- prune_samples (sample_names (ps_ob.p)[c (grep ("AAcntrl", sample_names(ps_ob.p)))], ps_ob.p)
+  ps_ob.inc <- prune_samples (sample_names (ps_ob.p)[c (grep ("Inscntrl", sample_names(ps_ob.p)))], ps_ob.p)
+  ps_ob.soc <- prune_samples (sample_names (ps_ob.p)[c (grep ("soilcntrl", sample_names(ps_ob.p)))], ps_ob.p)
+  
+  # remove 0 count OTU's from subsets
+  ps_ob.aac <- prune_taxa (taxa_sums (ps_ob.aac) > 0, ps_ob.aac)
+  ps_ob.inc <- prune_taxa (taxa_sums (ps_ob.inc) > 0, ps_ob.inc)
+  ps_ob.soc <- prune_taxa (taxa_sums (ps_ob.soc) > 0, ps_ob.soc)
+  
+  # filter out Australian control phylotypes
+  otu_table (ps_ob.p) <- subset (otu_table (ps_ob.p), subset = 
+    rownames (otu_table (ps_ob.p)) %!in% rownames (otu_table (ps_ob.inc)), drop = FALSE)
+  otu_table (ps_ob.p) <- subset (otu_table (ps_ob.p), subset =  
+    rownames (otu_table (ps_ob.p)) %!in% rownames (otu_table (ps_ob.soc)), drop = FALSE)
+   
+  # keep only PCM samples
+  ps_ob.p <- prune_samples (sample_names (ps_ob.p)[c (grep ("PCM", sample_names (ps_ob.p)))], ps_ob.p)
+  
+  # keep only PCM phylotypes
+  ps_ob.p <- prune_taxa (taxa_sums (ps_ob.p) > 0, ps_ob.p)
+  
+  # remove unwanted characters from taxonomy strings
+  tax_table (ps_ob.p) <- gsub ("__", "", tax_table (ps_ob.p)) 
+  tax_table (ps_ob.p) <- gsub ("_", " ", tax_table (ps_ob.p)) 
+  tax_table (ps_ob.p) <- gsub ("-", " ", tax_table (ps_ob.p)) 
+  tax_table (ps_ob.p) <- gsub (" ", " ", tax_table (ps_ob.p))
+  
+  # remove zero count taxa again, to be sure
+  ps_ob.p <- prune_taxa (taxa_sums (ps_ob.p) > 0, ps_ob.p)
+  
+  # print summary
+  message (length (sample_names (ps_ob.p)), " Samples (", appendLF = FALSE)
+  message (100 * round (length(sample_names(ps_ob.p)) / length (sample_names (ps_ob)), digits = 2)," %) and ", appendLF = FALSE)
+  message (length (taxa_names(ps_ob.p)), " Taxa (", appendLF = FALSE) 
+  message (100 * round (length (taxa_names (ps_ob.p)) / length(taxa_names (ps_ob)), digits = 2)," %) retained")
+  
+  # return sub-setted object
+  return (ps_ob.p)
+}
 
 # import Phyloseq objects
 # =======================
@@ -69,8 +122,11 @@ colnames(tax_table(psob_raw)) <- c("superkingdom", "phylum", "class", "order",
 psob_main <- psob_raw
 
 # save initial state after import
-save(psob_main, file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data_psob_import.Rdata")
-save.image(file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data_psob_import-image.Rdata")
+# save(psob_main, file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data_psob_import.Rdata")
+# save.image(file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data_psob_import-image.Rdata")
+
+load("/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data_psob_import.Rdata")
+load("/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data_psob_import-image.Rdata")
 
 # filter Phyloseq objects
 # =======================
@@ -80,6 +136,8 @@ save.image(file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data
 
 # subtract blanks
 # ---------------
+
+psob_main <- subset_pcm(psob_main)
 
 # select PCM samples
 # -------------------
@@ -109,7 +167,7 @@ if(TRUE == FALSE ){
 # Phyloseq object
 # ---------------
 
-save(psob_main, file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/200_all_data_psob_export.Rdata")
+save(psob_main, file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/200_all_data_psob_export_filtered.Rdata")
 
 # Long table
 # -----------
@@ -132,11 +190,11 @@ var_order <- c(
 
 psob_molten <- psob_molten %>% select(all_of(var_order))
 
-save(psob_molten, file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/200_all_data_long_export.Rdata")
+save(psob_molten, file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/200_all_data_long_export_filtered.Rdata")
 
 # save state after export
 # -------------------------
-save.image(file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data_psob_export-image.Rdata")
+save.image(file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data_psob_export-image_filtered.Rdata")
 
 
 # 06.05.2020 - data check 

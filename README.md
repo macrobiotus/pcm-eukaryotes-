@@ -238,6 +238,11 @@ Creative Commons Attribution 4.0 International Public License as per
   * creating and running `/Users/paul/Documents/OU_pcm_eukaryotes/Github/175_q2_seq_align.sh`  
   * creating and running `/Users/paul/Documents/OU_pcm_eukaryotes/Github/177_q2_mask_align.sh`
   * creating and running `/Users/paul/Documents/OU_pcm_eukaryotes/Github/180_q2_get_fastree.sh`
+* **29.06.2020** -  in `200_r_get_phyloseq.r` implement filtering
+  * done: `160 Samples (88 %) and 8448 Taxa (68 %) retained`
+  * writing new output files as described in script (check commit history for details)
+  * commit ``
+
 * **todo**
   * **before publication**
     * see _02.05.2020_ - find cause negative XRD values in `/Users/paul/Documents/OU_pcm_eukaryotes/Github/160_r_prep_q2_predictor-tab.r`
@@ -246,7 +251,8 @@ Creative Commons Attribution 4.0 International Public License as per
   * in `160_r_prep_q2_predictor-tab.r`
     * possibly: include variable sorting code and remove from `200_r_get_phyloseq.r`
   * in `200_r_get_phyloseq.r`
-    * finish filtering
+    * possibly: check contaminating sequences 
+    * possibly: implement tree tip agglomeration
     * possibly: adjust variable sorting code to match `160_r_prep_q2_predictor-tab.r`
   * in new version of predictor pre-processing
     * adjust Caret package
@@ -254,5 +260,5 @@ Creative Commons Attribution 4.0 International Public License as per
       * dummy variables
   * add trees to Phyloseq
     * then use `phyloseq::tip_glom()` instead of `phyloseq::tax_glom()` in `/Users/paul/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
-  * check masked alignment - adjust older sript
+  * check masked alignment - adjust older script
   
