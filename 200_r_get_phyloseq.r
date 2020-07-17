@@ -1,7 +1,7 @@
 # **********************************************
 # * Create, filter, and write Physloseq object *
 # **********************************************
-# 29-Jun-2020
+# 17-Jul-2020
 
 # load packages
 # =============
@@ -164,19 +164,20 @@ if(TRUE == FALSE ){
 # write files
 # ===========
 
-# Phyloseq object
-# ---------------
+# Phyloseq objects (intermediary)
+# -------------------------------
 
 save(psob_main, file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/200_all_data_psob_export_filtered.Rdata")
 
 # Long table
 # -----------
 
+# melt table
 psob_molten <- psmelt(psob_main) 
 
+# define variable order - follows "190_q2_export_objects.sh"
 names(psob_molten)
 
-# define variable order - follows "190_q2_export_objects.sh"
 var_order <- c(
     "OTU", "Abundance", 
     "Sample", "Location", "Description",
@@ -190,48 +191,75 @@ var_order <- c(
 
 psob_molten <- psob_molten %>% select(all_of(var_order))
 
+# 17.07.2020 - Keep only main areas and Eukaryota
+psob_molten <- psob_molten %>% filter(Location %in% c("Mount_Menzies", "Lake_Terrasovoe", "Mawson_Escarpment"))
+psob_molten <- psob_molten %>% filter(Superkingdom %in% c("Eukaryota"))
+
 save(psob_molten, file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/200_all_data_long_export_filtered.Rdata")
 
 # save state after export
 # -------------------------
 save.image(file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data_psob_export-image_filtered.Rdata")
 
+# 17.07.2020 - Plots and numerical summaries for results
+# =======================================================
 
-# 06.05.2020 - data check 
-# -----------------------
+# Numerical summaries
+# -------------------
+
 # show data dimension as overview 
 psob_molten <- psob_molten %>% as_tibble(.)
-# A tibble: 2,256,618 x 48
-
-# compare Location strings with MdLs email 
-psob_molten %>% distinct(Location,  .keep_all = FALSE) 
-# A tibble: 8 x 1
-#   Location         
-#   <chr>            
-# 1 Mount_Menzies    
-# 2 Mawson_Escarpment
-# 3 Lake_Terrasovoe  
-# 4 E_Ant_coast      
-# 5 Reinbolt_Hills   
-# 6 Australia        
-# 7 EBU_lab          
-# 8 SARDI_lab   
+# A tibble: 1,300,992 x 48
 
 # summarize distinct values across the long data frame
 show_vars <- c("OTU", "Abundance", "Sample", "BarcodeSequence", "Location", "Description",
   "superkingdom", "phylum", "class", "order", "family", "genus", "species")
 psob_molten %>% select(any_of(show_vars)) %>% summarize_all(n_distinct, na.rm = TRUE)
 # A tibble: 1 x 13
-#     OTU Abundance Sample Location Description superkingdom phylum class order family genus species BarcodeSequence
-#   <int>     <int>  <int>    <int>       <int>        <int>  <int> <int> <int>  <int> <int>   <int>           <int>
-# 1 12399      3102    182        8           6            6     64   181   477    929  1796    3042             182
+#     OTU Abundance Sample BarcodeSequence Location Description superkingdom phylum class order family genus species
+#   <int>     <int>  <int>           <int>    <int>       <int>        <int>  <int> <int> <int>  <int> <int>   <int>
+# 1  8448      2264    154             154        3           1            6     57   150   379    675  1243    2051
 
-# check for correct length of taxon columns - needs to sum up to 2,256,618 - ok
-length(which(psob_molten$species=='undefined')) #    2184
-length(which(psob_molten$species!='undefined')) # 2254434
+# get total seqencing effort
+sum(psob_molten$Abundance)
 
-length(which(psob_molten$genus=='undefined')) #  769314
-length(which(psob_molten$genus!='undefined')) # 1487304
+# re-check locations
+psob_molten %>% distinct(Location,  .keep_all = FALSE) 
 
-length(which(psob_molten$genus=='undefined')) #  769314
-length(which(psob_molten$genus!='undefined')) #  1487304
+# Plotting
+# --------
+
+# re-label locations for plotting
+psob_molten <- psob_molten %>%  
+  mutate(Location = case_when(Location == "Mount_Menzies" ~ "Mount Menzies",
+                              Location == "Mawson_Escarpment"  ~ "Mawson Escarpment", 
+                              Location == "Lake_Terrasovoe"  ~ "Lake Terrasovoje"))
+
+# re-label Phyla for plotting
+length(which (psob_molten$phylum %in% c("nomatch", "undefined")))
+length(psob_molten$phylum)
+
+psob_molten$phylum[which(psob_molten$phylum %in% c("nomatch", "undefined"))] <- NA
+
+
+# this doesn't work for some reason
+# psob_molten %>&  mutate(phylum = case_when(phylum == "nomatch" ~ "NA",
+#                             phylum == "undefined"  ~ "NA"))
+
+ggplot(psob_molten, aes_string(x = "phylum", y = "Abundance", fill = "phylum")) +
+  geom_bar(stat = "identity", position = "stack", colour = NA, size=0) +
+  facet_grid(Location ~ ., shrink = TRUE, scales = "fixed") +
+  theme_bw() +
+  theme(legend.position = "none") +
+  theme(strip.text.y = element_text(angle=0)) + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
+        axis.text.y = element_text(angle = 0, hjust = 1,  size = 7), 
+        axis.ticks.y = element_blank()) +
+  labs( title = "Phyla across all locations") + 
+  xlab("phyla at all locations") + 
+  ylab("read counts at each location (y scales fixed)")
+
+ggsave("200717_all_phyla_at_all_locations.pdf", plot = last_plot(), 
+         device = "pdf", path = "/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/200622_display_item_development",
+         scale = 3, width = 75, height = 50, units = c("mm"),
+         dpi = 500, limitsize = TRUE)
