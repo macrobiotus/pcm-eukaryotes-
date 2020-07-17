@@ -243,13 +243,17 @@ Creative Commons Attribution 4.0 International Public License as per
   * writing new output files as described in script (check commit history for details)
   * commit `9de24b18ae4ef7b5a9d803390b9e8650285fd6a7`
 * **17.07.2020** -  in `200_r_get_phyloseq.r` started to add visualisation code
+  * code for summary counts is now there
+  * ASV summary counts are summed up across all samples.
+  * removed low coverage phyla - **ok**
   * unfinished - see todo
 
 * **todo**
   * in `200_r_get_phyloseq.r`
-    * get summary values for manuscript draft - see therein
-    * possibly remove low coverage phyla
-    * agglomerate on phylum level to produce less-jagged plot
+    * update summary values for manuscript draft - see therein -  **pending**
+    * agglomerate on phylum level to produce less-jagged plot - **pending**
+    * remove contamination better - **pending**
+    * clean up script **pending**
   
   * **before publication**
     * see _02.05.2020_ - find cause negative XRD values in `/Users/paul/Documents/OU_pcm_eukaryotes/Github/160_r_prep_q2_predictor-tab.r`

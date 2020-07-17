@@ -192,8 +192,18 @@ var_order <- c(
 psob_molten <- psob_molten %>% select(all_of(var_order))
 
 # 17.07.2020 - Keep only main areas and Eukaryota
+# -----------------------------------------------
+# show data dimension as overview 
+psob_molten <- psob_molten %>% as_tibble(.)
+
+# A tibble: 1,351,680 x 48
 psob_molten <- psob_molten %>% filter(Location %in% c("Mount_Menzies", "Lake_Terrasovoe", "Mawson_Escarpment"))
-psob_molten <- psob_molten %>% filter(Superkingdom %in% c("Eukaryota"))
+psob_molten <- psob_molten %>% filter(superkingdom %in% c("Eukaryota"))
+
+# check for contaminants - as per below 
+# how widespread is Solanum pennellii, a highly covered read in the data?
+# its quite common, check alignments
+psob_molten$Abundance[which (psob_molten$OTU == "f88660c48713384b141b7cf376e1a118")]
 
 save(psob_molten, file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/200_all_data_long_export_filtered.Rdata")
 
@@ -204,24 +214,75 @@ save.image(file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data
 # 17.07.2020 - Plots and numerical summaries for results
 # =======================================================
 
+load("/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/200_all_data_long_export_filtered.Rdata")
+
 # Numerical summaries
 # -------------------
+length(unique(psob_molten$Sample))
+unique(psob_molten$Sample) %>% grepl(".MM", . , fixed = TRUE) %>% sum
+unique(psob_molten$Sample) %>% grepl(".ME", . , fixed = TRUE) %>% sum
+unique(psob_molten$Sample) %>% grepl(".LT", . , fixed = TRUE) %>% sum
 
-# show data dimension as overview 
-psob_molten <- psob_molten %>% as_tibble(.)
-# A tibble: 1,300,992 x 48
+# get total seqencing effort
+sum(psob_molten$Abundance)
+
+# check abundances
+summary(psob_molten$Abundance)
+hist(psob_molten$Abundance)
+plot(density(psob_molten$Abundance))
+
+length(which (psob_molten$Abundance <= 3 ))
+
+# remove ASVs with less then 3 sequences
+psob_molten <- psob_molten %>% filter(Abundance > 3)
+summary(psob_molten$Abundance)
 
 # summarize distinct values across the long data frame
 show_vars <- c("OTU", "Abundance", "Sample", "BarcodeSequence", "Location", "Description",
   "superkingdom", "phylum", "class", "order", "family", "genus", "species")
 psob_molten %>% select(any_of(show_vars)) %>% summarize_all(n_distinct, na.rm = TRUE)
+
 # A tibble: 1 x 13
 #     OTU Abundance Sample BarcodeSequence Location Description superkingdom phylum class order family genus species
 #   <int>     <int>  <int>           <int>    <int>       <int>        <int>  <int> <int> <int>  <int> <int>   <int>
-# 1  8448      2264    154             154        3           1            6     57   150   379    675  1243    2051
+# 1  2743      1831    147             147        3           1            1     31   106   277    496   787    1134
 
-# get total seqencing effort
-sum(psob_molten$Abundance)
+
+# get coverages per sample and analyze
+coverage_per_sample <- aggregate(psob_molten$Abundance, by=list(Sample=psob_molten$Sample), FUN=sum)
+coverage_per_sample$Sample %>% grepl(".MM", . , fixed = TRUE) %>% sum
+coverage_per_sample$Sample %>% grepl(".ME", . , fixed = TRUE) %>% sum
+coverage_per_sample$Sample %>% grepl(".LT", . , fixed = TRUE) %>% sum
+summary(coverage_per_sample)
+
+# get ASV count again
+length(unique(psob_molten$OTU))
+
+# get coverages per ASV and analyze
+coverage_per_asv <- aggregate(psob_molten$Abundance, by=list(ASV=psob_molten$OTU), FUN=sum)
+coverage_per_asv <- coverage_per_asv %>% arrange(desc(x))
+summary(coverage_per_asv)
+
+head(coverage_per_asv)
+head(psob_molten)
+
+# get most species ordered by frequency
+left_join(coverage_per_asv , psob_molten, by = c("ASV" = "OTU")) %>%
+    distinct_at(vars("ASV", "x", "superkingdom", "phylum", "class", "species")) %>% head(., n = 12)
+
+#                                ASV      x superkingdom       phylum           class                             species
+# 1  5004de9015b06c0221fb18cd330bc1e4 215462    Eukaryota   Ascomycota Lecanoromycetes               Acanthothecis fontana
+# 2  d96a424887ab33e2e7cc372d8c8fd40b 206939    Eukaryota   Ascomycota   Leotiomycetes              Ascozonus woolhopensis
+# 3  50baba76780ac5b54c70079f1af75604 194591    Eukaryota   Ascomycota Lecanoromycetes                  Lecanora rugosella
+# 4  d1cae5b7608113426bfb3bd92ff6ffcf 145295    Eukaryota Streptophyta      Liliopsida                Gastridium phleoides
+# 5  f88660c48713384b141b7cf376e1a118 140853    Eukaryota Streptophyta       undefined                   Solanum pennellii
+# 6  e881c59b29254fd091cee7feaaff143e 130422    Eukaryota     Nematoda     Chromadorea                 Scottnema lindsayae
+# 7  31a6dcb475a929ef9cc4186da075ea07 129971    Eukaryota     Rotifera      Bdelloidea               Philodina acuticornis
+# 8  ffba4e2457bbb54ce9dff4de75f4bff7 125600    Eukaryota     Rotifera      Bdelloidea               Philodina acuticornis
+# 9  b1c61b2e584822a0cf5c55ef502eb08f 124030    Eukaryota   Ciliophora Phyllopharyngea Pseudochilodonopsis quadrivacuolata
+# 10 413cf364a1daf21eb3c4f24ba076f5a3 114018    Eukaryota   Ascomycota Lecanoromycetes                    Pyxine sorediata
+# 11 b7f842c137861b77b4ebe9adc233bc54 112059    Eukaryota   Ascomycota   Leotiomycetes                 Thelebolus globosus
+# 12 8d7e8b0361dfc41dfac402c6daa5920b  96774    Eukaryota   Arthropoda       undefined             Derocheilocaris typicus
 
 # re-check locations
 psob_molten %>% distinct(Location,  .keep_all = FALSE) 
