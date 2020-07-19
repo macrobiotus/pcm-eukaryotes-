@@ -247,6 +247,10 @@ Creative Commons Attribution 4.0 International Public License as per
   * ASV summary counts are summed up across all samples.
   * removed low coverage phyla - **ok**
   * unfinished - see todo
+  * `591721c79d7a02df556c1bcb4ae8136ff214ce5b`
+* **20.07.2020** -  in `200_r_get_phyloseq.r` started re-code and new decontamination
+
+
 
 * **todo**
   * in `200_r_get_phyloseq.r`
