@@ -3,8 +3,6 @@
 # **********************************************
 # 20-Jul-2020
 
-
-
 # load packages
 # =============
 rm(list = ls(all.names = TRUE))
@@ -95,7 +93,7 @@ psob_molten <- psob_molten %>% as_tibble(.)
 
 # save or load molten state after import
 save(psob_molten, file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/200_all_data_long_export_raw.Rdata")
-# load("/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/200_all_data_long_export_raw.Rdata")
+load("/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/200_all_data_long_export_raw.Rdata")
 
 # format and pre-filter Phyloseq object
 # =====================================
@@ -152,72 +150,134 @@ load("/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/200_all_data_lon
 #  pre-filter state: 1,064,882 x 48 
 psob_molten
 
-# save and inspect contaminating reads
-# ------------------------------------
+# formate data for further work
+# -----------------------------
 
-# get tyes of controls 
+# filter for some controls: 70,212 x 48
 unique(psob_molten$Description)
+molten_controls <- psob_molten %>% filter(Description %in% unique(psob_molten$Description)[3:6])
 
-# isolate and inspect "AAcntrl"   **continue here after 20-07-2020** - !!!!remove 0 count asvs from sub tables!!!!
+molten_controls <- molten_controls %>% 
+  mutate(Description = case_when(Description == "AAcntrl" ~ "Antarctic Control",
+                              Description == "soilcntrl" ~ "Soil Control",
+                              Description == "PCRneg"  ~ "PCR Blank",
+                              Description == "Inscntrl" ~ "Insect Control",
+                              Description == "XTRneg"  ~ "Extraction Blank"))
 
-molten_aacntrl <- psob_molten %>% filter(Description == "AAcntrl")
+unique(molten_controls$Description)
 
-molten_aacntrl %>% select("superkingdom", "phylum", "class", "order", "family", "genus", "species") %>% distinct() %>% print(n = Inf)
+# plot controls (abundances are aggregated in-call to avoid jagged edges)
+# ---------------------------------------------------------------------
+ggplot(molten_controls, aes_string(x = "phylum", y = ave(molten_controls$Abundance, molten_controls$phylum, FUN=sum), fill = "phylum")) +
+  geom_bar(stat = "identity", position = "stack", colour = NA, size=0) +
+  facet_grid(Description ~ ., shrink = TRUE, scales = "fixed") +
+  theme_bw() +
+  theme(legend.position = "none") +
+  theme(strip.text.y = element_text(angle=0)) + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
+        axis.text.y = element_text(angle = 0, hjust = 1,  size = 7), 
+        axis.ticks.y = element_blank()) +
+  labs( title = "Phyla across all locations") + 
+  xlab("phyla in control samples") + 
+  ylab("read counts at each location (y scales fixed)")
 
-# isolate and inspect "soilcntrl" 
-
-molten_soilcntrl <- psob_molten %>% filter(Description == "soilcntrl")
-
-molten_soilcntrl %>% select("superkingdom", "phylum", "class", "order", "family", "genus", "species") %>% distinct() # %>% print(n = Inf)
-
-
-# isolate and inspect "PCRneg"   
-
-molten_pcrneg <- psob_molten %>% filter(Description == "PCRneg")
-
-molten_pcrneg %>% select("superkingdom", "phylum", "class", "order", "family", "genus", "species") %>% distinct() # %>%  print(n = Inf)
-
-
-# isolate and inspect "Inscntrl"
-
-molten_inscntrl <- psob_molten %>% filter(Description == "Inscntrl")
-
-# isolate and inspect "XTRneg" 
-
-molten_xtrneg <- psob_molten %>% filter(Description == "XTRneg")
-
-
-# merge and remove all / apart from AActrl()?)
+ggsave("200720_all_controls_at_all_locations.pdf", plot = last_plot(), 
+         device = "pdf", path = "/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/200622_display_item_development",
+         scale = 3, width = 75, height = 50, units = c("mm"),
+         dpi = 500, limitsize = TRUE)
 
 
-# (grep ("AAcntrl", sample_names(ps_ob.p)))], ps_ob.p)
-# (grep ("Inscntrl", sample_names(ps_ob.p)))], ps_ob.p)
-# (grep ("soilcntrl", sample_names(ps_ob.p)))], ps_ob.p)
+# "Soil Control": 1,077 ASVs
+# ---------------------------
+molten_soilcntrl <- molten_controls %>% filter(Description == "Soil Control", Abundance != 0)
 
+molten_soilcntrl %>% select("superkingdom", "phylum", "class", "order", "family", "genus", "species") %>% distinct() %>% print(n = Inf)
+
+
+# "Insect Control": 33 x 7 ASV
+# ----------------------------
+molten_inscntrl <- molten_controls %>% filter(Description == "Insect Control", Abundance != 0)
+
+molten_inscntrl %>% select("superkingdom", "phylum", "class", "order", "family", "genus", "species") %>% distinct() %>% print(n = Inf)
+
+# "Extraction Blank": 2,102 x 7
+# -----------------------------
+molten_xtrneg <- molten_controls %>% filter(Description == "Extraction Blank")
+
+molten_xtrneg %>% select("superkingdom", "phylum", "class", "order", "family", "genus", "species") %>% distinct() %>%  print(n = Inf)
+
+
+# "PCR Blank": 46 ASV's      
+# ----------------------
+molten_pcrneg <- molten_controls %>% filter(Description == "PCR Blank", Abundance != 0)
+
+molten_pcrneg %>% select("superkingdom", "phylum", "class", "order", "family", "genus", "species") %>% distinct() %>%  print(n = Inf)
+
+
+# retain only Antarctic reads of relevance 
+# ----------------------------------------
+
+# A tibble: 901,054 x 4
+psob_molten <- psob_molten %>% filter(Location %in% c("Mount_Menzies", "Lake_Terrasovoe", "Mawson_Escarpment"))
+
+# remove contamination (ASV and species) 
+# ----------------------------------------
+# checks
+unique(molten_controls$Description) # "Soil Control"     "PCR Blank"        "Insect Control"   "Extraction Blank"
+molten_controls # 76,063 x 48
+psob_contamination <- molten_controls %>% filter(Abundance != 0) # 4,597 x 48 - ok 
+
+# 901,054 x 48 - ok 
+psob_molten 
+
+# 552,398 x 48
+psob_molten <- psob_molten %>% anti_join(psob_contamination, by = ("OTU"))
+
+# 251,636 x 48
+psob_molten <- psob_molten %>% anti_join(psob_contamination, by = "species")
+
+
+# remove extremely low coverage ASVs 
+# --------------------------------
+
+length(unique (psob_molten$OTU))
+
+# get coverages per ASV
+coverage_per_asv <- aggregate(psob_molten$Abundance, by=list(ASV=psob_molten$OTU), FUN=sum)
+coverage_per_asv <- coverage_per_asv %>% arrange(desc(x))
+summary(coverage_per_asv)
+
+# 194,502 x 48
+psob_molten <- psob_molten %>% anti_join(as_tibble(coverage_per_asv[which(coverage_per_asv$x < 5), ]), by = c("OTU" = "ASV"))
+
+
+
+# ---- continue here after 20-Jul-2020 -----
+
+
+# load BLAST results ans remove wonky alignments
+# ----------------------------------------------
+
+# species list of cleaned data: 
+psob_molten %>% select("superkingdom", "phylum", "class", "order", "family", "genus", "species") %>% distinct() %>%  print(n = Inf)
+
+# save or load molten state after import
+save(psob_molten, file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/200_all_data_long_export_filtered.Rdata")
+
+
+
+# get numeric not yet available above
+# -----------------------------------
+
+# check for high abundance values
+# -------------------------------
 
 # check for contaminants - as per below 
 # how widespread is Solanum pennellii, a highly covered read in the data?
 # its quite common, check alignments
 # psob_molten$Abundance[which (psob_molten$OTU == "f88660c48713384b141b7cf376e1a118")]
 
-# remove contaminating reads
-# ---------------------------
 
-
-# retain only Antarctic reads of relevance 
-# ----------------------------------------
-
-# A tibble: 1,351,680 x 48
-psob_molten <- psob_molten %>% filter(Location %in% c("Mount_Menzies", "Lake_Terrasovoe", "Mawson_Escarpment"))
-
-
-# check for high abundance values
-# -------------------------------
-
-
-
-# get numeric not yet available above
-# -----------------------------------
 
 # retain final object for export
 # ------------------------------
@@ -280,6 +340,8 @@ save.image(file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data
 
 
 
+
+
 # ================================== old code below =============================
 
 
@@ -305,16 +367,6 @@ unique(psob_molten$Sample) %>% grepl(".LT", . , fixed = TRUE) %>% sum
 # get total seqencing effort
 sum(psob_molten$Abundance)
 
-# check abundances
-summary(psob_molten$Abundance)
-hist(psob_molten$Abundance)
-plot(density(psob_molten$Abundance))
-
-length(which (psob_molten$Abundance <= 3 ))
-
-# remove ASVs with less then 3 sequences
-psob_molten <- psob_molten %>% filter(Abundance > 3)
-summary(psob_molten$Abundance)
 
 # summarize distinct values across the long data frame
 show_vars <- c("OTU", "Abundance", "Sample", "BarcodeSequence", "Location", "Description",
