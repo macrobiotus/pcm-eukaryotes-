@@ -85,6 +85,8 @@ save.image(file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data
 # load("/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data_psob_import-image.Rdata")
 
 
+# https://benjjneb.github.io/decontam/vignettes/decontam_intro.html
+
 # melt Phyloseq object and get a tibble
 # -------------------------------------
 
@@ -249,7 +251,6 @@ summary(coverage_per_asv)
 
 # 194,502 x 48
 psob_molten <- psob_molten %>% anti_join(as_tibble(coverage_per_asv[which(coverage_per_asv$x < 5), ]), by = c("OTU" = "ASV"))
-
 
 
 # ---- continue here after 20-Jul-2020 -----

@@ -249,12 +249,25 @@ Creative Commons Attribution 4.0 International Public License as per
   * unfinished - see todo
   * `591721c79d7a02df556c1bcb4ae8136ff214ce5b`
 * **20.07.2020** -  in `200_r_get_phyloseq.r` started re-code and new decontamination
-  * continue in line 255: `# ---- continue here after 20-Jul-2020 -----`
+  * continue in line 255: `# ---- continue here after 20-Jul-2020 -----` - **aborted**
+* **27.07.2020** - 
+  * create hitherto unused file `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Manifest/200727_18S_MF.xlsx`
+  * updated todo list
+  * commit before further changes
+  * 
+  
+  
 
 
 
 * **todo**
-  * in `200_r_get_phyloseq.r`
+  * remove contamination
+    * in `200_r_get_phyloseq.r` implement usage of package `decontam`  
+    * possibly: re-process with more stringent thresholds
+    * possibly: re-Blast with more stringent thresholds
+  * in `200_r_get_phyloseq.r` or before 
+    * implemnet package `decontam`
+    * possibly re-BLAST
     * update summary values for manuscript draft - see therein -  **pending**
     * agglomerate on phylum level to produce less-jagged plot - **pending**
     * remove contamination better - **pending**
