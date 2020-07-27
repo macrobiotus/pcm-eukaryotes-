@@ -254,20 +254,19 @@ Creative Commons Attribution 4.0 International Public License as per
   * create hitherto unused file `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Manifest/200727_18S_MF.xlsx`
   * updated todo list
   * commit before further changes
-  * 
-  
-  
+  * commmit `72403c340a5ac9bea5a848d9f7b763b026c454b` 
+  * drafted `decontam` usage and minor adjustments in `200_r_get_phyloseq.r`
+  * commit ``
 
 
 
 * **todo**
-  * remove contamination
-    * in `200_r_get_phyloseq.r` implement usage of package `decontam`  
-    * possibly: re-process with more stringent thresholds
-    * possibly: re-Blast with more stringent thresholds
+  * re-denoise with more stringent treshhold
+  * re-Blast with more stringent thresholds
   * in `200_r_get_phyloseq.r` or before 
+    * remove contamination
     * implemnet package `decontam`
-    * possibly re-BLAST
+    * if so **add concentration values to mapping file**
     * update summary values for manuscript draft - see therein -  **pending**
     * agglomerate on phylum level to produce less-jagged plot - **pending**
     * remove contamination better - **pending**

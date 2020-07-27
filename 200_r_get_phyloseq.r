@@ -1,7 +1,8 @@
 # **********************************************
 # * Create, filter, and write Physloseq object *
 # **********************************************
-# 20-Jul-2020
+# 27-Jul-2020
+
 
 # load packages
 # =============
@@ -10,7 +11,7 @@ gc()
 
 library("tidyverse")   # work using tibbles
 library("phyloseq")    # handle Qiime 2 data in R - best used to generate long dataframe
-
+library("decontam")    # decontamination - check `https://benjjneb.github.io/decontam/vignettes/decontam_intro.html`
 
 
 # functions
@@ -85,12 +86,74 @@ save.image(file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data
 # load("/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data_psob_import-image.Rdata")
 
 
-# https://benjjneb.github.io/decontam/vignettes/decontam_intro.html
+# try package `decontam` (currently omitted)
+# -------------------------------------------
+# 
+# following:
+#   "https://benjjneb.github.io/decontam/vignettes/decontam_intro.html"
+#   carrying out filtering in case this will be used later, but for now subtracting
+#   all blanks anyways after this code 
+
+# plot library sizes
+# ...................
+psob <- psob_raw # copy for cleanup - just in case
+psob_df <- as.data.frame(sample_data(psob)) # Put sample_data into a ggplot-friendly data.frame
+psob_df$LibrarySize <- sample_sums(psob)
+psob_df <- psob_df[order(psob_df$LibrarySize),]
+psob_df$Index <- seq(nrow(psob_df))
+
+ggplot(data = psob_df, aes(x=Index, y=LibrarySize, color=Description)) + 
+  geom_point() +
+  theme_bw()
+  
+# frequency-based contamination identification 
+# ............................................
+# likely needs the library quantification values
+#   - check in paper 
+#   - skipping for now
+
+
+# prevalence-based contamination identification 
+# ............................................
+
+# no filtering done here - analysis and plotting
+
+sample_data(psob)$is.neg <- sample_data(psob)$Description %in% c("PCRneg", "XTRneg")
+contamdf.prev <- isContaminant(psob, method="prevalence", neg="is.neg", threshold=0.5)
+table(contamdf.prev$contaminant)
+head(which(contamdf.prev$contaminant))
+
+# Make phyloseq object of presence-absence in negative controls and true samples
+psob.pa <- transform_sample_counts(psob, function(abund) 1*(abund>0))
+psob.pa.neg <- prune_samples(sample_data(psob.pa)$Description %in% c("PCRneg", "XTRneg"), psob.pa)
+psob.pa.pos <- prune_samples(sample_data(psob.pa)$Description == "PCM", psob.pa)
+
+# Make data.frame of prevalence in positive and negative samples
+df.pa <- data.frame(pa.pos = taxa_sums(psob.pa.pos), pa.neg = taxa_sums(psob.pa.neg),
+                      contaminant=contamdf.prev$contaminant)
+
+# look at the incidences of taxa observations in negative controls and positive samples.
+ggplot(data=df.pa, aes(x=pa.neg, y=pa.pos, color=contaminant)) + 
+  geom_point() +
+  xlab("Prevalence (PCR and Extraction Controls)") +
+  ylab("Prevalence (PCM Samples)") +
+  theme_bw()
+
+# prevalence-based contamination filtering 
+# .........................................
+
+psob_decontam <- prune_taxa(!contamdf.prev$contaminant, psob)
+psob_decontam
+
+
 
 # melt Phyloseq object and get a tibble
 # -------------------------------------
 
-psob_molten <- psmelt(psob_raw) 
+
+#  psob_molten <- psmelt(psob_decontam)  # object processed by `decontam`
+psob_molten <- psmelt(psob_raw)           # object not processed by `decontam`
+
 psob_molten <- psob_molten %>% as_tibble(.)
 
 # save or load molten state after import
@@ -149,7 +212,7 @@ load("/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/200_all_data_lon
 # filter Phyloseq object 
 # ======================
 
-#  pre-filter state: 1,064,882 x 48 
+#  pre-filter state: 1,064,882 x 48 (without `decontam` or with `decontam` -  not checking for 0-count ASV's) 
 psob_molten
 
 # formate data for further work
@@ -157,7 +220,7 @@ psob_molten
 
 # filter for some controls: 70,212 x 48
 unique(psob_molten$Description)
-molten_controls <- psob_molten %>% filter(Description %in% unique(psob_molten$Description)[3:6])
+molten_controls <- psob_molten %>% filter(Description %in% unique(psob_molten$Description)[c(2:6)])
 
 molten_controls <- molten_controls %>% 
   mutate(Description = case_when(Description == "AAcntrl" ~ "Antarctic Control",
@@ -189,27 +252,27 @@ ggsave("200720_all_controls_at_all_locations.pdf", plot = last_plot(),
          dpi = 500, limitsize = TRUE)
 
 
-# "Soil Control": 1,077 ASVs
+# "Soil Control": 4,446 ASVs
 # ---------------------------
 molten_soilcntrl <- molten_controls %>% filter(Description == "Soil Control", Abundance != 0)
 
 molten_soilcntrl %>% select("superkingdom", "phylum", "class", "order", "family", "genus", "species") %>% distinct() %>% print(n = Inf)
 
 
-# "Insect Control": 33 x 7 ASV
+# "Insect Control": 36 ASV
 # ----------------------------
 molten_inscntrl <- molten_controls %>% filter(Description == "Insect Control", Abundance != 0)
 
 molten_inscntrl %>% select("superkingdom", "phylum", "class", "order", "family", "genus", "species") %>% distinct() %>% print(n = Inf)
 
-# "Extraction Blank": 2,102 x 7
-# -----------------------------
+# "Extraction Blank": 5,816 ASV's
+# -------------------------------
 molten_xtrneg <- molten_controls %>% filter(Description == "Extraction Blank")
 
 molten_xtrneg %>% select("superkingdom", "phylum", "class", "order", "family", "genus", "species") %>% distinct() %>%  print(n = Inf)
 
 
-# "PCR Blank": 46 ASV's      
+# "PCR Blank": 33 ASV's      
 # ----------------------
 molten_pcrneg <- molten_controls %>% filter(Description == "PCR Blank", Abundance != 0)
 
@@ -219,23 +282,23 @@ molten_pcrneg %>% select("superkingdom", "phylum", "class", "order", "family", "
 # retain only Antarctic reads of relevance 
 # ----------------------------------------
 
-# A tibble: 901,054 x 4
+# A tibble: 895,664 x 48
 psob_molten <- psob_molten %>% filter(Location %in% c("Mount_Menzies", "Lake_Terrasovoe", "Mawson_Escarpment"))
 
 # remove contamination (ASV and species) 
 # ----------------------------------------
 # checks
 unique(molten_controls$Description) # "Soil Control"     "PCR Blank"        "Insect Control"   "Extraction Blank"
-molten_controls # 76,063 x 48
-psob_contamination <- molten_controls %>% filter(Abundance != 0) # 4,597 x 48 - ok 
+molten_controls # 76,608
+psob_contamination <- molten_controls %>% filter(Abundance != 0) # 4,516 x 48 - ok 
 
-# 901,054 x 48 - ok 
+# 895,66 x 48 - ok 
 psob_molten 
 
 # 552,398 x 48
 psob_molten <- psob_molten %>% anti_join(psob_contamination, by = ("OTU"))
 
-# 251,636 x 48
+# 255,486 x 48
 psob_molten <- psob_molten %>% anti_join(psob_contamination, by = "species")
 
 
@@ -249,15 +312,37 @@ coverage_per_asv <- aggregate(psob_molten$Abundance, by=list(ASV=psob_molten$OTU
 coverage_per_asv <- coverage_per_asv %>% arrange(desc(x))
 summary(coverage_per_asv)
 
-# 194,502 x 48
+# add taxonomy to coverage list
+taxon_strings <- distinct(psob_molten[c("OTU", "superkingdom", "phylum", "class", "order", "family", "genus", "species")])
+coverage_per_asv <- left_join(coverage_per_asv, taxon_strings, by = c("ASV" = "OTU")) %>% filter(x != 0)
+
+# inspect 
+head(coverage_per_asv, n = 100)
+coverage_per_asv %>% arrange(superkingdom, phylum, class, order, family, genus, species)
+
+
+
+# filtering 110,110 x 48
 psob_molten <- psob_molten %>% anti_join(as_tibble(coverage_per_asv[which(coverage_per_asv$x < 5), ]), by = c("OTU" = "ASV"))
 
 
-# ---- continue here after 20-Jul-2020 -----
+
+# get coverages per ASV
+coverage_per_asv <- aggregate(psob_molten$Abundance, by=list(ASV=psob_molten$OTU), FUN=sum)
+coverage_per_asv <- coverage_per_asv %>% arrange(desc(x))
+summary(coverage_per_asv)
+
+# add taxonomy to coverage list
+taxon_strings <- distinct(psob_molten[c("OTU", "superkingdom", "phylum", "class", "order", "family", "genus", "species")])
+coverage_per_asv <- left_join(coverage_per_asv, taxon_strings, by = c("ASV" = "OTU")) %>% filter(x != 0)
+
+# inspect 
+head(coverage_per_asv, n = 100)
+coverage_per_asv %>% arrange(superkingdom, phylum, class, order, family, genus, species)
 
 
-# load BLAST results ans remove wonky alignments
-# ----------------------------------------------
+# ---- continue here after 27-Jul-2020 -----
+
 
 # species list of cleaned data: 
 psob_molten %>% select("superkingdom", "phylum", "class", "order", "family", "genus", "species") %>% distinct() %>%  print(n = Inf)
