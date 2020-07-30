@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# 15.04.2020 - Paul Czechowski - paul.czechowski@gmail.com 
+# 29.07.2020 - Paul Czechowski - paul.czechowski@gmail.com 
 # ========================================================
 # Import Qiime1-derived files into Qiime 2.
 

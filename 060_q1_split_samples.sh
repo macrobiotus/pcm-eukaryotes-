@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# 15.04.2020 - Paul Czechowski - paul.czechowski@gmail.com 
+# 28.07.2020 - Paul Czechowski - paul.czechowski@gmail.com 
 # ========================================================
 # Import ancient files using Qiime 1 so as to use DADA2 pipeline
 
@@ -24,8 +24,8 @@ elif [[ "$HOSTNAME" == "Pauls-MacBook-Pro.local" ]]  || [[ "$HOSTNAME" == "macmi
 fi
 
 # define input files
-inseq[1]="$trpth/Zenodo/Qiime/050_plate_1/seqs.fastq"
-inseq[2]="$trpth/Zenodo/Qiime/050_plate_2/seqs.fastq"
+inseq[1]="$trpth/Zenodo/Processing/050_plate_1/seqs.fastq"
+inseq[2]="$trpth/Zenodo/Processing/050_plate_2/seqs.fastq"
 
 prmtp[1]="fastq"
 prmtp[2]="fastq"
@@ -45,7 +45,7 @@ for ((i=1;i<=2;i++)); do
   if [ ! -f "${outdir[$i]}/out${prmtp[$i]}" ]; then
     
     # diagnostic message
-    printf "${bold}$(date):${normal} Wriring out demultiplxed files from \""${inseq[$i]}"\"...\n"
+    printf "${bold}$(date):${normal} Writing out demultiplxed files from \""${inseq[$i]}"\"...\n"
     
     split_sequence_file_on_sample_ids.py \
       -i "${inseq[$i]}"  \

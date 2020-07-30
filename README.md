@@ -256,16 +256,33 @@ Creative Commons Attribution 4.0 International Public License as per
   * commit before further changes
   * commmit `72403c340a5ac9bea5a848d9f7b763b026c454b` 
   * drafted `decontam` usage and minor adjustments in `200_r_get_phyloseq.r`
+  * commit `ae762b6201f0b1128cf4477d247572d21c39d34`
+  * starting re-processing
+    * **ok** - added post-PCR library and pool concentrations to `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Manifest/200727_18S_MF.xlsx`
+* **28.07.2020** - restarting processing
+  * mapping file validation went through without errors
+  * re-running `/Users/paul/Documents/OU_pcm_eukaryotes/Github/050_q1_demultiplex.sh`
+    * minimum Phred score `25`
+    * new mapping file `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Manifest/200727_18S_MF.txt`
+* **29.07.2020** - continuing processing
+  * running `/Users/paul/Documents/OU_pcm_eukaryotes/Github/060_q1_split_samples.sh` - **ok**
+  * running `/Users/paul/Documents/OU_pcm_eukaryotes/Github/070_bash_check_quality.sh`  - **ok**
+  * compressing files in place 
+    * `pigz /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/050_plate_1/*.fastq` - **ok**
+    * `pigz /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/050_plate_2/*.fastq` - **ok**
+  * running `/Users/paul/Documents/OU_pcm_eukaryotes/Github/080_bash_cutadapt.sh` - **ok**
+  * running `/Users/paul/Documents/OU_pcm_eukaryotes/Github/090_bash_create_manifests.sh` - **ok**
+  * running `/Users/paul/Documents/OU_pcm_eukaryotes/Github/100_q2_import.sh` - **ok**
+* **30.07.2020** - denoising on Cornell cluster
   * commit ``
 
 
-
 * **todo**
-  * re-denoise with more stringent treshhold
+  * re-denoise with more stringent threshold
   * re-Blast with more stringent thresholds
   * in `200_r_get_phyloseq.r` or before 
     * remove contamination
-    * implemnet package `decontam`
+    * implement package `decontam`
     * if so **add concentration values to mapping file**
     * update summary values for manuscript draft - see therein -  **pending**
     * agglomerate on phylum level to produce less-jagged plot - **pending**

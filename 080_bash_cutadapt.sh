@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# 15.04.2020 - Paul Czechowski - paul.czechowski@gmail.com 
+# 29.07.2020 - Paul Czechowski - paul.czechowski@gmail.com 
 # ========================================================
 # Remove adapter remnants before downstream processing.
 
@@ -54,7 +54,7 @@ fastqgzs=("${inpth_plt1[@]}" "${inpth_plt2[@]}")
 
 # define output directories
 # -------------------------
-destdir="$trpth/Zenodo/Processing/070_cutadapt"
+destdir="$trpth/Zenodo/Processing/080_cutadapt"
 
 # Defining sequences to be cut out:
 # ---------------------------------
@@ -79,7 +79,9 @@ adprcut='GACGGGCGGTGTGTAC'
 mkdir -p "$destdir"
 
 for fastqgz in "${fastqgzs[@]}"; do
-    
+  
+  # ran cutadapt 2.8 with Python 3.6.7 in Conda environment qiime2-2020.2)
+  # max-ee 2 is a sensible Qiime default
   cutadapt \
     -g "$adprcut" \
     -a "$revcut" \

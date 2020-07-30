@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# 16.04.2020 - Paul Czechowski - paul.czechowski@gmail.com 
+# 30.07.2020 - Paul Czechowski - paul.czechowski@gmail.com 
 # ========================================================
 # Denoise 2 sequencing runs using DAD2
 
@@ -47,9 +47,9 @@ otpth_vis[2]='Zenodo/Processing/110_18S_denoised-vis_run_2.qzv'
 # amplicon should be at least 85 bp 
 trnc[1]='85'
 trnc[2]='85'
-# allow no more then "5" errors in sequence,  default is "2"
-eerr[1]='5'
-eerr[2]='5'
+# allow no more then "1" errors in sequence,  default is "2"
+eerr[1]='1'
+eerr[2]='1'
 
 # run script
 # ----------

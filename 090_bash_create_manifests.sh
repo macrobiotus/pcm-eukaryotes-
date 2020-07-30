@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# 15.04.2020 - Paul Czechowski - paul.czechowski@gmail.com 
+# 29.07.2020 - Paul Czechowski - paul.czechowski@gmail.com 
 # ========================================================
 # Create Qiime 2 manifest files.
 

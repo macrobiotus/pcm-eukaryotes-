@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# 14.04.2020 - Paul Czechowski - paul.czechowski@gmail.com 
+# 28.07.2020 - Paul Czechowski - paul.czechowski@gmail.com 
 # ========================================================
 # Import ancient files using Qiime 1 so as to use DADA2 pipeline
 
@@ -30,12 +30,12 @@ inseq[2]='/Users/paul/Sequences/Raw/140401_18S_Illumina_Adelaide/18S3_PC_merged.
 inidx[1]='/Users/paul/Sequences/Raw/140401_18S_Illumina_Adelaide/18S4_PC_merged.Index.fastq.gz'
 inidx[2]='/Users/paul/Sequences/Raw/140401_18S_Illumina_Adelaide/18S3_PC_merged.Index.fastq.gz'
 
-inmap[1]='/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Manifest/160202_18S_MF.txt'
-inmap[2]='/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Manifest/160202_18S_MF.txt'
+inmap[1]='/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Manifest/200727_18S_MF.txt'
+inmap[2]='/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Manifest/200727_18S_MF.txt'
 
 # define input files and parameters for 18S
-prmqual[1]='19'
-prmqual[2]='19'
+prmqual[1]='24'
+prmqual[2]='24'
 
 prmidx[1]='100000000'
 prmidx[2]='200000000'
@@ -47,6 +47,11 @@ outseq[2]='/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/050_plate_2
 outlog[1]='/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/050_plate_1/050_plate_1_log.txt'
 outlog[2]='/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/050_plate_2/050_plate_2_log.txt'
 
+mkdir -p "${outseq[1]}"
+mkdir -p "${outseq[2]}"
+
+touch "${outlog[1]}"
+touch "${outlog[2]}"
 
 # Run import script - adjust `i` starting number! 
 # -----------------------------------------------
