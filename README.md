@@ -104,7 +104,7 @@ Creative Commons Attribution 4.0 International Public License as per
     * `/Users/paul/Documents/OU_pcm_eukaryotes/Github/115_gnu_plot_denoise_plate2.gnu`
     * results in `svgs` look well
   * wrote and ran `/Users/paul/Documents/OU_pcm_eukaryotes/Github/120_q2_merge.sh`
-  * wrote and ran  `/Users/paul/Documents/OU_pcm_eukaryotes/Github/130_q2_summary.sh`
+  * wrote and ran `/Users/paul/Documents/OU_pcm_eukaryotes/Github/130_q2_summary.sh`
   * commit `fb06ccb18f8f00c936e6a5ca4728f5f5970266e3`
   * exporting sequences for BLAST taxonomy annotation on cluster
     * `qiime tools export --input-path /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/120_18S_merged-seq.qza --output-path /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/120_18S_merged-seq.fasta`
@@ -274,11 +274,24 @@ Creative Commons Attribution 4.0 International Public License as per
   * running `/Users/paul/Documents/OU_pcm_eukaryotes/Github/090_bash_create_manifests.sh` - **ok**
   * running `/Users/paul/Documents/OU_pcm_eukaryotes/Github/100_q2_import.sh` - **ok**
 * **30.07.2020** - denoising on Cornell cluster
-  * commit ``
-
+  * commit `fcfee3b1b773976424e21c77c4712e6c91376cd8`
+  * uploading to cluster - **completed**
+* **03.08.2020** - denoising on Cornell cluster
+  * denoising with `ee=1` finished quickly
+    * output files do not indicate ee treshhold
+  * re-running with more ee settings
+    * `ee=2` specified in output file names
+    * `ee=3` specified in output file names
+  * exporting summary stats files to `tsv`
+    * `qiime tools export --input-path /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/110_18S_denoised-stt_run_1.qza  --output-path /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/110_18S_denoised-stt_run_1.tsv`
+    * `qiime tools export --input-path /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/110_18S_denoised-stt_run_2.qza  --output-path /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/110_18S_denoised-stt_run_2.tsv`
+    * `qiime tools export --input-path /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/110_18S_denoised-stt_run_1_ee2.qza --output-path /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/110_18S_denoised-stt_run_1_ee2.tsv`
+    * `qiime tools export --input-path /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/110_18S_denoised-stt_run_2_ee2.qza --output-path /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/110_18S_denoised-stt_run_2_ee2.tsv`
+    * `qiime tools export --input-path /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/110_18S_denoised-stt_run_1_ee3.qza --output-path /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/110_18S_denoised-stt_run_1_ee3.tsv`
+    * `qiime tools export --input-path /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/110_18S_denoised-stt_run_2_ee3.qza --output-path /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/110_18S_denoised-stt_run_2_ee3.tsv`
 
 * **todo**
-  * re-denoise with more stringent threshold
+  * evaluate denoising - continue moving summary files -  check summary files - erase older files
   * re-Blast with more stringent thresholds
   * in `200_r_get_phyloseq.r` or before 
     * remove contamination

@@ -2,7 +2,9 @@
 
 # 30.07.2020 - Paul Czechowski - paul.czechowski@gmail.com 
 # ========================================================
-# Denoise 2 sequencing runs using DAD2
+# Denoise 2 sequencing runs using DADA2
+# Last time run several ee treshholds (1 to 3) were tried by modifying the script 
+#  manually
 
 # set -x
 set -e
@@ -30,30 +32,32 @@ inpth[2]='Zenodo/Processing/100_18S_import_run_2.qza'
 
 # define output locations
 # ---------------------------------
-otpth_seq[1]='Zenodo/Processing/110_18S_denoised-seq_run_1.qza'
-otpth_seq[2]='Zenodo/Processing/110_18S_denoised-seq_run_2.qza'
+otpth_seq[1]='Zenodo/Processing/110_18S_denoised-seq_run_1_ee3.qza'
+otpth_seq[2]='Zenodo/Processing/110_18S_denoised-seq_run_2_ee3.qza'
 
-otpth_tab[1]='Zenodo/Processing/110_18S_denoised-tab_run_1.qza'
-otpth_tab[2]='Zenodo/Processing/110_18S_denoised-tab_run_2.qza'
+otpth_tab[1]='Zenodo/Processing/110_18S_denoised-tab_run_1_ee3.qza'
+otpth_tab[2]='Zenodo/Processing/110_18S_denoised-tab_run_2_ee3.qza'
 
-otpth_stat[1]='Zenodo/Processing/110_18S_denoised-stt_run_1.qza'
-otpth_stat[2]='Zenodo/Processing/110_18S_denoised-stt_run_2.qza'
+otpth_stat[1]='Zenodo/Processing/110_18S_denoised-stt_run_1_ee3.qza'
+otpth_stat[2]='Zenodo/Processing/110_18S_denoised-stt_run_2_ee3.qza'
 
-otpth_vis[1]='Zenodo/Processing/110_18S_denoised-vis_run_1.qzv'
-otpth_vis[2]='Zenodo/Processing/110_18S_denoised-vis_run_2.qzv'
+otpth_vis[1]='Zenodo/Processing/110_18S_denoised-vis_run_1_ee3.qzv'
+otpth_vis[2]='Zenodo/Processing/110_18S_denoised-vis_run_2_ee3.qzv'
 
-# trimming parameters 18S - reads already filtered for Phred 20 
+# trimming parameters 18S - reads already filtered for Phred 25 
 # --------------------------------------------------------------
 # amplicon should be at least 85 bp 
 trnc[1]='85'
 trnc[2]='85'
 # allow no more then "1" errors in sequence,  default is "2"
-eerr[1]='1'
-eerr[2]='1'
+eerr[1]='3'
+eerr[2]='3'
 
 # run script
 # ----------
-for ((i=2;i<=2;i++)); do
+
+
+for ((i=1;i<=2;i++)); do
 
    # denoising
    qiime dada2 denoise-single \
