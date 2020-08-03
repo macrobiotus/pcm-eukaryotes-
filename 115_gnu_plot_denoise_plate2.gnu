@@ -1,7 +1,7 @@
 #!/usr/local/bin/gnuplot
 
 # Output W3C Scalable Vector Graphics
-set terminal svg size 1300, 350 font "Menlo,12"
+set terminal svg size 1300, 375 font "Menlo,12"
 
 # Set plot size
 set size 1,1
@@ -39,6 +39,6 @@ set output "../Zenodo/Processing/115_gnu_plot_denoise_plate2.svg"
 # linewidth 4         Use a wideplotr line width
 
 # plot
-plot for [i=2:5] "../Zenodo/Processing/110_18S_denoised-stt_run_2.tsv" using i:xtic(1) title columnheader linewidth 4
+plot for [i=2:5] "../Zenodo/Processing/110_18S_denoised-stt_run_2_mod.txt" using i:xtic(1) title columnheader linewidth 4
 
 

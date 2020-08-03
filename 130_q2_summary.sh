@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# 16.04.2020 - Paul Czechowski - paul.czechowski@gmail.com 
+# 03.08.2020 - Paul Czechowski - paul.czechowski@gmail.com 
 # ========================================================
 # Denoise 2 sequencing runs using DAD2
 

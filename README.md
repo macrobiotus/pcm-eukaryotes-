@@ -289,10 +289,31 @@ Creative Commons Attribution 4.0 International Public License as per
     * `qiime tools export --input-path /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/110_18S_denoised-stt_run_2_ee2.qza --output-path /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/110_18S_denoised-stt_run_2_ee2.tsv`
     * `qiime tools export --input-path /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/110_18S_denoised-stt_run_1_ee3.qza --output-path /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/110_18S_denoised-stt_run_1_ee3.tsv`
     * `qiime tools export --input-path /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/110_18S_denoised-stt_run_2_ee3.qza --output-path /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/110_18S_denoised-stt_run_2_ee3.tsv`
+    * bumb in Qiime version added percentage column - erased those in converted `.txt` files so as to no need to edit the gnuplot scripts.
+    * ran only for `ee=1`
+      * `/Users/paul/Documents/OU_pcm_eukaryotes/Github/115_gnu_plot_denoise_plate1.gnu`
+      * `/Users/paul/Documents/OU_pcm_eukaryotes/Github/115_gnu_plot_denoise_plate2.gnu`
+    * ran `/Users/paul/Documents/OU_pcm_eukaryotes/Github/120_q2_merge.sh` 
+    * ran `/Users/paul/Documents/OU_pcm_eukaryotes/Github/130_q2_summary.sh`
+  * exporting sequences for BLAST taxonomy annotation on cluster
+    * `qiime tools export --input-path /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/120_18S_merged-seq.qza --output-path /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/120_18S_merged-seq.fasta`
+    * `pigz /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/120_18S_merged-seq.fasta`
+    * file names are:
+      * `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/120_18S_merged-seq.fasta
+      * `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/120_18S_merged-seq.fasta.gz
+    * copying environmental definition file for BLAST script
+      * `cp ~/Documents/CU_combined/Zenodo/Blast/190718_gi_list_environmental.txt ../Zenodo/Blast/`
+    * preparing blast on cluster by reviewing
+      * `/Users/paul/Documents/CU_combined/Transport/350_sync_ncbi_nt_to_scratch.sh`
+      * `/Users/paul/Documents/OU_pcm_eukaryotes/Github/140_bash_fasta_blast.sh`
+    * commit ``
+
+ 
 
 * **todo**
-  * evaluate denoising - continue moving summary files -  check summary files - erase older files
+  
   * re-Blast with more stringent thresholds
+  * compress via `pigz /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/190718_gi_list_environmental.txt`
   * in `200_r_get_phyloseq.r` or before 
     * remove contamination
     * implement package `decontam`
