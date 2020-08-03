@@ -1,6 +1,7 @@
 # Import Blast results, format, get new taxonomy strings, and write out compatible with Qiime 2 
 # ==============================================================================================
 
+# last run 3-Aug-2020
 # see https://ropensci.org/tutorials/taxize_tutorial/
 #  for handling blast data and getting correct taxonomy strings from the net
 
@@ -33,7 +34,7 @@ plan(multiprocess)
 # takes 7-10 hours on four cores - avoid by reloading full object from disk 
 blast_results_list <- furrr::future_map(blast_results_files, blastxml_dump, form = "tibble", .progress = TRUE) 
 
-# save(blast_results_list, file="/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_blast-noenv.Rdata")
+save(blast_results_list, file="/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_blast-noenv.Rdata")
 load(file="/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_blast-noenv.Rdata", verbose = TRUE)
 
 names(blast_results_list) <- blast_results_files # works

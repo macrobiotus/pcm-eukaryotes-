@@ -76,7 +76,6 @@ for fasta in "${inpth_seq[@]}";do
     #   Needed by parser "http://sing-group.org/blasterjs/" is '-outfmt "0"' or '-outfmt "5"'.
     # Diagnostic message
     printf "\nOn $(date) querying \"$fasta\" against \"$dbpath\"...\n" && \
-    
     gzip -dc "$fasta" | \
       blastn \
         -db "$dbpath" \
@@ -87,9 +86,8 @@ for fasta in "${inpth_seq[@]}";do
         -max_target_seqs 5 \
         -out "$trpth"/Zenodo/Blast/"$tgt_file" \
         -num_threads "$cores" \
-        -qcov_hsp_perc 95
-        -perc_identity 75
-        -task blastn
+        -qcov_hsp_perc 95 \
+        -perc_identity 75 \
         -negative_gilist "$trpth"/Zenodo/Blast/190718_gi_list_environmental.txt && \
       printf "...on $(date) Blast finished writing to \"$trpth/Zenodo/Blast/$tgt_file\".\n" || \
       { printf "Blastn failed at $(date +"%T") on \"$fasta\". \n" ; exit 1; }

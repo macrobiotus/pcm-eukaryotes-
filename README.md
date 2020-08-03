@@ -304,15 +304,25 @@ Creative Commons Attribution 4.0 International Public License as per
     * copying environmental definition file for BLAST script
       * `cp ~/Documents/CU_combined/Zenodo/Blast/190718_gi_list_environmental.txt ../Zenodo/Blast/`
     * preparing blast on cluster by reviewing
-      * `/Users/paul/Documents/CU_combined/Transport/350_sync_ncbi_nt_to_scratch.sh`
+      * `/Users/paul/Documents/OU_pcm_eukaryotes/Transport/050_sync_ncbi_nt_to_scratch.sh`
       * `/Users/paul/Documents/OU_pcm_eukaryotes/Github/140_bash_fasta_blast.sh`
-    * commit ``
+    * commit `316577910262d8d0811f362c85863cca9fa77825`
+    * files arrived on cluster - copying database to scratch
+    * erasing outdated files for simplicity: `find . ! -newermt 2020-06-01 ! -type d -delete`
+    * blast started sucessfully at 2020-Aug-3 16:30 - finished 17:30 - expecting only few hits
+      * `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/140_18S_merged-seq_blast-noenv.xml`
+      * `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/140_18S_merged-seq_blast-noenv.xml.gz`
+    * start working on `/Users/paul/Documents/OU_pcm_eukaryotes/Github/150_r_get_q2_tax-tab.r` - **unfinished**
+      * waiting for `furrr::future_map()` to finish
+      * contains no data 
+      * re-BLast with less stringent settings (not `-evalue 1e-5`, nor `-evalue 1e-50`,  but `-evalue 1e-10` ) - **pending**
+        * readily adjusted `~/Documents/OU_pcm_eukaryotes/Github/140_bash_fasta_blast.sh`
+      * commit ``
 
  
 
 * **todo**
-  
-  * re-Blast with more stringent thresholds
+  * possible re-Blast again with less stringent thresholds
   * compress via `pigz /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/190718_gi_list_environmental.txt`
   * in `200_r_get_phyloseq.r` or before 
     * remove contamination
