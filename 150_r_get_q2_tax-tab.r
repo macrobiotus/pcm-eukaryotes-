@@ -1,7 +1,7 @@
 # Import Blast results, format, get new taxonomy strings, and write out compatible with Qiime 2 
 # ==============================================================================================
 
-# last run 3-Aug-2020
+# last run 6-Aug-2020
 # see https://ropensci.org/tutorials/taxize_tutorial/
 #  for handling blast data and getting correct taxonomy strings from the net
 
@@ -25,16 +25,16 @@ library("taxonomizr") # query taxon names
 blast_results_folder <- "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast"
 blast_results_pattern <- "*.xml$"
 
-# read all file into lists for `lapply()` usage
+# read all file into lists for `lapply()` -  new file: 68M Aug  4 13:11
 blast_results_files <- list.files(path=blast_results_folder, pattern = blast_results_pattern, full.names = TRUE)
 
 # enable multithreading - only useful for multiple files
 plan(multiprocess) 
 
 # takes 7-10 hours on four cores - avoid by reloading full object from disk 
-blast_results_list <- furrr::future_map(blast_results_files, blastxml_dump, form = "tibble", .progress = TRUE) 
+# blast_results_list <- furrr::future_map(blast_results_files, blastxml_dump, form = "tibble", .progress = TRUE) 
 
-save(blast_results_list, file="/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_blast-noenv.Rdata")
+# save(blast_results_list, file="/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_blast-noenv.Rdata")
 load(file="/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_blast-noenv.Rdata", verbose = TRUE)
 
 names(blast_results_list) <- blast_results_files # works
@@ -42,7 +42,7 @@ names(blast_results_list) <- blast_results_files # works
 # save object and some time by reloading it - comment in if necessary
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # save(blast_results_list, file="/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_blast-noenv.Rdata")
-load(file="/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_blast-noenv.Rdata", verbose = TRUE)
+# load(file="/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_blast-noenv.Rdata", verbose = TRUE)
 
 # create one large item from many few, while keeping source file info fo grouping or subsetting
 blast_results_list %>% bind_rows(, .id = "src" ) %>%        # add source file names as column elements
@@ -53,15 +53,15 @@ blast_results_list %>% bind_rows(, .id = "src" ) %>%        # add source file na
 # save object and some time by reloading it - comment in if necessary
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # save(blast_results, file="/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_blast-noenv_sliced.Rdata")
-load(file="/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_blast-noenv_sliced.Rdata", verbose = TRUE)
-nrow(blast_results) # 11675
+# load(file="/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_blast-noenv_sliced.Rdata", verbose = TRUE)
+nrow(blast_results) # 11675 - 10302, better
 
 # Part II: Re-annotate Blast results
 # ----------------------------------
 
 # prepareDatabase not needed to be run multiple times
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# 17-Apr-2020: check external hard drive for readily created database files
+# 10-Aug-2020: check external hard drive for readily created database files
 # prepareDatabase(sqlFile = "accessionTaxa.sql", tmpDir = "/Users/paul/Sequences/References/taxonomizR/", vocal = TRUE) # takes a very long time - avoid by reloading full object from disk
 
 # function for mutate to convert NCBI accession numbers to taxonomic IDs

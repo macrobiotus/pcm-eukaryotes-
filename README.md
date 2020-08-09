@@ -6,7 +6,7 @@ Creative Commons Attribution 4.0 International Public License as per
 `https://creativecommons.org/licenses/by/4.0/legalcode`
 
 ## Progress notes
-* **12.20.2020** - adjusting repository for analysis restart
+* **12.02.2020** - adjusting repository for analysis restart
   * commit `4e8dccdaa9ac0501b6bf0655bef4b5d2fe91ae3d` in GitHub folder
   * commit `0ec21a12a03aa416ffd159cd3020f46a9437e510` in Transport folder.
   * removing `x` flags in Github and Transport folders
@@ -22,7 +22,7 @@ Creative Commons Attribution 4.0 International Public License as per
   * find old Qiime mapping file - **pending**
   * find predictor data - formatted or unformatted **pending**
   * commit `4e8dccdaa9ac0501b6bf0655bef4b5d2fe91ae3d`
-* * **13.02.2020** - adjusting repository for analysis restart
+* **13.02.2020** - adjusting repository for analysis restart
   * `cp /Users/paul/Archive/PhD_Thesis/09_pcm_2011_sample_information/150901_PCM_data_with_ages.xlsm /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Predictors/200213_PCM_predictors.xlsm`
   * edited file to have stable hashes (hashes not generated in sheet anymore by VBA function, but saved within:)
     * `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Predictors/200213_PCM_predictors.xlsx`
@@ -317,12 +317,27 @@ Creative Commons Attribution 4.0 International Public License as per
       * contains no data 
       * re-BLast with less stringent settings (not `-evalue 1e-5`, nor `-evalue 1e-50`,  but `-evalue 1e-10` ) - **pending**
         * readily adjusted `~/Documents/OU_pcm_eukaryotes/Github/140_bash_fasta_blast.sh`
-      * commit ``
-
- 
+      * commit `1a75d8e79ec98d4982167c41f6138df10f15df2b`
+      * erased
+        * `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/140_18S_merged-seq_blast-noenv.xml`
+        * `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_blast-noenv.Rdata`
+      * pushed updated files to cluster
+* **04.08.2020** - third blast on Cornell cluster
+  * working on `cbsumm25` - files arriving ok
+  * files blasted and back on local
+  * continue 
+    * reading in `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/140_18S_merged-seq_blast-noenv.xml`
+    * with `/Users/paul/Documents/OU_pcm_eukaryotes/Github/150_r_get_q2_tax-tab.r`
+* **06.08.2020** - read-in of 3rd Blast results
+  * running through `/Users/paul/Documents/OU_pcm_eukaryotes/Github/150_r_get_q2_tax-tab.r`
+* **07.08.2020** - read-in of 3rd Blast results
+  * continue in line `37` - with `save()` call
+* **10.08.2020** - continue processing of new Blast results
+  * continue in line `80`with loading saved file
+  * commit ``
 
 * **todo**
-  * possible re-Blast again with less stringent thresholds
+  * re-BLast with less stringent settings (not `-evalue 1e-5`, nor `-evalue 1e-50`,  but `-evalue 1e-10`)
   * compress via `pigz /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/190718_gi_list_environmental.txt`
   * in `200_r_get_phyloseq.r` or before 
     * remove contamination
@@ -331,7 +346,7 @@ Creative Commons Attribution 4.0 International Public License as per
     * update summary values for manuscript draft - see therein -  **pending**
     * agglomerate on phylum level to produce less-jagged plot - **pending**
     * remove contamination better - **pending**
-    * clean up script **pending**
+    * clean up script - **pending**
   
   * **before publication**
     * see _02.05.2020_ - find cause negative XRD values in `/Users/paul/Documents/OU_pcm_eukaryotes/Github/160_r_prep_q2_predictor-tab.r`

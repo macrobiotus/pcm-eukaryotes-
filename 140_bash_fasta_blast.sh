@@ -80,14 +80,14 @@ for fasta in "${inpth_seq[@]}";do
       blastn \
         -db "$dbpath" \
         -task blastn \
-        -evalue 1e-50 \
+        -evalue 1e-10 \
         -max_hsps 5 \
         -outfmt 5 \
         -max_target_seqs 5 \
         -out "$trpth"/Zenodo/Blast/"$tgt_file" \
         -num_threads "$cores" \
-        -qcov_hsp_perc 95 \
-        -perc_identity 75 \
+        -qcov_hsp_perc 90 \
+        -perc_identity 50 \
         -negative_gilist "$trpth"/Zenodo/Blast/190718_gi_list_environmental.txt && \
       printf "...on $(date) Blast finished writing to \"$trpth/Zenodo/Blast/$tgt_file\".\n" || \
       { printf "Blastn failed at $(date +"%T") on \"$fasta\". \n" ; exit 1; }
