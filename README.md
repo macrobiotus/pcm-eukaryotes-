@@ -346,28 +346,46 @@ Creative Commons Attribution 4.0 International Public License as per
       * original ratios values `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Metadata/200421_pcm_xrd.csv`
       * instead of raw vales `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Metadata/200421_pcm_xrd.csv`
     * in script now setting xrd values to absolute and recalculating ratios - better now - **ok**
+  * commit `ec7daef26b90a15ecd9c91396c02838b788a6d55`
+  * updating to qiime to `qiime2-2020.6`
+  * importing taxonomy file:
+      `qiime tools import \
+        --input-path  "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_q2taxtable.tsv" \
+        --output-path "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_q2taxtable.qza" \
+        --type 'FeatureData[Taxonomy]' \
+        --input-format HeaderlessTSVTaxonomyFormat || { echo 'Taxonomy import failed' ; exit 1; }`
+  * continue with `/Users/paul/Documents/OU_pcm_eukaryotes/Github/170_q2_summary.sh`
+    * `cp /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Manifest/200810_18S_MF_merged.txt /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Manifest/200810_18S_MF_merged_q2_import.txt`
+  * barplot:  `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/170_18S_merged-seq_barplot.qzv`
+    * many bacterial reads - **keep in mind**
+  * summary file: `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/170_18S_merged-tab.qz`
+    * saved output files - **ok**
+      * `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/170_feature-frequency-detail.csv`
+      * `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/170_sample-frequency-detail.csv`
+  * ran `/Users/paul/Documents/OU_pcm_eukaryotes/Github/175_q2_seq_align.sh` - **ok, but check alignment if using file in tree**
+  * ran `/Users/paul/Documents/OU_pcm_eukaryotes/Github/177_q2_mask_align.sh` - **ok, but check alignment if using file in tree**
+  * ran `/Users/paul/Documents/OU_pcm_eukaryotes/Github/180_q2_get_fastree.sh` - **ok**
+  * ran `/Users/paul/Documents/OU_pcm_eukaryotes/Github/190_q2_export_objects.sh` - **ok**
+    * results in `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/190_18S_merged-tab_q2_export`
+  * checking and rerunning re-run `~/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
+    * continue  after line `215` (with `decontam`-filtered Phyloseq object)`
+    * script needs restructuring, otherwise `decontam` filtering dosen't make sense
   
 
-
-
-
 * **todo**
-  * email Duanne White or other people for negative xrd values
-  * re-BLast with less stringent settings (not `-evalue 1e-5`, nor `-evalue 1e-50`,  but `-evalue 1e-10`)
-  * compress via `pigz /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/190718_gi_list_environmental.txt`
   * in `200_r_get_phyloseq.r` or before 
+    
+    * comprehend script structure, re-sucture, and adjust script clean up script - **pending**
     * remove contamination
-    * implement package `decontam`
-    * if so **add concentration values to mapping file**
     * update summary values for manuscript draft - see therein -  **pending**
     * agglomerate on phylum level to produce less-jagged plot - **pending**
     * remove contamination better - **pending**
-    * clean up script - **pending**
+    
+  * check alignments if using tree
   
-  * **before publication**
-    * see _02.05.2020_ - find cause negative XRD values in `/Users/paul/Documents/OU_pcm_eukaryotes/Github/160_r_prep_q2_predictor-tab.r`
-    * see _02.05.2020_ - find cause for missing sequences in `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/110_18S_merged-seq_blast-noenv.txt`
-  * export qiime objects using shell script
+* **before publication**
+  * **addressed** - see _02.05.2020_ - find cause negative XRD values in `/Users/paul/Documents/OU_pcm_eukaryotes/Github/160_r_prep_q2_predictor-tab.r`
+  * **pending** - see _02.05.2020_ - find cause for missing sequences in `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/110_18S_merged-seq_blast-noenv.txt`
   * in `160_r_prep_q2_predictor-tab.r`
     * possibly: include variable sorting code and remove from `200_r_get_phyloseq.r`
   * in `200_r_get_phyloseq.r`

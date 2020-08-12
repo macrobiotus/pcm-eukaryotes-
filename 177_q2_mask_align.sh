@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# 07.05.2020 - Paul Czechowski - paul.czechowski@gmail.com 
+# 12.08.2020 - Paul Czechowski - paul.czechowski@gmail.com 
 # ========================================================
 
 # set -x

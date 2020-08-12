@@ -49,7 +49,7 @@ otpth_vis[2]='Zenodo/Processing/110_18S_denoised-vis_run_2_ee3.qzv'
 # amplicon should be at least 85 bp 
 trnc[1]='85'
 trnc[2]='85'
-# allow no more then "1" errors in sequence,  default is "2"
+# allowed no more then "1" errors in sequence **check log file for last applied value!!!**, default is "2"
 eerr[1]='3'
 eerr[2]='3'
 

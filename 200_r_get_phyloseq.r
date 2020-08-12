@@ -1,8 +1,7 @@
 # **********************************************
 # * Create, filter, and write Physloseq object *
 # **********************************************
-# 27-Jul-2020
-
+# 12-Aug-2020
 
 # load packages
 # =============
@@ -12,7 +11,7 @@ gc()
 library("tidyverse")   # work using tibbles
 library("phyloseq")    # handle Qiime 2 data in R - best used to generate long dataframe
 library("decontam")    # decontamination - check `https://benjjneb.github.io/decontam/vignettes/decontam_intro.html`
-
+library("openxlsx")    # write Excel tables
 
 # functions
 # =========
@@ -81,7 +80,7 @@ colnames(tax_table(psob_raw)) <- c("superkingdom", "phylum", "class", "order",
 # 
 save(psob_raw, file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data_psob_import.Rdata")
 save.image(file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data_psob_import-image.Rdata")
-# 
+
 # load("/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data_psob_import.Rdata")
 # load("/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data_psob_import-image.Rdata")
 
@@ -96,6 +95,7 @@ save.image(file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data
 
 # plot library sizes
 # ...................
+
 psob <- psob_raw # copy for cleanup - just in case
 psob_df <- as.data.frame(sample_data(psob)) # Put sample_data into a ggplot-friendly data.frame
 psob_df$LibrarySize <- sample_sums(psob)
@@ -106,22 +106,54 @@ ggplot(data = psob_df, aes(x=Index, y=LibrarySize, color=Description)) +
   geom_point() +
   theme_bw()
   
-# frequency-based contamination identification 
-# ............................................
-# likely needs the library quantification values
-#   - check in paper 
-#   - skipping for now
+ggsave("200812_raw_library_coverage_and_types.pdf", plot = last_plot(), 
+         device = "pdf", path = "/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/200622_display_item_development",
+         scale = 3, width = 50, height = 50, units = c("mm"),
+         dpi = 500, limitsize = TRUE)
+  
+# contamination identification using package `decontam`
+# ......................................................
 
+# contamination analysis and plotting
 
-# prevalence-based contamination identification 
-# ............................................
+# set type for subsequent code
+sample_data(psob)$RibLibConcAvg <- as.numeric(sample_data(psob)$RibLibConcAvg)
 
-# no filtering done here - analysis and plotting
-
+# get combined factor identifying negative controls
 sample_data(psob)$is.neg <- sample_data(psob)$Description %in% c("PCRneg", "XTRneg")
+
+# prevalence-based contamination identification
 contamdf.prev <- isContaminant(psob, method="prevalence", neg="is.neg", threshold=0.5)
-table(contamdf.prev$contaminant)
+table(contamdf.prev$contaminant) # FALSE 12386  TRUE 51 
 head(which(contamdf.prev$contaminant))
+
+# frequency-based contamination identification
+contamdf.freq <- isContaminant(psob, method="frequency", conc="RibLibConcAvg")
+table(contamdf.freq$contaminant) # FALSE 12386  TRUE 239 
+head(which(contamdf.freq$contaminant))
+
+# frequency and prevalence based contamination identification
+contamdf.freq <- isContaminant(psob, method="combined", conc="RibLibConcAvg", neg="is.neg", threshold=0.5)
+table(contamdf.freq$contaminant) # FALSE 12386  TRUE 1184 
+head(which(contamdf.freq$contaminant))
+
+# randomwly inspecting 5 ASV
+set.seed(100)
+plot_frequency(psob, taxa_names(psob)[sample(which(contamdf.freq$contaminant),81)], conc="RibLibConcAvg") +
+    xlab("DNA Concentration (PicoGreen fluorescent intensity)")
+
+ggsave("200812_81_likely_contaminats.pdf", plot = last_plot(), 
+         device = "pdf", path = "/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/200622_display_item_development",
+         scale = 3, width = 200, height = 200, units = c("mm"),
+         dpi = 500, limitsize = TRUE)
+
+# "In this plot the dashed black line shows the model of a noncontaminant
+# sequence feature for which frequency is expected to be independent of the input
+# DNA concentration. The red line shows the model of a contaminant sequence
+# feature, for which frequency is expected to be inversely proportional to input
+# DNA concentration, as contaminating DNA will make up a larger fraction of the
+# total DNA in samples with very little total DNA. Clearly Seq3 fits the red
+# contaminant model very well, while Seq1 does not."
 
 # Make phyloseq object of presence-absence in negative controls and true samples
 psob.pa <- transform_sample_counts(psob, function(abund) 1*(abund>0))
@@ -139,26 +171,28 @@ ggplot(data=df.pa, aes(x=pa.neg, y=pa.pos, color=contaminant)) +
   ylab("Prevalence (PCM Samples)") +
   theme_bw()
 
-# prevalence-based contamination filtering 
-# .........................................
+ggsave("200812_contaminant_detection_check.pdf", plot = last_plot(), 
+         device = "pdf", path = "/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/200622_display_item_development",
+         scale = 3, width = 50, height = 50, units = c("mm"),
+         dpi = 500, limitsize = TRUE)
 
+
+# contamination filtering
 psob_decontam <- prune_taxa(!contamdf.prev$contaminant, psob)
 psob_decontam
-
 
 
 # melt Phyloseq object and get a tibble
 # -------------------------------------
 
-
-#  psob_molten <- psmelt(psob_decontam)  # object processed by `decontam`
-psob_molten <- psmelt(psob_raw)           # object not processed by `decontam`
+psob_molten <- psmelt(psob_decontam)  # object processed by `decontam`
+# psob_molten <- psmelt(psob_raw)           # object not processed by `decontam`
 
 psob_molten <- psob_molten %>% as_tibble(.)
 
 # save or load molten state after import
 save(psob_molten, file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/200_all_data_long_export_raw.Rdata")
-load("/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/200_all_data_long_export_raw.Rdata")
+# load("/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/200_all_data_long_export_raw.Rdata")
 
 # format and pre-filter Phyloseq object
 # =====================================
@@ -177,7 +211,7 @@ var_order <- c(
     "QUARTZ", "FELDSPAR", "TITANITE", "GARNETS", "MICAS", "DOLOMITE", "KAOLCHLOR", "CALCITE", "CHLORITE", 
     "ELEVATION", "SLOPE", "ASPECT",  "LongDEC", "LatDEC", "Loci", "AGE_KA",
     "superkingdom", "phylum", "class", "order", "family", "genus", "species",
-    "BarcodeSequence", "LinkerPrimerSequence", "TmplHash", "LibContent", "SardiID", "XtrOri", "XtrContent"
+    "BarcodeSequence", "LinkerPrimerSequence", "TmplHash", "LibContent", "SardiID", "XtrOri", "XtrContent", "RibLibConcAvg","RibPoolConcAvg"
 )
 
 psob_molten <- psob_molten %>% select(all_of(var_order))
@@ -185,6 +219,13 @@ psob_molten <- psob_molten %>% select(all_of(var_order))
 # retain only eukaryotes
 # ----------------------
 
+# count non-eukaryotes in raw data (7,720)
+psob_molten %>% filter(superkingdom %!in% c("Eukaryota")) %>% distinct(OTU) 
+
+# count eukaryotes in raw data (4,666)
+psob_molten %>% filter(superkingdom %in% c("Eukaryota")) %>% distinct(OTU) 
+
+# retain only eukaryotes
 psob_molten <- psob_molten %>% filter(superkingdom %in% c("Eukaryota"))
 
 # clean taxonomy strings
@@ -202,6 +243,7 @@ psob_molten <- psob_molten %>%
 # print and save a species list
 psob_species_list <- psob_molten %>% arrange(superkingdom, phylum, class, order, family, genus, species) %>% 
   select("superkingdom", "phylum", "class", "order", "family", "genus", "species") %>% distinct() %>% print(n = Inf)
+write.xlsx(psob_species_list, "/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/200622_display_item_development/200812_200_eukaryote_asv_no_abundances_decontam_filtered.xlsx", overwrite = FALSE)
 
 psob_molten <- psob_molten %>% arrange(superkingdom, phylum, class, order, family, genus, species)
 

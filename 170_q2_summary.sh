@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
-# 02.05.2020 - Paul Czechowski - paul.czechowski@gmail.com 
+# 12.08.2020 - Paul Czechowski - paul.czechowski@gmail.com 
 # ========================================================
-# Denoise 2 sequencing runs using DAD2
 
 # set -x
 set -e
@@ -26,7 +25,7 @@ fi
 
 # define relative input locations - Qiime files
 # --------------------------------------------------------
-inpth_map='Zenodo/Manifest/200501_18S_MF_merged_q2_import.txt'
+inpth_map='Zenodo/Manifest/200810_18S_MF_merged_q2_import.txt'
 inpth_tax='Zenodo/Blast/150_18S_merged-seq_q2taxtable.qza'
 
 # define relative input locations - sequence files

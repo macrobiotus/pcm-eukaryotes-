@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# 05.05.2020 - Paul Czechowski - paul.czechowski@gmail.com 
+# 12.08.2020 - Paul Czechowski - paul.czechowski@gmail.com 
 # ========================================================
 
 # For debugging only
@@ -30,8 +30,11 @@ fi
 
 # Qiime files
 # -----------
+
+# MD5 (/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_q2taxtable.qza) = b5e1e51cb160982300b9c1794b3044c4
 tax_assignemnts='Zenodo/Blast/150_18S_merged-seq_q2taxtable.qza'
-inpth_map='Zenodo/Manifest/200501_18S_MF_merged_q2_import.txt'
+# MD5 (/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Manifest/200810_18S_MF_merged_q2_import.txt) = 62f8ced6d6c8ceb682c53e446c568df8
+inpth_map='Zenodo/Manifest/200810_18S_MF_merged_q2_import.txt'
 
 # Find all feature tables and put into array
 # ------------------------------------------
@@ -119,7 +122,7 @@ for i in "${!inpth_features[@]}"; do
         -o "$results_dir"/features-tax-meta.biom \
         -m "$trpth"/"$inpth_map" \
         --observation-header OTUID,taxonomy,confidence \
-        --sample-header SampleID,BarcodeSequence,LinkerPrimerSequence,TmplHash,LibContent,SardiID,XtrOri,XtrContent,Location,LongDEC,LatDEC,Loci,Description,COLR,GRAVL,TEXT,AMMN,NITR,PHOS,POTA,SULPH,CARB,COND,PH_CACL,PH_H2O,RLU,QUARTZ,FELDSPAR,TITANITE,GARNETS,MICAS,DOLOMITE,KAOLCHLOR,CALCITE,CHLORITE,ELEVATION,SLOPE,ASPECT,AGE_KA || { echo 'Metadata addition failed' ; exit 1; }
+        --sample-header SampleID,BarcodeSequence,LinkerPrimerSequence,TmplHash,LibContent,SardiID,XtrOri,XtrContent,Location,LongDEC,LatDEC,Loci,RibLibConcAvg,RibPoolConcAvg,Description,COLR,GRAVL,TEXT,AMMN,NITR,PHOS,POTA,SULPH,CARB,COND,PH_CACL,PH_H2O,RLU,QUARTZ,FELDSPAR,TITANITE,GARNETS,MICAS,DOLOMITE,KAOLCHLOR,CALCITE,CHLORITE,ELEVATION,SLOPE,ASPECT,AGE_KA || { echo 'Metadata addition failed' ; exit 1; }
   
       # Exporting .biom file to .tsv
       printf "${bold}$(date):${normal} Exporting to .tsv file...\n"
