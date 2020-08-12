@@ -1,7 +1,7 @@
 # *********************************************************
 # * Combine and correct sample descriptors and predictors *
 # ********************************************************* 
-# 03-May-2020
+# 12-Aug-2020
 
 # load packages
 # =============
@@ -15,7 +15,10 @@ library("stringr")    # rename column names using dplyr
 # load sample descriptions
 # =========================
 
-p_mtd <- "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Manifest/200420_18S_MF_corrected.xlsx"
+# formerly
+# p_mtd <- "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Manifest/200420_18S_MF_corrected.xlsx"
+# recently - with DNA concentration values for possiby better cleanup
+p_mtd <- "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Manifest/200727_18S_MF.xlsx"
 
 tib_mtd <- read_excel(p_mtd) %>%
   mutate_at(vars(SampleID, BarcodeSequence, LinkerPrimerSequence, TmplHash,  LibContent, SardiID,  XtrOri, XtrContent, Location, Loci, Description ), factor) 
@@ -36,7 +39,7 @@ duplicated(tib_mtd$SampleID)
 p_atp <- "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Metadata/200419_pcm_atp.csv"
 p_che <- "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Metadata/200419_pcm_csbp.csv"
 p_geo <- "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Metadata/200419_pcm_geog.csv"
-p_xrd <- "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Metadata/200421_pcm_xrd.csv"
+p_xrd <- "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Metadata/200812_pcm_xrd.csv"
 p_age <- "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Metadata/200419_pcm_ages.csv"
 
 tib_atp <- read_csv(p_atp,
@@ -126,30 +129,38 @@ save.image(file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/160_soil-dat
 
 # check xrd values
 tib_compl %>% 
-  mutate(row_sum = rowSums(select(., names(tib_xrd)[2:9]))) %>% 
-  dplyr:::select(names(tib_xrd)[2:9], row_sum) %>% print.data.frame()
+  mutate(row_sum = rowSums(select(., names(tib_xrd)[2:10]))) %>% 
+  dplyr:::select(names(tib_xrd)[2:10], row_sum) %>% print.data.frame()
 
 # re-scale xrd values to yield a column sum of 1, i.e. close data
-#  after rounding errors in Excel
-#  also: Some peak values were negative which doesn't make sense
-#  need to set to NA or nee to check with Duanne White
-#  for now just using the absolute value.
+#  after rounding errors in Excel now just using the absolute value.
 
 tib_compl <- tib_compl %>% 
-  mutate_at(vars(names(tib_xrd)[2:9]), abs) %>% 
-  mutate(row_sum = rowSums(select(., names(tib_xrd)[2:9]))) %>% 
-  mutate_at(vars(names(tib_xrd)[2:9]), ~ ./row_sum) %>% 
+  mutate_at(vars(names(tib_xrd)[2:10]), abs) %>% 
+  mutate(row_sum = rowSums(select(., names(tib_xrd)[2:10]))) %>% 
+  mutate_at(vars(names(tib_xrd)[2:10]), ~ ./row_sum) %>% 
   select(-row_sum) %>% arrange(SampleID)
 
-# check xrd values
+# check xrd values again - looking good
 tib_compl %>% 
-  mutate(row_sum = rowSums(select(., names(tib_xrd)[2:9]))) %>% 
+  mutate(row_sum = rowSums(select(., names(tib_xrd)[2:10]))) %>% 
   select(names(tib_xrd)[2:9], row_sum) %>% print.data.frame()
 
+
+tib_compl$CHLORITE
 # plot all raw data
-# dev.new()
-# tib_compl %>% keep(is.numeric) %>%  gather() %>% 
-#   ggplot2:::ggplot(aes(value)) + facet_wrap(~ key, scales = "free") + geom_histogram() + geom_density()
+tib_compl %>% keep(is.numeric) %>%  gather() %>% 
+  ggplot2:::ggplot(aes(value)) + facet_wrap(~ key, scales = "free") + geom_histogram() + geom_density() + theme_bw() +
+  theme(legend.position = "none") +
+  theme(strip.text.y = element_text(angle=0)) + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
+        axis.text.y = element_text(angle = 0, hjust = 1,  size = 7), 
+        axis.ticks.y = element_blank())
+
+ggsave("200810_predictor_data_of_script_160.pdf", plot = last_plot(), 
+       device = "pdf", path = "/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/200622_display_item_development/",
+       scale = 3, width = 75, height = 50, units = c("mm"),
+       dpi = 500, limitsize = TRUE)
 
 # save intermediate state after corrections
 save(tib_compl, file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/160_soil-data_corrected.Rdata")
@@ -158,6 +169,9 @@ save.image(file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/160_soil-dat
 # write_merged tables - for Qiime import
 # ======================================
 
-p_compl <- tib_compl
-p_compl <- "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Manifest/200501_18S_MF_merged.txt"
+tib_compl
+# formerly:
+# p_compl <- "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Manifest/200501_18S_MF_merged.txt" 
+# recently
+p_compl <- "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Manifest/200810_18S_MF_merged.txt"
 write_tsv(tib_compl, p_compl, append = FALSE, col_names = TRUE)

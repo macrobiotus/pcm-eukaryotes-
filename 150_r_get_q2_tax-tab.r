@@ -79,24 +79,24 @@ blast_results_appended <- blast_results %>% mutate(tax_id = get_taxid(hit_access
 # save(blast_results_appended, file="/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_blast-noenv_with-taxid.Rdata")
 load(file="/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_blast-noenv_with-taxid.Rdata", verbose=TRUE)
 
-length(blast_results_appended$tax_id) # 11675
+length(blast_results_appended$tax_id) # 11675 - now 10302, better
 
 # look up taxonomy table - takes a long time, needs external database.
 tax_table <- as_tibble(get_strng(blast_results_appended$tax_id), rownames = "tax_id") %>% mutate(tax_id= as.numeric(tax_id))
-nrow(tax_table) # 11675
+nrow(tax_table) # 11675 now 10302, as above
 
 # getting a tax table without duplicates to enable proper join command later
 tax_table <- tax_table %>% arrange(tax_id) %>% distinct(tax_id, superkingdom, phylum, class, order, family, genus, species, .keep_all= TRUE)
 
 # checks
 head(tax_table)
-nrow(tax_table)             # 3891 - as it should
+nrow(tax_table)             # was 3891, now 2761 - Blast parameters can be kept
 all(!duplicated(tax_table)) #        and no duplicated tax ids anymore
-lapply(list(blast_results_appended,tax_table), nrow) # first 11675, second deduplicated and with 3051 - ok 
+lapply(list(blast_results_appended,tax_table), nrow) # first 10302, second deduplicated and with 2761 - ok 
 
 # https://stackoverflow.com/questions/5706437/whats-the-difference-between-inner-join-left-join-right-join-and-full-join
 blast_results_final <- left_join(blast_results_appended, tax_table, copy = TRUE) 
-nrow(blast_results_final) # 11675 - table has correct length now 
+nrow(blast_results_final) # 10302 - table has correct length now 
 
 # Part III: Format Blast results for export
 # -----------------------------------------
@@ -147,12 +147,12 @@ names(q2taxtable) <- c("#OTUID", "taxonomy", "confidence")
 # ----------------------------------------
 
 # read fasta used for Blasting
-fnapth <- "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/140_18S_merged-seq.fasta"
+fnapth <- "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/120_18S_merged-seq.fasta"
 fna = readDNAStringSet(fnapth)
-length(names(fna)) # 12399 as expected
+length(names(fna)) # was 12399 as expected, now 12437
 
 # get length of main table without missing hash values
-length(q2taxtable$taxonomy) # 11675 as expected
+length(q2taxtable$taxonomy) # 10302 as expected
 
 # add missing hash values from fasts to main table to get complete table  
 q2taxtable <- left_join(enframe(names(fna), value = '#OTUID'), q2taxtable, by = c('#OTUID'))

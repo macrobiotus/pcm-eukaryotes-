@@ -334,9 +334,25 @@ Creative Commons Attribution 4.0 International Public License as per
   * continue in line `37` - with `save()` call
 * **10.08.2020** - continue processing of new Blast results
   * continue in line `80`with loading saved file
-  * commit ``
+  * commit `260f6fe0a9816f2daf19ef0c0a94571d30275991`
+  * finished running through `/Users/paul/Documents/OU_pcm_eukaryotes/Github/150_r_get_q2_tax-tab.r` - **ok**
+    * re-wrote `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_q2taxtable.tsv`
+  * starting to run through `/Users/paul/Documents/OU_pcm_eukaryotes/Github/160_r_prep_q2_predictor-tab.r`
+    * continued from line `21` - **ok**
+    * finished script, saved output file `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Manifest/200810_18S_MF_merged.txt`
+* **10.08.2020** - continue re-processing - checking XRD values
+  * working on `/Users/paul/Documents/OU_pcm_eukaryotes/Github/160_r_prep_q2_predictor-tab.r`
+    * as xrd values now using from `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Metadata/150901_PCM_data_with_ages_modified.xlsm`
+      * original ratios values `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Metadata/200421_pcm_xrd.csv`
+      * instead of raw vales `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Metadata/200421_pcm_xrd.csv`
+    * in script now setting xrd values to absolute and recalculating ratios - better now - **ok**
+  
+
+
+
 
 * **todo**
+  * email Duanne White or other people for negative xrd values
   * re-BLast with less stringent settings (not `-evalue 1e-5`, nor `-evalue 1e-50`,  but `-evalue 1e-10`)
   * compress via `pigz /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/190718_gi_list_environmental.txt`
   * in `200_r_get_phyloseq.r` or before 
