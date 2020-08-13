@@ -370,17 +370,22 @@ Creative Commons Attribution 4.0 International Public License as per
   * checking and rerunning re-run `~/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
     * continue  after line `215` (with `decontam`-filtered Phyloseq object)`
     * script needs restructuring, otherwise `decontam` filtering dosen't make sense
-  
+  * commit `f8157bbfea9688f1ee3f1b7bc7b1f79e020bb6fd`
+* **13.08.2020** - continue re-processing - checking XRD values
+  * drafted revisions of `200_r_get_phyloseq.r` 
+    * needs cleaning up from top two bottom
+    * upper and lower section surrounding cleanup need to be adjusted
+    * adjust output file names
+  * commit ``
+
+
+
+
 
 * **todo**
   * in `200_r_get_phyloseq.r` or before 
-    
-    * comprehend script structure, re-sucture, and adjust script clean up script - **pending**
-    * remove contamination
-    * update summary values for manuscript draft - see therein -  **pending**
+    * update summary values for manuscript draft - see therein - **pending**
     * agglomerate on phylum level to produce less-jagged plot - **pending**
-    * remove contamination better - **pending**
-    
   * check alignments if using tree
   
 * **before publication**
