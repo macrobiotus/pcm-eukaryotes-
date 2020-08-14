@@ -1,7 +1,7 @@
 # **********************************************
 # * Create, filter, and write Physloseq object *
 # **********************************************
-# 13-Aug-2020
+# 14-Aug-2020
 
 # load packages
 # =============
@@ -181,7 +181,6 @@ save.image(file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data
 # create molten Phyloseq object copy
 psob_raw_molten <- psmelt(psob_raw)
 
-
 # Tidy object 
 # -----------
 
@@ -195,126 +194,152 @@ psob_raw_molten <- clean_molten_tax_strings(psob_raw_molten)
 psob_raw_molten <- retain_pcm_sample_for_inspection(psob_raw_molten)
 
 # re-label available data categories for plotting
-psob_raw_molten$phylum[which(psob_raw_molten$phylum %in% c("nomatch", "undefined"))] <- NA
+psob_raw_molten$phylum[which(psob_raw_molten$phylum %in% c("nomatch", "undefined"))] <- "no hit, reference, or complete taxonomy string"
 
 # get a tibble
 psob_raw_molten <- psob_raw_molten %>% as_tibble(.)
+
+# remove empty data - hope this works
+psob_raw_molten <- psob_raw_molten %>% filter(Abundance > 0) 
 
 
 # Describe object (as below) 
 # --------------------------
 
-# count eukaryotes and non-eukaryotes 
-psob_raw_molten %>% filter(superkingdom %in% c("Eukaryota")) %>% distinct(OTU) 
-psob_raw_molten %>% filter(superkingdom %!in% c("Eukaryota")) %>% distinct(OTU) 
-
 # create and save plot
-ggplot(psob_plot_data, aes_string(x = "phylum", y = "Abundance", fill = "phylum")) +
+ggplot(psob_raw_molten, aes_string(x = "phylum", y = "Abundance", fill = "phylum")) +
   geom_bar(stat = "identity", position = "stack", colour = NA, size=0) +
-  facet_grid(Location ~ ., shrink = TRUE, scales = "fixed") +
+  facet_grid(Location ~ ., shrink = TRUE, scales = "free_y") +
   theme_bw() +
   theme(legend.position = "none") +
   theme(strip.text.y = element_text(angle=0)) + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
         axis.text.y = element_text(angle = 0, hjust = 1,  size = 7), 
         axis.ticks.y = element_blank()) +
-  labs( title = "Phyla across all locations") + 
+  labs( title = "Phyla across all locations before filtering") + 
   xlab("phyla at all locations") + 
-  ylab("read counts at each location (y scales fixed)")
+  ylab("read counts at each location (y scales variable)")
 
-ggsave("200717_all_phyla_at_all_locations.pdf", plot = last_plot(), 
+ggsave("200814_all_unfiltered_phyla_at_all_locations.pdf", plot = last_plot(), 
          device = "pdf", path = "/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/200622_display_item_development",
          scale = 3, width = 75, height = 50, units = c("mm"),
          dpi = 500, limitsize = TRUE)
 
 # Numerical summaries
 # -------------------
-length(unique(psob_molten$Sample))
-unique(psob_molten$Sample) %>% grepl(".MM", . , fixed = TRUE) %>% sum
-unique(psob_molten$Sample) %>% grepl(".ME", . , fixed = TRUE) %>% sum
-unique(psob_molten$Sample) %>% grepl(".LT", . , fixed = TRUE) %>% sum
+length(unique(psob_raw_molten$Sample)) # 154 samples from study sites
+unique(psob_raw_molten$Sample) %>% grepl(".MM", . , fixed = TRUE) %>% sum # 26 sample Mount Menzies
+unique(psob_raw_molten$Sample) %>% grepl(".ME", . , fixed = TRUE) %>% sum # 70 samples Mawson Escarpment
+unique(psob_raw_molten$Sample) %>% grepl(".LT", . , fixed = TRUE) %>% sum # 58 samples Lake Terrasovoje
+sum(26 + 70 + 58) # 154 - ok
 
 # get total seqencing effort
-sum(psob_molten$Abundance)
-
+sum(psob_raw_molten$Abundance) #  16 524 031 sequences total - after import filtering
 
 # summarize distinct values across the long data frame
 show_vars <- c("OTU", "Abundance", "Sample", "BarcodeSequence", "Location", "Description",
   "superkingdom", "phylum", "class", "order", "family", "genus", "species")
-psob_molten %>% select(any_of(show_vars)) %>% summarize_all(n_distinct, na.rm = TRUE)
+psob_raw_molten %>% select(any_of(show_vars)) %>% summarize_all(n_distinct, na.rm = TRUE)
 
 # A tibble: 1 x 13
 #     OTU Abundance Sample BarcodeSequence Location Description superkingdom phylum class order family genus species
 #   <int>     <int>  <int>           <int>    <int>       <int>        <int>  <int> <int> <int>  <int> <int>   <int>
-# 1  2743      1831    147             147        3           1            1     31   106   277    496   787    1134
+# 1  8097      2847    154             154        3           1            5     47   131   342    621  1161    1904
 
-
-# get coverages per sample and analyze
-coverage_per_sample <- aggregate(psob_molten$Abundance, by=list(Sample=psob_molten$Sample), FUN=sum)
-coverage_per_sample$Sample %>% grepl(".MM", . , fixed = TRUE) %>% sum
-coverage_per_sample$Sample %>% grepl(".ME", . , fixed = TRUE) %>% sum
-coverage_per_sample$Sample %>% grepl(".LT", . , fixed = TRUE) %>% sum
+# Analyze coverages per samples
+coverage_per_sample <- aggregate(psob_raw_molten$Abundance, by=list(Sample=psob_raw_molten$Sample), FUN=sum)
 summary(coverage_per_sample)
+coverage_per_sample %>% filter(., grepl(".MM", Sample , fixed = TRUE)) %>% summary(x) 
+coverage_per_sample %>% filter(., grepl(".ME", Sample , fixed = TRUE)) %>% summary(x) 
+coverage_per_sample %>% filter(., grepl(".LT", Sample , fixed = TRUE)) %>% summary(x) 
 
-# get ASV count again
-length(unique(psob_molten$OTU))
+
+# Analyze coverages per ASVs
+length(unique(psob_raw_molten$OTU)) # 8097
+# count eukaryotes and non-eukaryotes 
+psob_raw_molten %>% filter(superkingdom %in% c("Eukaryota")) %>% distinct(OTU)  # 2,656 Eukaryota ASV
+psob_raw_molten %>% filter(superkingdom %!in% c("Eukaryota")) %>% distinct(OTU) # 5,441 non-Eukaryota ASV
+
 
 # get coverages per ASV and analyze
-coverage_per_asv <- aggregate(psob_molten$Abundance, by=list(ASV=psob_molten$OTU), FUN=sum)
+coverage_per_asv <- aggregate(psob_raw_molten$Abundance, by=list(ASV=psob_raw_molten$OTU), FUN=sum)
 coverage_per_asv <- coverage_per_asv %>% arrange(desc(x))
 summary(coverage_per_asv)
 
-head(coverage_per_asv)
-head(psob_molten)
 
 # get most species ordered by frequency
-left_join(coverage_per_asv , psob_molten, by = c("ASV" = "OTU")) %>%
-    distinct_at(vars("ASV", "x", "superkingdom", "phylum", "class", "species")) %>% head(., n = 12)
+psob_asv_list <- left_join(coverage_per_asv , psob_raw_molten, by = c("ASV" = "OTU")) %>%
+    distinct_at(vars("ASV", "x", "superkingdom", "phylum", "class", "order", "family", "genus", "species")) 
 
-#                                ASV      x superkingdom       phylum           class                             species
-# 1  5004de9015b06c0221fb18cd330bc1e4 215462    Eukaryota   Ascomycota Lecanoromycetes               Acanthothecis fontana
-# 2  d96a424887ab33e2e7cc372d8c8fd40b 206939    Eukaryota   Ascomycota   Leotiomycetes              Ascozonus woolhopensis
-# 3  50baba76780ac5b54c70079f1af75604 194591    Eukaryota   Ascomycota Lecanoromycetes                  Lecanora rugosella
-# 4  d1cae5b7608113426bfb3bd92ff6ffcf 145295    Eukaryota Streptophyta      Liliopsida                Gastridium phleoides
-# 5  f88660c48713384b141b7cf376e1a118 140853    Eukaryota Streptophyta       undefined                   Solanum pennellii
-# 6  e881c59b29254fd091cee7feaaff143e 130422    Eukaryota     Nematoda     Chromadorea                 Scottnema lindsayae
-# 7  31a6dcb475a929ef9cc4186da075ea07 129971    Eukaryota     Rotifera      Bdelloidea               Philodina acuticornis
-# 8  ffba4e2457bbb54ce9dff4de75f4bff7 125600    Eukaryota     Rotifera      Bdelloidea               Philodina acuticornis
-# 9  b1c61b2e584822a0cf5c55ef502eb08f 124030    Eukaryota   Ciliophora Phyllopharyngea Pseudochilodonopsis quadrivacuolata
-# 10 413cf364a1daf21eb3c4f24ba076f5a3 114018    Eukaryota   Ascomycota Lecanoromycetes                    Pyxine sorediata
-# 11 b7f842c137861b77b4ebe9adc233bc54 112059    Eukaryota   Ascomycota   Leotiomycetes                 Thelebolus globosus
-# 12 8d7e8b0361dfc41dfac402c6daa5920b  96774    Eukaryota   Arthropoda       undefined             Derocheilocaris typicus
+psob_asv_list %>% head(., n = 12)
 
-# re-check locations
-psob_molten %>% distinct(Location,  .keep_all = FALSE)
-
+#                                 ASV       x superkingdom              phylum               class                       species
+# 1  f184ca796a5be28dc3cde4bcbe1d26d3 1491686    Eukaryota no hit or reference           undefined          uncultured eukaryote
+# 2  5c882557a215b3ca73569393ee7212b6  888969    Eukaryota        Streptophyta           undefined               Cicer arietinum
+# 3  a889334a65362e22039f6bd6b31aceff  454680     Bacteria      Planctomycetes      Planctomycetia     Singulisphaera acidiphila
+# 4  7c12dd9bdf0ab53af6f927744d2d6649  291288    Eukaryota          Ascomycota      Eurotiomycetes       Arthrocladium tropicale
+# 5  e275f1ca63cb2b3e7b039a2ce85b4dac  272358    Eukaryota            Nematoda             Enoplea      Microdorylaimus modestus
+# 6  25ad1fd18126a0c3909c61d2dc8b43c4  270294    Eukaryota            Rotifera          Bdelloidea          Philodina sp. cmbb21
+# 7  bd2b68bde1426f96a5a6abc71daabc20  255198    Eukaryota       Heterolobosea           undefined Allovahlkampfia sp. PKD 2011b
+# 8  58dd134e3736080c944c9655172c18ec  246207     Bacteria      Proteobacteria Alphaproteobacteria              Sphingomonas sp.
+# 9  5004de9015b06c0221fb18cd330bc1e4  207718    Eukaryota          Ascomycota     Lecanoromycetes         Acanthothecis fontana
+# 10 d96a424887ab33e2e7cc372d8c8fd40b  201579    Eukaryota          Ascomycota       Leotiomycetes        Ascozonus woolhopensis
+# 11 634e9c4059da8b996c8a07faabfb488f  200259    Eukaryota            Cercozoa           undefined             Cercozoa sp. TGS3
+# 12 3d3dbac4c47854fe7091ae126d8a7438  186507     Bacteria      Proteobacteria Alphaproteobacteria  Erythrobacteraceae bacterium
 
 
-# print and save a species list
-psob_species_list <- psob_molten %>% arrange(superkingdom, phylum, class, order, family, genus, species) %>% 
-  select("superkingdom", "phylum", "class", "order", "family", "genus", "species") %>% distinct() %>% print(n = Inf)
-write.xlsx(psob_species_list, "/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/200622_display_item_development/200812_200_eukaryote_asv_no_abundances_decontam_filtered.xlsx", overwrite = FALSE)
+psob_asv_list %>% 
+  arrange(superkingdom, phylum, class, order, family, genus, species) %>%
+  write.xlsx(.,"/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/200622_display_item_development/200814_all_unfiltered_phyla_at_all_locations.xlsx", overwrite = FALSE)
 
 
 # save or load molten state 
-save(psob_molten, file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/200_all_data_long_export_raw.Rdata")
-load("/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/200_all_data_long_export_raw.Rdata")
+save.image(file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data_long_export_raw-image.Rdata")
+save(psob_raw_molten, file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data_long_export_raw.Rdata")
+load("/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data_long_export_raw.Rdata")
 
-# [...]
+
 
 # III. Remove contamination, melt, and remove more
 # ===============================================
 
 psob <- psob_raw # create Phyloseq object copy
 
+
+# plot controls (abundances are aggregated in-call to avoid jagged edges)
+psob_molten <- psmelt(psob)
+unique(psob_molten$Description) # "PCMNT" "ICNTRL" "SCNTRL" "ACNTRL" "XCNTRL"
+molten_contamination <- psob_molten %>% 
+  filter(Description %in% c("ICNTRL", "SCNTRL", "ACNTRL", "XCNTRL")) %>% 
+  filter(Abundance != 0) # 4,218 x 51
+
+ggplot(molten_contamination, aes_string(x = "phylum", y = molten_contamination$Abundance, fill = "phylum")) +
+  geom_bar(stat = "identity", position = "stack", colour = NA, size=0) +
+  facet_grid(Description ~ ., shrink = TRUE, scales = "free_y") +
+  theme_bw() +
+  theme(legend.position = "none") +
+  theme(strip.text.y = element_text(angle=0)) + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
+        axis.text.y = element_text(angle = 0, hjust = 1,  size = 7), 
+        axis.ticks.y = element_blank()) +
+  labs( title = "Phyla in controls across all locations before application of Decontam") + 
+  xlab("phyla in control samples") + 
+  ylab("read counts at each location (y scales variable)")
+
+ggsave("200814_unfiltered_controls.pdf", plot = last_plot(), 
+         device = "pdf", path = "/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/200622_display_item_development",
+         scale = 3, width = 75, height = 50, units = c("mm"),
+         dpi = 500, limitsize = TRUE)
+
+# names are being re-used further down, thus avoiding chaos here
+rm(molten_contamination, psob_molten)
+
 # Removal of contamination with package `decontam`
 # ------------------------------------------------
 # following:
 #   "https://benjjneb.github.io/decontam/vignettes/decontam_intro.html"
 
-
 # plot initial library sizes
-psob <- psob_raw # copy for cleanup - just in case
 psob_df <- as.data.frame(sample_data(psob)) # Put sample_data into a ggplot-friendly data.frame
 psob_df$LibrarySize <- sample_sums(psob)
 psob_df <- psob_df[order(psob_df$LibrarySize),]
@@ -324,7 +349,7 @@ ggplot(data = psob_df, aes(x=Index, y=LibrarySize, color=Description)) +
   geom_point() +
   theme_bw()
   
-ggsave("200813_raw_library_coverage_and_types.pdf", plot = last_plot(), 
+ggsave("200814_raw_library_coverage_and_types.pdf", plot = last_plot(), 
          device = "pdf", path = "/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/200622_display_item_development",
          scale = 3, width = 50, height = 50, units = c("mm"),
          dpi = 500, limitsize = TRUE)
@@ -334,11 +359,11 @@ ggsave("200813_raw_library_coverage_and_types.pdf", plot = last_plot(),
 sample_data(psob)$RibLibConcAvg <- as.numeric(sample_data(psob)$RibLibConcAvg)
 
 # get combined factor identifying negative controls
-sample_data(psob)$is.neg <- sample_data(psob)$Description %in% c("PCRneg", "XTRneg")
+sample_data(psob)$is.neg <- sample_data(psob)$Description %in% c("ACNTRL", "XCNTRL")
 
 # frequency and prevalence based contamination identification
-contamdf.freq <- isContaminant(psob, method="combined", conc="RibLibConcAvg", neg="is.neg", threshold=0.5)
-table(contamdf.freq$contaminant) # FALSE 12386  TRUE 1184 
+contamdf.freq <- isContaminant(psob, method="combined", conc="RibLibConcAvg", neg="is.neg", threshold=0.6)
+table(contamdf.freq$contaminant) # FALSE 8917  TRUE 1635 
 head(which(contamdf.freq$contaminant))
 
 # randomwly inspecting 81 ASV
@@ -346,7 +371,7 @@ set.seed(100)
 plot_frequency(psob, taxa_names(psob)[sample(which(contamdf.freq$contaminant),81)], conc="RibLibConcAvg") +
     xlab("DNA Concentration (PicoGreen fluorescent intensity)")
 
-ggsave("200813_decontam_81_likely-contaminats.pdf", plot = last_plot(), 
+ggsave("200814_decontam_81_likely-contaminats.pdf", plot = last_plot(), 
          device = "pdf", path = "/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/200622_display_item_development",
          scale = 3, width = 200, height = 200, units = c("mm"),
          dpi = 500, limitsize = TRUE)
@@ -361,132 +386,147 @@ ggsave("200813_decontam_81_likely-contaminats.pdf", plot = last_plot(),
 
 # Make phyloseq object of presence-absence in negative controls and true samples
 psob.pa <- transform_sample_counts(psob, function(abund) 1*(abund>0))
-psob.pa.neg <- prune_samples(sample_data(psob.pa)$Description %in% c("PCRneg", "XTRneg"), psob.pa)
-psob.pa.pos <- prune_samples(sample_data(psob.pa)$Description == "PCM", psob.pa)
+psob.pa.neg <- prune_samples(sample_data(psob.pa)$Description %in% c("ACNTRL", "XCNTRL"), psob.pa)
+psob.pa.pos <- prune_samples(sample_data(psob.pa)$Description == "PCMNT", psob.pa)
 
 # Make data.frame of prevalence in positive and negative samples
 df.pa <- data.frame(pa.pos = taxa_sums(psob.pa.pos), pa.neg = taxa_sums(psob.pa.neg),
-                      contaminant=contamdf.prev$contaminant)
+                      contaminant=contamdf.freq$contaminant)
 
 # look at the incidences of taxa observations in negative controls and positive samples.
 ggplot(data=df.pa, aes(x=pa.neg, y=pa.pos, color=contaminant)) + 
   geom_point() +
-  xlab("Prevalence (PCR and Extraction Controls)") +
-  ylab("Prevalence (PCM Samples)") +
+  xlab("prevalence (PCR and Extraction Controls)") +
+  ylab("prevalence (PCM Samples)") +
   theme_bw()
 
-ggsave("200813_decontam_contaminant_detection_check.pdf", plot = last_plot(), 
+ggsave("200814_decontam_contaminant_detection_check.pdf", plot = last_plot(), 
          device = "pdf", path = "/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/200622_display_item_development",
          scale = 3, width = 50, height = 50, units = c("mm"),
          dpi = 500, limitsize = TRUE)
 
 
 # contamination filtering
-psob_decontam <- prune_taxa(!contamdf.prev$contaminant, psob)
+psob_decontam <- prune_taxa(!contamdf.freq$contaminant, psob)
 
 
+# Inspect controls in study samples after application of `decontam`
+# ----------------------------------------------------------------
 
-# Subtraction of contamination from study samples
-# ------------------------------------------------
+psob_molten <- psmelt(psob_decontam) %>% as_tibble()
 
-psob_molten <- psmelt(psob_decontam) 
+# "Soil Control": 2,315 ASVs
+molten_soilcntrl <- psob_molten %>% filter(Description == "SCNTRL", Abundance != 0) 
 
-# "Soil Control": 4,446 ASVs
-molten_soilcntrl <- molten_controls %>% filter(Description == "Soil Control", Abundance != 0)
-
-molten_soilcntrl %>% select("superkingdom", "phylum", "class", "order", "family", "genus", "species") %>% distinct() %>% print(n = Inf)
-
-
-# "Insect Control": 36 ASV
-molten_inscntrl <- molten_controls %>% filter(Description == "Insect Control", Abundance != 0)
-
-molten_inscntrl %>% select("superkingdom", "phylum", "class", "order", "family", "genus", "species") %>% distinct() %>% print(n = Inf)
-
-# "Extraction Blank": 5,816 ASV's
-molten_xtrneg <- molten_controls %>% filter(Description == "Extraction Blank")
-
-molten_xtrneg %>% select("superkingdom", "phylum", "class", "order", "family", "genus", "species") %>% distinct() %>%  print(n = Inf)
+molten_soilcntrl %>% select("OTU", "superkingdom", "phylum", "class", "order", "family", "genus", "species") %>% 
+  distinct_at(vars("OTU", "superkingdom", "phylum", "class", "order", "family", "genus", "species")) %>% 
+  arrange(superkingdom, phylum, class, order, family, genus, species) # %>% print(n = Inf)
 
 
-# "PCR Blank": 33 ASV's      
-molten_pcrneg <- molten_controls %>% filter(Description == "PCR Blank", Abundance != 0)
+# "Insect Control": 30 ASVs
+molten_inscntrl <- psob_molten %>% filter(Description == "ICNTRL", Abundance != 0) 
 
-molten_pcrneg %>% select("superkingdom", "phylum", "class", "order", "family", "genus", "species") %>% distinct() %>%  print(n = Inf)
+molten_inscntrl %>% select("OTU", "superkingdom", "phylum", "class", "order", "family", "genus", "species") %>% 
+  distinct_at(vars("OTU", "superkingdom", "phylum", "class", "order", "family", "genus", "species")) %>% 
+  arrange(superkingdom, phylum, class, order, family, genus, species) %>%
+  print(n = Inf)
 
+# "Extraction Blank": 1 ASV's
+molten_xcntrl <- psob_molten %>% filter(Description == "XCNTRL", Abundance != 0) 
 
-# remove contamination (ASV and species) 
-# checks
-unique(molten_controls$Description) # "Soil Control"     "PCR Blank"        "Insect Control"   "Extraction Blank"
-molten_controls # 76,608
-psob_contamination <- molten_controls %>% filter(Abundance != 0) # 4,516 x 48 - ok 
+molten_xcntrl %>% select("OTU", "superkingdom", "phylum", "class", "order", "family", "genus", "species") %>% 
+  distinct_at(vars("OTU", "superkingdom", "phylum", "class", "order", "family", "genus", "species")) %>% 
+  arrange(superkingdom, phylum, class, order, family, genus, species) %>%
+  print(n = Inf)
 
-# 895,66 x 48 - ok 
-psob_molten 
+# "PCR Blank": 51 ASV's      
+molten_acntrl <- psob_molten %>% filter(Description == "ACNTRL", Abundance != 0) 
 
-# 552,398 x 48
-psob_molten <- psob_molten %>% anti_join(psob_contamination, by = ("OTU"))
+molten_acntrl %>% select("OTU", "superkingdom", "phylum", "class", "order", "family", "genus", "species") %>% 
+  distinct_at(vars("OTU", "superkingdom", "phylum", "class", "order", "family", "genus", "species")) %>%
+  arrange(superkingdom, phylum, class, order, family, genus, species) %>% 
+  print(n = Inf)
 
-# 255,486 x 48
-psob_molten <- psob_molten %>% anti_join(psob_contamination, by = "species")
-
-
-
-# Removal of low-coverage ASV's
-# ------------------------------
-
-length(unique (psob_molten$OTU))
-
-# get coverages per ASV
-coverage_per_asv <- aggregate(psob_molten$Abundance, by=list(ASV=psob_molten$OTU), FUN=sum)
-coverage_per_asv <- coverage_per_asv %>% arrange(desc(x))
-summary(coverage_per_asv)
-
-# add taxonomy to coverage list
-taxon_strings <- distinct(psob_molten[c("OTU", "superkingdom", "phylum", "class", "order", "family", "genus", "species")])
-coverage_per_asv <- left_join(coverage_per_asv, taxon_strings, by = c("ASV" = "OTU")) %>% filter(x != 0)
-
-# inspect 
-head(coverage_per_asv, n = 100)
-coverage_per_asv %>% arrange(superkingdom, phylum, class, order, family, genus, species)
-
-# ** filtering 110,110 x 48 ** 
-psob_molten <- psob_molten %>% anti_join(as_tibble(coverage_per_asv[which(coverage_per_asv$x < 5), ]), by = c("OTU" = "ASV"))
-
-# get coverages per ASV
-coverage_per_asv <- aggregate(psob_molten$Abundance, by=list(ASV=psob_molten$OTU), FUN=sum)
-coverage_per_asv <- coverage_per_asv %>% arrange(desc(x))
-summary(coverage_per_asv)
-
-# add taxonomy to coverage list
-taxon_strings <- distinct(psob_molten[c("OTU", "superkingdom", "phylum", "class", "order", "family", "genus", "species")])
-coverage_per_asv <- left_join(coverage_per_asv, taxon_strings, by = c("ASV" = "OTU")) %>% filter(x != 0)
-
-# inspect 
-head(coverage_per_asv, n = 100)
-coverage_per_asv %>% arrange(superkingdom, phylum, class, order, family, genus, species)
-
-
-# Inspect controls
-# ----------------
+# isolate contamination as a whole - instead of looking at things individually
+unique(psob_molten$Description) # "PCMNT" "ICNTRL" "SCNTRL" "ACNTRL" "XCNTRL"
+molten_contamination <- psob_molten %>% 
+  filter(Description %in% c("ICNTRL", "SCNTRL", "ACNTRL", "XCNTRL")) %>% 
+  filter(Abundance != 0) # 4,218 x 51
 
 # plot controls (abundances are aggregated in-call to avoid jagged edges)
-ggplot(molten_controls, aes_string(x = "phylum", y = ave(molten_controls$Abundance, molten_controls$phylum, FUN=sum), fill = "phylum")) +
+ggplot(molten_contamination, aes_string(x = "phylum", y = molten_contamination$Abundance, fill = "phylum")) +
   geom_bar(stat = "identity", position = "stack", colour = NA, size=0) +
-  facet_grid(Description ~ ., shrink = TRUE, scales = "fixed") +
+  facet_grid(Description ~ ., shrink = TRUE, scales = "free_y") +
   theme_bw() +
   theme(legend.position = "none") +
   theme(strip.text.y = element_text(angle=0)) + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
         axis.text.y = element_text(angle = 0, hjust = 1,  size = 7), 
         axis.ticks.y = element_blank()) +
-  labs( title = "Phyla across all locations") + 
+  labs( title = "Phyla across all locations after application of Decontam") + 
   xlab("phyla in control samples") + 
-  ylab("read counts at each location (y scales fixed)")
+  ylab("read counts at each location (y scales variable)")
 
-ggsave("200720_all_controls_at_all_locations.pdf", plot = last_plot(), 
+ggsave("200814_decontam_effect_on_controls.pdf", plot = last_plot(), 
          device = "pdf", path = "/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/200622_display_item_development",
          scale = 3, width = 75, height = 50, units = c("mm"),
          dpi = 500, limitsize = TRUE)
+
+# Remove contamination (ASV and species)
+# --------------------------------------
+
+# 28,530 x 51 - ok 
+psob_molten %>% filter(Abundance != 0)
+
+# 20,767 x 51 - some removed ok 
+psob_molten <- psob_molten %>% anti_join(molten_contamination, by = ("OTU")) %>% filter(Abundance != 0)
+
+#  7,774 x 51
+psob_molten <- psob_molten %>% anti_join(molten_contamination, by = "species") %>% filter(Abundance != 0)
+
+# Removal of Bacteria
+# ------------------------------
+
+unique(psob_molten$superkingdom)
+psob_molten <- psob_molten %>% filter(superkingdom == "Eukaryota")
+psob_molten %>% filter(Abundance != 0) # 3,047 x 51 lines
+
+
+# Removal of low-coverage ASV's
+# ------------------------------
+# unrevised code - skipping for now 
+# length(unique (psob_molten$OTU))
+# 
+# # get coverages per ASV
+# coverage_per_asv <- aggregate(psob_molten$Abundance, by=list(ASV=psob_molten$OTU), FUN=sum)
+# coverage_per_asv <- coverage_per_asv %>% arrange(desc(x))
+# summary(coverage_per_asv)
+# 
+# # add taxonomy to coverage list
+# taxon_strings <- distinct(psob_molten[c("OTU", "superkingdom", "phylum", "class", "order", "family", "genus", "species")])
+# coverage_per_asv <- left_join(coverage_per_asv, taxon_strings, by = c("ASV" = "OTU")) %>% filter(x != 0)
+# 
+# # inspect 
+# head(coverage_per_asv, n = 100)
+# coverage_per_asv %>% arrange(superkingdom, phylum, class, order, family, genus, species)
+# 
+# # ** filtering 110,110 x 48 ** 
+# psob_molten <- psob_molten %>% anti_join(as_tibble(coverage_per_asv[which(coverage_per_asv$x < 5), ]), by = c("OTU" = "ASV"))
+# 
+# # get coverages per ASV
+# coverage_per_asv <- aggregate(psob_molten$Abundance, by=list(ASV=psob_molten$OTU), FUN=sum)
+# coverage_per_asv <- coverage_per_asv %>% arrange(desc(x))
+# summary(coverage_per_asv)
+# 
+# # add taxonomy to coverage list
+# taxon_strings <- distinct(psob_molten[c("OTU", "superkingdom", "phylum", "class", "order", "family", "genus", "species")])
+# coverage_per_asv <- left_join(coverage_per_asv, taxon_strings, by = c("ASV" = "OTU")) %>% filter(x != 0)
+# 
+# # inspect 
+# head(coverage_per_asv, n = 100)
+# coverage_per_asv %>% arrange(superkingdom, phylum, class, order, family, genus, species)
+
+
 
 
 
@@ -506,48 +546,47 @@ psob_molten <- clean_molten_tax_strings(psob_molten)
 psob_molten <- retain_pcm_sample_for_inspection(psob_molten)
 
 # re-label available data categories for plotting
-psob_molten$phylum[which(psob_molten$phylum %in% c("nomatch", "undefined"))] <- NA
+psob_molten$phylum[which(psob_molten$phylum %in% c("nomatch", "undefined"))] <- "no hit, reference, or complete taxonomy string"
 
 # get a tibble
 psob_molten <- psob_molten %>% as_tibble(.)
 
+# remove empty data - hope this works
+psob_molten <- psob_molten %>% filter(Abundance > 0) 
 
-# Describe object (as above) 
+
+# Describe object (as below) 
 # --------------------------
 
-# count eukaryotes and non-eukaryotes 
-psob_raw_molten %>% filter(superkingdom %in% c("Eukaryota")) %>% distinct(OTU) 
-psob_raw_molten %>% filter(superkingdom %!in% c("Eukaryota")) %>% distinct(OTU) 
-
 # create and save plot
-ggplot(psob_plot_data, aes_string(x = "phylum", y = "Abundance", fill = "phylum")) +
+ggplot(psob_molten, aes_string(x = "phylum", y = "Abundance", fill = "phylum")) +
   geom_bar(stat = "identity", position = "stack", colour = NA, size=0) +
-  facet_grid(Location ~ ., shrink = TRUE, scales = "fixed") +
+  facet_grid(Location ~ ., shrink = TRUE, scales = "free_y") +
   theme_bw() +
   theme(legend.position = "none") +
   theme(strip.text.y = element_text(angle=0)) + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
         axis.text.y = element_text(angle = 0, hjust = 1,  size = 7), 
         axis.ticks.y = element_blank()) +
-  labs( title = "Phyla across all locations") + 
+  labs( title = "Phyla across all locations after filtering") + 
   xlab("phyla at all locations") + 
-  ylab("read counts at each location (y scales fixed)")
+  ylab("read counts at each location (y scales variable)")
 
-ggsave("200717_all_phyla_at_all_locations.pdf", plot = last_plot(), 
+ggsave("200814_all_filtered_phyla_at_all_locations.pdf", plot = last_plot(), 
          device = "pdf", path = "/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/200622_display_item_development",
          scale = 3, width = 75, height = 50, units = c("mm"),
          dpi = 500, limitsize = TRUE)
 
 # Numerical summaries
 # -------------------
-length(unique(psob_molten$Sample))
-unique(psob_molten$Sample) %>% grepl(".MM", . , fixed = TRUE) %>% sum
-unique(psob_molten$Sample) %>% grepl(".ME", . , fixed = TRUE) %>% sum
-unique(psob_molten$Sample) %>% grepl(".LT", . , fixed = TRUE) %>% sum
+length(unique(psob_molten$Sample)) # 154 samples from study sites
+unique(psob_molten$Sample) %>% grepl(".MM", . , fixed = TRUE) %>% sum # 24 sample Mount Menzies
+unique(psob_molten$Sample) %>% grepl(".ME", . , fixed = TRUE) %>% sum # 65 samples Mawson Escarpment
+unique(psob_molten$Sample) %>% grepl(".LT", . , fixed = TRUE) %>% sum # 56 samples Lake Terrasovoje
+sum(24 + 65 + 56) # 154 - ok
 
 # get total seqencing effort
-sum(psob_molten$Abundance)
-
+sum(psob_molten$Abundance) #  2 942 264 sequences total - after removal of bacteria and contamination
 
 # summarize distinct values across the long data frame
 show_vars <- c("OTU", "Abundance", "Sample", "BarcodeSequence", "Location", "Description",
@@ -557,70 +596,60 @@ psob_molten %>% select(any_of(show_vars)) %>% summarize_all(n_distinct, na.rm = 
 # A tibble: 1 x 13
 #     OTU Abundance Sample BarcodeSequence Location Description superkingdom phylum class order family genus species
 #   <int>     <int>  <int>           <int>    <int>       <int>        <int>  <int> <int> <int>  <int> <int>   <int>
-# 1  2743      1831    147             147        3           1            1     31   106   277    496   787    1134
+# 1  1099      1062    145             145        3           1            1     26    86   219    362   526     699
 
-
-# get coverages per sample and analyze
+# Analyze coverages per samples
 coverage_per_sample <- aggregate(psob_molten$Abundance, by=list(Sample=psob_molten$Sample), FUN=sum)
-coverage_per_sample$Sample %>% grepl(".MM", . , fixed = TRUE) %>% sum
-coverage_per_sample$Sample %>% grepl(".ME", . , fixed = TRUE) %>% sum
-coverage_per_sample$Sample %>% grepl(".LT", . , fixed = TRUE) %>% sum
 summary(coverage_per_sample)
+coverage_per_sample %>% filter(., grepl(".MM", Sample , fixed = TRUE)) %>% summary(x) 
+coverage_per_sample %>% filter(., grepl(".ME", Sample , fixed = TRUE)) %>% summary(x) 
+coverage_per_sample %>% filter(., grepl(".LT", Sample , fixed = TRUE)) %>% summary(x) 
 
-# get ASV count again
-length(unique(psob_molten$OTU))
+
+# Analyze coverages per ASVs
+length(unique(psob_molten$OTU)) # 8097
+# count eukaryotes and non-eukaryotes 
+psob_molten %>% filter(superkingdom %in% c("Eukaryota")) %>% distinct(OTU)  # 1,099 Eukaryota ASV
+psob_molten %>% filter(superkingdom %!in% c("Eukaryota")) %>% distinct(OTU) # 0 non-Eukaryota ASV
+
 
 # get coverages per ASV and analyze
 coverage_per_asv <- aggregate(psob_molten$Abundance, by=list(ASV=psob_molten$OTU), FUN=sum)
 coverage_per_asv <- coverage_per_asv %>% arrange(desc(x))
 summary(coverage_per_asv)
 
-head(coverage_per_asv)
-head(psob_molten)
 
 # get most species ordered by frequency
-left_join(coverage_per_asv , psob_molten, by = c("ASV" = "OTU")) %>%
-    distinct_at(vars("ASV", "x", "superkingdom", "phylum", "class", "species")) %>% head(., n = 12)
+psob_asv_list <- left_join(coverage_per_asv , psob_molten, by = c("ASV" = "OTU")) %>%
+  distinct_at(vars("ASV", "x", "superkingdom", "phylum", "class", "order", "family", "genus", "species")) %>% 
+  arrange(superkingdom, phylum, class, order, family, genus, species) 
 
-#                                ASV      x superkingdom       phylum           class                             species
-# 1  5004de9015b06c0221fb18cd330bc1e4 215462    Eukaryota   Ascomycota Lecanoromycetes               Acanthothecis fontana
-# 2  d96a424887ab33e2e7cc372d8c8fd40b 206939    Eukaryota   Ascomycota   Leotiomycetes              Ascozonus woolhopensis
-# 3  50baba76780ac5b54c70079f1af75604 194591    Eukaryota   Ascomycota Lecanoromycetes                  Lecanora rugosella
-# 4  d1cae5b7608113426bfb3bd92ff6ffcf 145295    Eukaryota Streptophyta      Liliopsida                Gastridium phleoides
-# 5  f88660c48713384b141b7cf376e1a118 140853    Eukaryota Streptophyta       undefined                   Solanum pennellii
-# 6  e881c59b29254fd091cee7feaaff143e 130422    Eukaryota     Nematoda     Chromadorea                 Scottnema lindsayae
-# 7  31a6dcb475a929ef9cc4186da075ea07 129971    Eukaryota     Rotifera      Bdelloidea               Philodina acuticornis
-# 8  ffba4e2457bbb54ce9dff4de75f4bff7 125600    Eukaryota     Rotifera      Bdelloidea               Philodina acuticornis
-# 9  b1c61b2e584822a0cf5c55ef502eb08f 124030    Eukaryota   Ciliophora Phyllopharyngea Pseudochilodonopsis quadrivacuolata
-# 10 413cf364a1daf21eb3c4f24ba076f5a3 114018    Eukaryota   Ascomycota Lecanoromycetes                    Pyxine sorediata
-# 11 b7f842c137861b77b4ebe9adc233bc54 112059    Eukaryota   Ascomycota   Leotiomycetes                 Thelebolus globosus
-# 12 8d7e8b0361dfc41dfac402c6daa5920b  96774    Eukaryota   Arthropoda       undefined             Derocheilocaris typicus
+psob_asv_list %>% head(., n = 100)
 
-# re-check locations
-psob_molten %>% distinct(Location,  .keep_all = FALSE)
-
-
-
-# print and save a species list
-psob_species_list <- psob_molten %>% arrange(superkingdom, phylum, class, order, family, genus, species) %>% 
-  select("superkingdom", "phylum", "class", "order", "family", "genus", "species") %>% distinct() %>% print(n = Inf)
-write.xlsx(psob_species_list, "/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/200622_display_item_development/200812_200_eukaryote_asv_no_abundances_decontam_filtered.xlsx", overwrite = FALSE)
+#                                 ASV       x superkingdom              phylum               class                       species
+# 1  f184ca796a5be28dc3cde4bcbe1d26d3 1491686    Eukaryota no hit or reference           undefined          uncultured eukaryote
+# 2  5c882557a215b3ca73569393ee7212b6  888969    Eukaryota        Streptophyta           undefined               Cicer arietinum
+# 3  a889334a65362e22039f6bd6b31aceff  454680     Bacteria      Planctomycetes      Planctomycetia     Singulisphaera acidiphila
+# 4  7c12dd9bdf0ab53af6f927744d2d6649  291288    Eukaryota          Ascomycota      Eurotiomycetes       Arthrocladium tropicale
+# 5  e275f1ca63cb2b3e7b039a2ce85b4dac  272358    Eukaryota            Nematoda             Enoplea      Microdorylaimus modestus
+# 6  25ad1fd18126a0c3909c61d2dc8b43c4  270294    Eukaryota            Rotifera          Bdelloidea          Philodina sp. cmbb21
+# 7  bd2b68bde1426f96a5a6abc71daabc20  255198    Eukaryota       Heterolobosea           undefined Allovahlkampfia sp. PKD 2011b
+# 8  58dd134e3736080c944c9655172c18ec  246207     Bacteria      Proteobacteria Alphaproteobacteria              Sphingomonas sp.
+# 9  5004de9015b06c0221fb18cd330bc1e4  207718    Eukaryota          Ascomycota     Lecanoromycetes         Acanthothecis fontana
+# 10 d96a424887ab33e2e7cc372d8c8fd40b  201579    Eukaryota          Ascomycota       Leotiomycetes        Ascozonus woolhopensis
+# 11 634e9c4059da8b996c8a07faabfb488f  200259    Eukaryota            Cercozoa           undefined             Cercozoa sp. TGS3
+# 12 3d3dbac4c47854fe7091ae126d8a7438  186507     Bacteria      Proteobacteria Alphaproteobacteria  Erythrobacteraceae bacterium
 
 
-
-# save or load molten state 
-save(psob_molten, file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/200_all_data_long_export_raw.Rdata")
-load("/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/200_all_data_long_export_raw.Rdata")
-
-# [...]
+psob_asv_list %>% 
+  arrange(superkingdom, phylum, class, order, family, genus, species) %>%
+  write.xlsx(.,"/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/200622_display_item_development/200814_all_filtered_phyla_at_all_locations.xlsx", overwrite = FALSE)
 
 
 # V. Export molten Phyloseq object
 # ================================
 
 
-# for further analysis
-save(psob_molten, file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/200_all_data_long_export_filtered.Rdata")
-
-# workspace
-save.image(file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data_psob_export-image_filtered.Rdata")
+# save or load molten state 
+save.image(file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data_long_export_filtered-image.Rdata")
+save(psob_molten, file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data_long_export_filtered.Rdata")

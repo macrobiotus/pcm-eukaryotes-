@@ -367,7 +367,7 @@ Creative Commons Attribution 4.0 International Public License as per
   * ran `/Users/paul/Documents/OU_pcm_eukaryotes/Github/180_q2_get_fastree.sh` - **ok**
   * ran `/Users/paul/Documents/OU_pcm_eukaryotes/Github/190_q2_export_objects.sh` - **ok**
     * results in `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/190_18S_merged-tab_q2_export`
-  * checking and rerunning re-run `~/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
+  * checking and rerunning `~/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
     * continue  after line `215` (with `decontam`-filtered Phyloseq object)`
     * script needs restructuring, otherwise `decontam` filtering dosen't make sense
   * commit `f8157bbfea9688f1ee3f1b7bc7b1f79e020bb6fd`
@@ -376,7 +376,17 @@ Creative Commons Attribution 4.0 International Public License as per
     * needs cleaning up from top two bottom
     * upper and lower section surrounding cleanup need to be adjusted
     * adjust output file names
+  * commit `39f32a129888691d69d3cbc3887c93f297b1c31b`
+    * continue at line 228
+* **14.08.2020** - continue re-processing - 
+  * finished revision of `200_r_get_phyloseq.r`
+  * putative contamination / moss reads removed to largest extent possible
+  * exclude Streptophyta in Discussion
+  * mailing of files
   * commit ``
+  
+
+
 
 
 
