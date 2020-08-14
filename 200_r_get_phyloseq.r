@@ -420,7 +420,7 @@ molten_soilcntrl <- psob_molten %>% filter(Description == "SCNTRL", Abundance !=
 
 molten_soilcntrl %>% select("OTU", "superkingdom", "phylum", "class", "order", "family", "genus", "species") %>% 
   distinct_at(vars("OTU", "superkingdom", "phylum", "class", "order", "family", "genus", "species")) %>% 
-  arrange(superkingdom, phylum, class, order, family, genus, species) # %>% print(n = Inf)
+  arrange(superkingdom, phylum, class, order, family, genus, species) %>% print(n = Inf)
 
 
 # "Insect Control": 30 ASVs
@@ -525,10 +525,6 @@ psob_molten %>% filter(Abundance != 0) # 3,047 x 51 lines
 # # inspect 
 # head(coverage_per_asv, n = 100)
 # coverage_per_asv %>% arrange(superkingdom, phylum, class, order, family, genus, species)
-
-
-
-
 
 # IV. Re-inspect molten and cleaned  Phyloseq object
 # ==================================================

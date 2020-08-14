@@ -382,36 +382,16 @@ Creative Commons Attribution 4.0 International Public License as per
   * finished revision of `200_r_get_phyloseq.r`
   * putative contamination / moss reads removed to largest extent possible
   * exclude Streptophyta in Discussion
-  * mailing of files
-  * commit ``
+  * commit `789a099b4e7aee0279f01b1fb4ef73ff008fcd28`
+  * removing contamination by genera
+  * commit `01d1bb7e83652c55cd5870b592e016e2ffff3df1`
+  * mailing off files
+  * checking roach discrepancy - other species in control then in samples 
   
-
-
-
-
-
-
-
-* **todo**
-  * in `200_r_get_phyloseq.r` or before 
-    * update summary values for manuscript draft - see therein - **pending**
-    * agglomerate on phylum level to produce less-jagged plot - **pending**
-  * check alignments if using tree
-  
-* **before publication**
+* **todo before publication**
   * **addressed** - see _02.05.2020_ - find cause negative XRD values in `/Users/paul/Documents/OU_pcm_eukaryotes/Github/160_r_prep_q2_predictor-tab.r`
   * **pending** - see _02.05.2020_ - find cause for missing sequences in `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/110_18S_merged-seq_blast-noenv.txt`
-  * in `160_r_prep_q2_predictor-tab.r`
-    * possibly: include variable sorting code and remove from `200_r_get_phyloseq.r`
   * in `200_r_get_phyloseq.r`
-    * possibly: check contaminating sequences 
-    * possibly: implement tree tip agglomeration
-    * possibly: adjust variable sorting code to match `160_r_prep_q2_predictor-tab.r`
-  * in new version of predictor pre-processing
-    * adjust Caret package
-      * co-linearities
-      * dummy variables
-  * add trees to Phyloseq
-    * then use `phyloseq::tip_glom()` instead of `phyloseq::tax_glom()` in `/Users/paul/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
-  * check masked alignment - adjust older script
+    * check why roaches don't get removed 
+  * check alignments if using tree
   
