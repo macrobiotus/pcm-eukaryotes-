@@ -479,10 +479,10 @@ ggsave("200814_decontam_effect_on_controls.pdf", plot = last_plot(),
 psob_molten %>% filter(Abundance != 0)
 
 # 20,767 x 51 - some removed ok 
-psob_molten <- psob_molten %>% anti_join(molten_contamination, by = ("OTU")) %>% filter(Abundance != 0)
+psob_molten <- psob_molten %>% anti_join(molten_contamination, by = "OTU") %>% filter(Abundance != 0)
 
 #  7,774 x 51
-psob_molten <- psob_molten %>% anti_join(molten_contamination, by = "species") %>% filter(Abundance != 0)
+psob_molten <- psob_molten %>% anti_join(molten_contamination, by = "genus") %>% filter(Abundance != 0)
 
 # Removal of Bacteria
 # ------------------------------
