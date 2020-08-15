@@ -382,11 +382,22 @@ Creative Commons Attribution 4.0 International Public License as per
   * finished revision of `200_r_get_phyloseq.r`
   * putative contamination / moss reads removed to largest extent possible
   * exclude Streptophyta in Discussion
-  * commit `789a099b4e7aee0279f01b1fb4ef73ff008fcd28`
+    * commit `789a099b4e7aee0279f01b1fb4ef73ff008fcd28`
   * removing contamination by genera
-  * commit `01d1bb7e83652c55cd5870b592e016e2ffff3df1`
+    * commit `01d1bb7e83652c55cd5870b592e016e2ffff3df1`
   * mailing off files
-  * checking roach discrepancy - other species in control then in samples 
+  * checking roach discrepancy - other species in control then in samples
+    * commit `9ead478d554c24573598eab21e70f0c3681ba69` - other species in control then in samples
+* **15.08.2020** - checking extent of putative contamination or spurious hits
+  * checked alignments in Megan - see `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Megan`
+  * added code to `/Users/paul/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
+    * 84 samples contain one of "Streptophyta", "Insecta", or "Chordata".
+    * 69 samples contain "Streptophyta"
+    * 26 samples contain one of "Insecta", or "Chordata"
+    
+
+
+
   
 * **todo before publication**
   * **addressed** - see _02.05.2020_ - find cause negative XRD values in `/Users/paul/Documents/OU_pcm_eukaryotes/Github/160_r_prep_q2_predictor-tab.r`

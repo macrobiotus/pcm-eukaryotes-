@@ -529,7 +529,7 @@ psob_molten %>% filter(Abundance != 0) # 3,047 x 51 lines
 # IV. Re-inspect molten and cleaned  Phyloseq object
 # ==================================================
 
-# Tidy object 
+# Tidy object
 # -----------
 
 # reorder variables
@@ -545,7 +545,7 @@ psob_molten <- retain_pcm_sample_for_inspection(psob_molten)
 psob_molten$phylum[which(psob_molten$phylum %in% c("nomatch", "undefined"))] <- "no hit, reference, or complete taxonomy string"
 
 # get a tibble
-psob_molten <- psob_molten %>% as_tibble(.)
+psob_molten <- psob_molten %>% as_tibble()
 
 # remove empty data - hope this works
 psob_molten <- psob_molten %>% filter(Abundance > 0) 
@@ -641,6 +641,15 @@ psob_asv_list %>%
   arrange(superkingdom, phylum, class, order, family, genus, species) %>%
   write.xlsx(.,"/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/200622_display_item_development/200814_all_filtered_phyla_at_all_locations.xlsx", overwrite = FALSE)
 
+# compiling list of putatively remnant contaminants to exclude, if only in certain samples
+# -----------------------------------------------------------------------------------------
+# asv's are 
+prc_asvs <- c(psob_asv_list[which (psob_asv_list$phylum %in% c("Streptophyta")), ]$ASV, 
+prc_asvs <-          psob_asv_list[which (psob_asv_list$class %in% c("Insecta", "Chordata")), ]$ASV)
+
+# affected samples (84 of 156)
+prc_smpl <- sort(unique(psob_molten[ which(psob_molten$OTU %in% prc_asvs), ]$Sample))
+length(prc_smpl)
 
 # V. Export molten Phyloseq object
 # ================================
