@@ -394,6 +394,11 @@ Creative Commons Attribution 4.0 International Public License as per
     * 84 samples contain one of "Streptophyta", "Insecta", or "Chordata".
     * 69 samples contain "Streptophyta"
     * 26 samples contain one of "Insecta", or "Chordata"
+  * commit 
+  `f86106a8dd1618674d7f026fb9293a4d84f8629`
+* **26.08.2020** - rerunning script for manuscript composition
+  * `/Users/paul/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
+  * *
     
 
 

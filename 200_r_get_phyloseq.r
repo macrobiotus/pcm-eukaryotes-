@@ -1,7 +1,7 @@
 # **********************************************
 # * Create, filter, and write Physloseq object *
 # **********************************************
-# 14-Aug-2020
+# 26-Aug-2020
 
 # load packages
 # =============
@@ -287,7 +287,6 @@ psob_asv_list %>% head(., n = 12)
 # 11 634e9c4059da8b996c8a07faabfb488f  200259    Eukaryota            Cercozoa           undefined             Cercozoa sp. TGS3
 # 12 3d3dbac4c47854fe7091ae126d8a7438  186507     Bacteria      Proteobacteria Alphaproteobacteria  Erythrobacteraceae bacterium
 
-
 psob_asv_list %>% 
   arrange(superkingdom, phylum, class, order, family, genus, species) %>%
   write.xlsx(.,"/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/200622_display_item_development/200814_all_unfiltered_phyla_at_all_locations.xlsx", overwrite = FALSE)
@@ -299,12 +298,10 @@ save(psob_raw_molten, file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/2
 load("/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data_long_export_raw.Rdata")
 
 
-
 # III. Remove contamination, melt, and remove more
 # ===============================================
 
 psob <- psob_raw # create Phyloseq object copy
-
 
 # plot controls (abundances are aggregated in-call to avoid jagged edges)
 psob_molten <- psmelt(psob)
@@ -472,7 +469,7 @@ ggsave("200814_decontam_effect_on_controls.pdf", plot = last_plot(),
          scale = 3, width = 75, height = 50, units = c("mm"),
          dpi = 500, limitsize = TRUE)
 
-# Remove contamination (ASV and species)
+# Remove contamination (ASV and species) 
 # --------------------------------------
 
 # 28,530 x 51 - ok 
@@ -489,7 +486,7 @@ psob_molten <- psob_molten %>% anti_join(molten_contamination, by = "genus") %>%
 
 unique(psob_molten$superkingdom)
 psob_molten <- psob_molten %>% filter(superkingdom == "Eukaryota")
-psob_molten %>% filter(Abundance != 0) # 3,047 x 51 lines
+psob_molten %>% filter(Abundance != 0) # 3,047 x 51 lines              <----- 
 
 
 # Removal of low-coverage ASV's
@@ -592,7 +589,7 @@ psob_molten %>% select(any_of(show_vars)) %>% summarize_all(n_distinct, na.rm = 
 # A tibble: 1 x 13
 #     OTU Abundance Sample BarcodeSequence Location Description superkingdom phylum class order family genus species
 #   <int>     <int>  <int>           <int>    <int>       <int>        <int>  <int> <int> <int>  <int> <int>   <int>
-# 1  1099      1062    145             145        3           1            1     26    86   219    362   526     699
+# 1   766       880    142             142        3           1            1     25    81   200    312   432     495
 
 # Analyze coverages per samples
 coverage_per_sample <- aggregate(psob_molten$Abundance, by=list(Sample=psob_molten$Sample), FUN=sum)
@@ -605,7 +602,7 @@ coverage_per_sample %>% filter(., grepl(".LT", Sample , fixed = TRUE)) %>% summa
 # Analyze coverages per ASVs
 length(unique(psob_molten$OTU)) # 8097
 # count eukaryotes and non-eukaryotes 
-psob_molten %>% filter(superkingdom %in% c("Eukaryota")) %>% distinct(OTU)  # 1,099 Eukaryota ASV
+psob_molten %>% filter(superkingdom %in% c("Eukaryota")) %>% distinct(OTU)  # 766 Eukaryota ASV
 psob_molten %>% filter(superkingdom %!in% c("Eukaryota")) %>% distinct(OTU) # 0 non-Eukaryota ASV
 
 
@@ -618,7 +615,8 @@ summary(coverage_per_asv)
 # get most species ordered by frequency
 psob_asv_list <- left_join(coverage_per_asv , psob_molten, by = c("ASV" = "OTU")) %>%
   distinct_at(vars("ASV", "x", "superkingdom", "phylum", "class", "order", "family", "genus", "species")) %>% 
-  arrange(superkingdom, phylum, class, order, family, genus, species) 
+  arrange(superkingdom, phylum, class, order, family, genus, species)  %>%
+  arrange(desc(x))
 
 psob_asv_list %>% head(., n = 100)
 
@@ -635,7 +633,6 @@ psob_asv_list %>% head(., n = 100)
 # 10 d96a424887ab33e2e7cc372d8c8fd40b  201579    Eukaryota          Ascomycota       Leotiomycetes        Ascozonus woolhopensis
 # 11 634e9c4059da8b996c8a07faabfb488f  200259    Eukaryota            Cercozoa           undefined             Cercozoa sp. TGS3
 # 12 3d3dbac4c47854fe7091ae126d8a7438  186507     Bacteria      Proteobacteria Alphaproteobacteria  Erythrobacteraceae bacterium
-
 
 psob_asv_list %>% 
   arrange(superkingdom, phylum, class, order, family, genus, species) %>%
