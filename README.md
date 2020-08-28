@@ -394,12 +394,15 @@ Creative Commons Attribution 4.0 International Public License as per
     * 84 samples contain one of "Streptophyta", "Insecta", or "Chordata".
     * 69 samples contain "Streptophyta"
     * 26 samples contain one of "Insecta", or "Chordata"
-  * commit 
-  `f86106a8dd1618674d7f026fb9293a4d84f8629`
+  * commit `f86106a8dd1618674d7f026fb9293a4d84f8629`
 * **26.08.2020** - rerunning script for manuscript composition
-  * `/Users/paul/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
-  * *
-    
+  * re-running `/Users/paul/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
+  * commit `eb5c5ebe894c9c68dae3d84079b24f27a4f8accd`
+* **26.08.2020** - rerunning script for manuscript composition
+  * adding to `/Users/paul/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
+    * adding code to export sample locations for QGis map to `/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/200622_display_item_development/200828_coordinates_all_filtered_phyla_at_all_locations.xlsx`
+  * commit ``
+*
 
 
 
