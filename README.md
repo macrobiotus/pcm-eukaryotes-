@@ -391,7 +391,7 @@ Creative Commons Attribution 4.0 International Public License as per
 * **15.08.2020** - checking extent of putative contamination or spurious hits
   * checked alignments in Megan - see `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Megan`
   * added code to `/Users/paul/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
-    * 84 samples contain one of "Streptophyta", "Insecta", or "Chordata".
+   * 84 samples contain one of "Streptophyta", "Insecta", or "Chordata".
     * 69 samples contain "Streptophyta"
     * 26 samples contain one of "Insecta", or "Chordata"
   * commit `f86106a8dd1618674d7f026fb9293a4d84f8629`
@@ -401,12 +401,19 @@ Creative Commons Attribution 4.0 International Public License as per
 * **26.08.2020** - rerunning script for manuscript composition
   * adding to `/Users/paul/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
     * adding code to export sample locations for QGis map to `/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/200622_display_item_development/200828_coordinates_all_filtered_phyla_at_all_locations.xlsx`
-  * commit `0291de9e6d21f21c5eddc270fcf85df896b9fea0`
-
-
+  * commit ` f86106a8dd1618674d7f026fb9293a4d84f8629f`
+* **27.12.2020**
+  * received results  from Michel de Lange and GitHub link
+  * check `/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript`
+* **03.01.2020** - starting code revision for results section update
+  * added Excel export code to `/Users/paul/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
+  * next continue updating results by updating `/Users/paul/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
+  * commit ``
+  
 
   
 * **todo before publication**
+  * **pending** - * use excel files in supplemnt as stored here: /Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/201230_supplemental_information
   * **addressed** - see _02.05.2020_ - find cause negative XRD values in `/Users/paul/Documents/OU_pcm_eukaryotes/Github/160_r_prep_q2_predictor-tab.r`
   * **pending** - see _02.05.2020_ - find cause for missing sequences in `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/110_18S_merged-seq_blast-noenv.txt`
   * in `200_r_get_phyloseq.r`

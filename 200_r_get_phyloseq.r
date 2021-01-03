@@ -1,7 +1,7 @@
 # **********************************************
 # * Create, filter, and write Physloseq object *
 # **********************************************
-# 26-Aug-2020
+# 26-Aug-2020, 03-Jan-2021
 
 # load packages
 # =============
@@ -246,20 +246,18 @@ psob_raw_molten %>% select(any_of(show_vars)) %>% summarize_all(n_distinct, na.r
 #   <int>     <int>  <int>           <int>    <int>       <int>        <int>  <int> <int> <int>  <int> <int>   <int>
 # 1  8097      2847    154             154        3           1            5     47   131   342    621  1161    1904
 
+# ASV counts unfiltered data
+length(unique(psob_raw_molten$OTU)) # 8097
+# count eukaryotes and non-eukaryotes 
+psob_raw_molten %>% filter(superkingdom %in% c("Eukaryota")) %>% distinct(OTU)  # 2,656 Eukaryota ASV
+psob_raw_molten %>% filter(superkingdom %!in% c("Eukaryota")) %>% distinct(OTU) # 5,441 non-Eukaryota ASV
+
 # Analyze coverages per samples
 coverage_per_sample <- aggregate(psob_raw_molten$Abundance, by=list(Sample=psob_raw_molten$Sample), FUN=sum)
 summary(coverage_per_sample)
 coverage_per_sample %>% filter(., grepl(".MM", Sample , fixed = TRUE)) %>% summary(x) 
 coverage_per_sample %>% filter(., grepl(".ME", Sample , fixed = TRUE)) %>% summary(x) 
 coverage_per_sample %>% filter(., grepl(".LT", Sample , fixed = TRUE)) %>% summary(x) 
-
-
-# Analyze coverages per ASVs
-length(unique(psob_raw_molten$OTU)) # 8097
-# count eukaryotes and non-eukaryotes 
-psob_raw_molten %>% filter(superkingdom %in% c("Eukaryota")) %>% distinct(OTU)  # 2,656 Eukaryota ASV
-psob_raw_molten %>% filter(superkingdom %!in% c("Eukaryota")) %>% distinct(OTU) # 5,441 non-Eukaryota ASV
-
 
 # get coverages per ASV and analyze
 coverage_per_asv <- aggregate(psob_raw_molten$Abundance, by=list(ASV=psob_raw_molten$OTU), FUN=sum)
@@ -417,8 +415,8 @@ molten_soilcntrl <- psob_molten %>% filter(Description == "SCNTRL", Abundance !=
 
 molten_soilcntrl %>% select("OTU", "superkingdom", "phylum", "class", "order", "family", "genus", "species") %>% 
   distinct_at(vars("OTU", "superkingdom", "phylum", "class", "order", "family", "genus", "species")) %>% 
-  arrange(superkingdom, phylum, class, order, family, genus, species) %>% print(n = Inf)
-
+  arrange(superkingdom, phylum, class, order, family, genus, species) %>% print(n = Inf) %>%
+  write.xlsx(.,"/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/201230_supplemental_information/210301__soilcntrl__200_r_get_phyloseq.xlsx", overwrite = TRUE)
 
 # "Insect Control": 30 ASVs
 molten_inscntrl <- psob_molten %>% filter(Description == "ICNTRL", Abundance != 0) 
@@ -426,7 +424,8 @@ molten_inscntrl <- psob_molten %>% filter(Description == "ICNTRL", Abundance != 
 molten_inscntrl %>% select("OTU", "superkingdom", "phylum", "class", "order", "family", "genus", "species") %>% 
   distinct_at(vars("OTU", "superkingdom", "phylum", "class", "order", "family", "genus", "species")) %>% 
   arrange(superkingdom, phylum, class, order, family, genus, species) %>%
-  print(n = Inf)
+  print(n = Inf) %>%
+  write.xlsx(.,"/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/201230_supplemental_information/210301__inscntrl__200_r_get_phyloseq.xlsx", overwrite = TRUE)
 
 # "Extraction Blank": 1 ASV's
 molten_xcntrl <- psob_molten %>% filter(Description == "XCNTRL", Abundance != 0) 
@@ -434,7 +433,7 @@ molten_xcntrl <- psob_molten %>% filter(Description == "XCNTRL", Abundance != 0)
 molten_xcntrl %>% select("OTU", "superkingdom", "phylum", "class", "order", "family", "genus", "species") %>% 
   distinct_at(vars("OTU", "superkingdom", "phylum", "class", "order", "family", "genus", "species")) %>% 
   arrange(superkingdom, phylum, class, order, family, genus, species) %>%
-  print(n = Inf)
+  print(n = Inf) 
 
 # "PCR Blank": 51 ASV's      
 molten_acntrl <- psob_molten %>% filter(Description == "ACNTRL", Abundance != 0) 
@@ -442,8 +441,9 @@ molten_acntrl <- psob_molten %>% filter(Description == "ACNTRL", Abundance != 0)
 molten_acntrl %>% select("OTU", "superkingdom", "phylum", "class", "order", "family", "genus", "species") %>% 
   distinct_at(vars("OTU", "superkingdom", "phylum", "class", "order", "family", "genus", "species")) %>%
   arrange(superkingdom, phylum, class, order, family, genus, species) %>% 
-  print(n = Inf)
-
+  print(n = Inf) %>%
+  write.xlsx(.,"/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/201230_supplemental_information/210301__acntrl__200_r_get_phyloseq.xlsx", overwrite = TRUE)
+  
 # isolate contamination as a whole - instead of looking at things individually
 unique(psob_molten$Description) # "PCMNT" "ICNTRL" "SCNTRL" "ACNTRL" "XCNTRL"
 molten_contamination <- psob_molten %>% 
@@ -548,7 +548,7 @@ psob_molten <- psob_molten %>% as_tibble()
 psob_molten <- psob_molten %>% filter(Abundance > 0) 
 
 
-# Describe object (as below) 
+# Describe object (as below) <-  continue here after 03.01.2021
 # --------------------------
 
 # create and save plot
@@ -650,7 +650,6 @@ length(prc_smpl)
 
 # V. Export molten Phyloseq object
 # ================================
-
 
 # save or load molten state 
 save.image(file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data_long_export_filtered-image.Rdata")
