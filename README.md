@@ -408,8 +408,10 @@ Creative Commons Attribution 4.0 International Public License as per
 * **03.01.2020** - starting code revision for results section update
   * added Excel export code to `/Users/paul/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
   * next continue updating results by updating `/Users/paul/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
+  * commit `ce4d0667d73c8fcdec60080c594f65e4993a1311`
+* **04.01.2020** - continuing code revision for results section update
+  * done with pass
   * commit ``
-  
 
   
 * **todo before publication**
