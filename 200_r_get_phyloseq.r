@@ -13,6 +13,9 @@ library("phyloseq")    # handle Qiime 2 data in R - best used to generate long d
 library("decontam")    # decontamination - check `https://benjjneb.github.io/decontam/vignettes/decontam_intro.html`
 library("openxlsx")    # write Excel tables
 
+library("data.table")   # faster handling of large tables
+library("future.apply") # faster handling of large tables
+
 # functions
 # =========
 
@@ -714,4 +717,58 @@ names(psob_molten)
 psob_molten %>% 
   distinct_at(vars("Sample", "Location", "LongDEC", "LatDEC")) %>%
   write.xlsx(.,"/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/200622_display_item_development/200828_coordinates_all_filtered_phyla_at_all_locations.xlsx", overwrite = TRUE)
+
+# VII. Get barplot of ASV that proved to be significant after MdLs analysis
+# =========================================================================
+
+# keep only significant phyla as per MdL's analysis
+psob_signif <- psob_molten %>% filter(phylum  == "Basidiomycota" | phylum  == "Chlorophyta" | phylum  == "Ciliophora" | phylum  ==  "Nematoda" | phylum  == "Tardigrada") 
+
+# use data.table to speed up things and to reuse older code from other project 
+psob_signif <- psob_signif %>% data.table()
+
+# aggregate counts by location
+psob_signif <- psob_signif[, lapply(.SD, sum, na.rm=TRUE), by=c("Location", "OTU", "Sample", "LongDEC", "LatDEC", "superkingdom", "phylum", "class", "order", "family", "genus", "species"), .SDcols=c("Abundance") ]
+
+# add presence-absence abundance column
+psob_signif <- psob_signif[ , AsvPresent :=  fifelse(Abundance == 0 , 0, 1, na=NA)]
+
+# understand data structures
+future_apply(psob_signif, 2, function(x) length(unique(x)))
+
+# get species counts for Results text 
+psob_signif [which(psob_signif$phylum  == "Basidiomycota"),]$species %>% unique() %>% length()
+psob_signif [which(psob_signif$phylum  == "Chlorophyta"),]$species %>% unique() %>% length()
+psob_signif [which(psob_signif$phylum  == "Ciliophora"),]$species %>% unique() %>% length()
+psob_signif [which(psob_signif$phylum  == "Nematoda"),]$species %>% unique() %>% length()
+psob_signif [which(psob_signif$phylum  == "Tardigrada"),]$species %>% unique() %>% length()
+
+length(unique(psob_signif$OTU))
+
+# write table for supplemental information 
+write.xlsx(psob_signif,"/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/SpeciesLists/200104_significant_species.xlsx", overwrite = TRUE)
+
+
+# get species plot as Figure 2
+# plot plain ASV per phylum and port - facetted
+ggplot(psob_signif, aes_string(x = "phylum", y = "AsvPresent", fill="phylum")) +
+  geom_bar(stat = "identity", position = "stack", size = 0) +
+  facet_grid(Location ~ ., shrink = TRUE, scales = "fixed") + 
+  theme_bw() +
+  theme(strip.text.y = element_text(angle = 0)) + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
+        axis.text.y = element_text(angle = 0, hjust = 1,  size = 8), 
+        axis.ticks.y = element_blank()) +
+  theme(legend.position = "none") +
+  ylab("ASV count")
+
+ggsave("210104_significant_asvs.pdf", plot = last_plot(), 
+         device = "pdf", path = "/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/200622_display_item_development",
+         scale = 3, width = 40, height = 30, units = c("mm"),
+         dpi = 500, limitsize = TRUE)
+         
+ggsave("210104_significant_asvs.pdf", plot = last_plot(), 
+         device = "pdf", path = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/ProcessingPlots",
+         scale = 3, width = 40, height = 30, units = c("mm"),
+         dpi = 500, limitsize = TRUE)
 

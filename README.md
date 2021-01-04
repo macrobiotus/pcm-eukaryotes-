@@ -411,6 +411,8 @@ Creative Commons Attribution 4.0 International Public License as per
   * commit `ce4d0667d73c8fcdec60080c594f65e4993a1311`
 * **04.01.2020** - continuing code revision for results section update
   * done with pass
+  * commit `cd030c97b4663af6aa8229f1335eebf6fc6d6c41`
+  * recoded figure 2 and updated README
   * commit ``
 
   
