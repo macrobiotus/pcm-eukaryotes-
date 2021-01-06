@@ -1,7 +1,7 @@
 # **********************************************
 # * Create, filter, and write Physloseq object *
 # **********************************************
-# 26-Aug-2020, 03-Jan-2021, 04-Jan-2021
+# 26-Aug-2020, 03-Jan-2021, 04-Jan-2021, 07-Jan-2021
 
 # load packages
 # =============
@@ -771,4 +771,52 @@ ggsave("210104_significant_asvs.pdf", plot = last_plot(),
          device = "pdf", path = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/ProcessingPlots",
          scale = 3, width = 40, height = 30, units = c("mm"),
          dpi = 500, limitsize = TRUE)
+
+# new code below 7-Jan-2020
+# =========================
+
+# Numerical summaries
+# -------------------
+length(unique(psob_signif$Sample)) # 128 samples from study sites
+unique(psob_signif$Sample) %>% grepl(".MM", . , fixed = TRUE) %>% sum # 16 sample Mount Menzies
+unique(psob_signif$Sample) %>% grepl(".ME", . , fixed = TRUE) %>% sum # 57 samples Mawson Escarpment
+unique(psob_signif$Sample) %>% grepl(".LT", . , fixed = TRUE) %>% sum # 55 samples Lake Terrasovoje
+sum(16 + 57 + 55) # 154 - ok
+
+# get total sequencing effort
+sum(psob_signif$Abundance) #  2 285 773 sequences total - after removal of bacteria and contamination
+
+
+# Analyze coverages per samples
+coverage_per_sample <- aggregate(psob_signif$Abundance, by=list(Sample=psob_signif$Sample), FUN=sum)
+summary(coverage_per_sample)
+coverage_per_sample %>% filter(., grepl(".MM", Sample , fixed = TRUE)) %>% summary(x) 
+coverage_per_sample %>% filter(., grepl(".ME", Sample , fixed = TRUE)) %>% summary(x) 
+coverage_per_sample %>% filter(., grepl(".LT", Sample , fixed = TRUE)) %>% summary(x) 
+
+# get coverages per ASV and analyze
+coverage_per_asv <- aggregate(psob_signif$Abundance, by=list(ASV=psob_signif$OTU), FUN=sum)
+coverage_per_asv <- coverage_per_asv %>% arrange(desc(x))
+summary(coverage_per_asv)
+
+
+# Analyze coverages per ASVs
+length(unique(psob_signif$OTU)) # 766
+# count eukaryotes and non-eukaryotes 
+psob_signif %>% filter(superkingdom %in% c("Eukaryota")) %>% distinct(OTU)  # 766 Eukaryota ASV
+psob_signif %>% filter(superkingdom %!in% c("Eukaryota")) %>% distinct(OTU) # 0 non-Eukaryota ASV
+
+# summarize distinct values across the long data frame
+show_vars <- c("OTU", "Abundance", "Sample", "BarcodeSequence", "Location", "Description",
+               "superkingdom", "phylum", "class", "order", "family", "genus", "species")
+psob_signif %>% select(any_of(show_vars)) %>% summarize_all(n_distinct, na.rm = TRUE)
+
+
+# get most species ordered by frequency
+psob_asv_list <- left_join(coverage_per_asv , psob_signif, by = c("ASV" = "OTU")) %>%
+  distinct_at(vars("ASV", "x", "superkingdom", "phylum", "class", "order", "family", "genus", "species")) %>% 
+  arrange(superkingdom, phylum, class, order, family, genus, species)  %>%
+  arrange(desc(x))
+
+psob_asv_list %>% head(., n = 100)
 
