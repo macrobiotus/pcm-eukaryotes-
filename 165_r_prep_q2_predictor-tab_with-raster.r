@@ -328,6 +328,6 @@ tib_compl_clim
 # formerly:
 # p_compl <- "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Manifest/200501_18S_MF_merged.txt" 
 # p_compl <- "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Manifest/200810_18S_MF_merged.txt"
-p_compl <- "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Manifest/2100902_18S_MF_merged.txt"
+p_compl <- "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Manifest/210209_18S_MF_merged.txt"
 # write_tsv(tib_compl, p_compl, append = FALSE, col_names = TRUE)
 write_tsv(tib_compl_clim, p_compl, append = FALSE, col_names = TRUE)

@@ -432,10 +432,18 @@ Creative Commons Attribution 4.0 International Public License as per
        * `raster.downscale()` as per `https://rdrr.io/cran/spatialEco/man/raster.downscale.html` - ****possibly rework****
     * step through pipeline again - keep in mind new mapping file with new metadata - **pending**
 * **09.02.2021** - starting to re-run pipeline with new climate data
+  * commit `9a378dd2d7d3e12529d4e0cd56b88f094b9c03f8`
+  * continue with `/Users/paul/Documents/OU_pcm_eukaryotes/Github/170_q2_summary.sh`
+    * `cp /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Manifest/210209_18S_MF_merged.txt /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Manifest/210209_18S_MF_merged_q2_import.txt`
+    * using `qiime2-2020.11` after `qiime2-2020.06` on cluster for denoising
+    * adjusting and running `/Users/paul/Documents/OU_pcm_eukaryotes/Github/170_q2_summary.sh`
+    * adjusting and running `/Users/paul/Documents/OU_pcm_eukaryotes/Github/190_q2_export_objects.sh`
+    * adjusting and running `/Users/paul/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
   * commit ``
+
   
 * **todo before publication**
-  * **pending** - * use excel files in supplemnt as stored here: ``/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/201230_supplemental_information`
+  * **pending** - * use excel files in supplemnt as stored here: `/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/201230_supplemental_information`
   * **addressed** - see _02.05.2020_ - find cause negative XRD values in `/Users/paul/Documents/OU_pcm_eukaryotes/Github/160_r_prep_q2_predictor-tab.r`
   * **pending** - see _02.05.2020_ - find cause for missing sequences in `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/110_18S_merged-seq_blast-noenv.txt`
   * in `200_r_get_phyloseq.r`

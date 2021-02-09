@@ -1,7 +1,7 @@
 # **********************************************
 # * Create, filter, and write Physloseq object *
 # **********************************************
-# 26-Aug-2020, 03-Jan-2021, 04-Jan-2021, 07-Jan-2021
+# 26-Aug-2020, 03-Jan-2021, 04-Jan-2021, 07-Jan-2021, 10-02-2021
 
 # load packages
 # =============
@@ -15,6 +15,8 @@ library("openxlsx")    # write Excel tables
 
 library("data.table")   # faster handling of large tables
 library("future.apply") # faster handling of large tables
+
+library("magrittr")        # more pipes
 
 # functions
 # =========
@@ -73,6 +75,7 @@ reorder_vars <- function (molten_phyloseq_object){
     "RLU", 
     "QUARTZ", "FELDSPAR", "TITANITE", "GARNETS", "MICAS", "DOLOMITE", "KAOLCHLOR", "CALCITE", "CHLORITE", 
     "ELEVATION", "SLOPE", "ASPECT",  "LongDEC", "LatDEC", "Loci", "AGE_KA",
+    "RACMO_precip_mm_35to1km", "RACMO_windsp_10m_35to1km", "RACMO_tmp_2m_35to1km",
     "superkingdom", "phylum", "class", "order", "family", "genus", "species",
     "BarcodeSequence", "LinkerPrimerSequence", "TmplHash", "LibContent", "SardiID", "XtrOri", "XtrContent", "RibLibConcAvg","RibPoolConcAvg")
   
@@ -264,21 +267,27 @@ psob_raw_molten %>% filter(superkingdom %!in% c("Eukaryota")) %>% distinct(OTU) 
 # Analyze coverages per samples
 coverage_per_sample <- aggregate(psob_raw_molten$Abundance, by=list(Sample=psob_raw_molten$Sample), FUN=sum)
 summary(coverage_per_sample)
-coverage_per_sample %>% filter(., grepl(".MM", Sample , fixed = TRUE)) %>% summary(x) 
+sd(coverage_per_sample$x) # 60940.4
+
+coverage_per_sample %>% filter(., grepl(".MM", Sample , fixed = TRUE)) %>% summary(x)
+coverage_per_sample %>% filter(., grepl(".MM", Sample , fixed = TRUE)) %>% pull(x) %>% sd() # 32205
+
 coverage_per_sample %>% filter(., grepl(".ME", Sample , fixed = TRUE)) %>% summary(x) 
-coverage_per_sample %>% filter(., grepl(".LT", Sample , fixed = TRUE)) %>% summary(x) 
+coverage_per_sample %>% filter(., grepl(".ME", Sample , fixed = TRUE)) %>% pull(x) %>% sd() # 37983.14
+
+coverage_per_sample %>% filter(., grepl(".LT", Sample , fixed = TRUE)) %>% summary(x)
+coverage_per_sample %>% filter(., grepl(".LT", Sample , fixed = TRUE)) %>% pull(x) %>% sd() # 87005.67
 
 # get coverages per ASV and analyze
 coverage_per_asv <- aggregate(psob_raw_molten$Abundance, by=list(ASV=psob_raw_molten$OTU), FUN=sum)
 coverage_per_asv <- coverage_per_asv %>% arrange(desc(x))
 summary(coverage_per_asv)
 
-
 # get most species ordered by frequency
 psob_asv_list <- left_join(coverage_per_asv , psob_raw_molten, by = c("ASV" = "OTU")) %>%
     distinct_at(vars("ASV", "x", "superkingdom", "phylum", "class", "order", "family", "genus", "species")) 
 
-psob_asv_list %>% head(., n = 12)
+psob_asv_list %>% head(., n = 50)
 
 #                                 ASV       x superkingdom              phylum               class                       species
 # 1  f184ca796a5be28dc3cde4bcbe1d26d3 1491686    Eukaryota no hit or reference           undefined          uncultured eukaryote
@@ -540,42 +549,9 @@ psob_molten <- psob_molten %>% anti_join(molten_contamination, by = "genus") %>%
 
 unique(psob_molten$superkingdom)
 psob_molten <- psob_molten %>% filter(superkingdom == "Eukaryota")
-psob_molten %>% filter(Abundance != 0) # 3,047 x 51 lines              <----- 
+psob_molten %>% filter(Abundance != 0) # 2,055 x 54
 
 
-# Removal of low-coverage ASV's
-# ------------------------------
-# unrevised code - skipping for now 
-# length(unique (psob_molten$OTU))
-# 
-# # get coverages per ASV
-# coverage_per_asv <- aggregate(psob_molten$Abundance, by=list(ASV=psob_molten$OTU), FUN=sum)
-# coverage_per_asv <- coverage_per_asv %>% arrange(desc(x))
-# summary(coverage_per_asv)
-# 
-# # add taxonomy to coverage list
-# taxon_strings <- distinct(psob_molten[c("OTU", "superkingdom", "phylum", "class", "order", "family", "genus", "species")])
-# coverage_per_asv <- left_join(coverage_per_asv, taxon_strings, by = c("ASV" = "OTU")) %>% filter(x != 0)
-# 
-# # inspect 
-# head(coverage_per_asv, n = 100)
-# coverage_per_asv %>% arrange(superkingdom, phylum, class, order, family, genus, species)
-# 
-# # ** filtering 110,110 x 48 ** 
-# psob_molten <- psob_molten %>% anti_join(as_tibble(coverage_per_asv[which(coverage_per_asv$x < 5), ]), by = c("OTU" = "ASV"))
-# 
-# # get coverages per ASV
-# coverage_per_asv <- aggregate(psob_molten$Abundance, by=list(ASV=psob_molten$OTU), FUN=sum)
-# coverage_per_asv <- coverage_per_asv %>% arrange(desc(x))
-# summary(coverage_per_asv)
-# 
-# # add taxonomy to coverage list
-# taxon_strings <- distinct(psob_molten[c("OTU", "superkingdom", "phylum", "class", "order", "family", "genus", "species")])
-# coverage_per_asv <- left_join(coverage_per_asv, taxon_strings, by = c("ASV" = "OTU")) %>% filter(x != 0)
-# 
-# # inspect 
-# head(coverage_per_asv, n = 100)
-# coverage_per_asv %>% arrange(superkingdom, phylum, class, order, family, genus, species)
 
 # IV. Re-inspect molten and cleaned  Phyloseq object
 # ==================================================
@@ -748,7 +724,6 @@ length(unique(psob_signif$OTU))
 # write table for supplemental information 
 write.xlsx(psob_signif,"/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/SpeciesLists/200104_significant_species.xlsx", overwrite = TRUE)
 
-
 # get species plot as Figure 2
 # plot plain ASV per phylum and port - facetted
 ggplot(psob_signif, aes_string(x = "phylum", y = "AsvPresent", fill="phylum")) +
@@ -786,7 +761,6 @@ sum(16 + 57 + 55) # 128 - ok
 # get total sequencing effort
 sum(psob_signif$Abundance) #   1 210 855 sequences total - after removal of bacteria and contamination
 
-
 # Analyze coverages per samples
 coverage_per_sample <- aggregate(psob_signif$Abundance, by=list(Sample=psob_signif$Sample), FUN=sum)
 summary(coverage_per_sample)
@@ -798,7 +772,6 @@ coverage_per_sample %>% filter(., grepl(".LT", Sample , fixed = TRUE)) %>% summa
 coverage_per_asv <- aggregate(psob_signif$Abundance, by=list(ASV=psob_signif$OTU), FUN=sum)
 coverage_per_asv <- coverage_per_asv %>% arrange(desc(x))
 summary(coverage_per_asv)
-
 
 # Analyze coverages per ASVs
 length(unique(psob_signif$OTU)) # 766

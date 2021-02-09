@@ -25,7 +25,8 @@ fi
 
 # define relative input locations - Qiime files
 # --------------------------------------------------------
-inpth_map='Zenodo/Manifest/200810_18S_MF_merged_q2_import.txt'
+# inpth_map='Zenodo/Manifest/200810_18S_MF_merged_q2_import.txt'
+inpth_map='Zenodo/Manifest/210209_18S_MF_merged_q2_import.txt'
 inpth_tax='Zenodo/Blast/150_18S_merged-seq_q2taxtable.qza'
 
 # define relative input locations - sequence files
