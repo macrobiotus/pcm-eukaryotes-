@@ -368,7 +368,7 @@ Creative Commons Attribution 4.0 International Public License as per
   * ran `/Users/paul/Documents/OU_pcm_eukaryotes/Github/190_q2_export_objects.sh` - **ok**
     * results in `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/190_18S_merged-tab_q2_export`
   * checking and rerunning `~/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
-    * continue  after line `215` (with `decontam`-filtered Phyloseq object)`
+    * continue  after line `215` (with `decontam`-filtered Phyloseq object)
     * script needs restructuring, otherwise `decontam` filtering dosen't make sense
   * commit `f8157bbfea9688f1ee3f1b7bc7b1f79e020bb6fd`
 * **13.08.2020** - continue re-processing - checking XRD values
@@ -401,7 +401,7 @@ Creative Commons Attribution 4.0 International Public License as per
 * **26.08.2020** - rerunning script for manuscript composition
   * adding to `/Users/paul/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
     * adding code to export sample locations for QGis map to `/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/200622_display_item_development/200828_coordinates_all_filtered_phyla_at_all_locations.xlsx`
-  * commit ` f86106a8dd1618674d7f026fb9293a4d84f8629f`
+  * commit `f86106a8dd1618674d7f026fb9293a4d84f8629f`
 * **27.12.2020**
   * received results  from Michel de Lange and GitHub link
   * check `/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript`
@@ -415,11 +415,27 @@ Creative Commons Attribution 4.0 International Public License as per
   * recoded figure 2 and updated README
   * commit `874b1d1cbf45b4b95ec820210bdd7a2378d264ef`
 * **07.01.2020** - continued code revision for results section update
+  * commit `04349baf0bf243ee3525757c1fac697a467cd97f`
+* **01.02.2020** - started manuscript revision
+  * to update statistics ran `/Users/paul/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
+* **09.02.2021** - attempting to read in climate data from Qgis restarts
+  * created copy `/Users/paul/Documents/OU_pcm_eukaryotes/Github/165_r_prep_q2_predictor-tab_with-ratser.r`
+  * to read in and interpolate data from rasters
+    * see `/Users/paul/Quantarctica/Quantarctica3/Atmosphere/Van Wessem RACMO`
+    * RACMO Average 10 m wind speed (35 km) - `/Users/paul/Quantarctica/Quantarctica3/Atmosphere/Van Wessem RACMO/RACMO_WindSpeed_10m_35km.tif`
+    * RACMO Average 2 m Total precipitation (35 km) - `/Users/paul/Quantarctica/Quantarctica3/Atmosphere/Van Wessem RACMO/RACMO_Precipitation_35km.tif`
+    * RACMO Average 2 m Temperature  (35 km) - `/Users/paul/Quantarctica/Quantarctica3/Atmosphere/Van Wessem RACMO/RACMO_Temperature_2m_35km.txt`
+  * created script draft
+    * using `raster::diaggregate()` only -  **possibly rework**
+    * better use 
+       * AreaToPointKriging (`https://link.springer.com/article/10.1007/s11004-019-09840-6`) - ****possibly rework****
+       * `raster.downscale()` as per `https://rdrr.io/cran/spatialEco/man/raster.downscale.html` - ****possibly rework****
+    * step through pipeline again - keep in mind new mapping file with new metadata - **pending**
+* **09.02.2021** - starting to re-run pipeline with new climate data
   * commit ``
-
   
 * **todo before publication**
-  * **pending** - * use excel files in supplemnt as stored here: /Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/201230_supplemental_information
+  * **pending** - * use excel files in supplemnt as stored here: ``/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/201230_supplemental_information`
   * **addressed** - see _02.05.2020_ - find cause negative XRD values in `/Users/paul/Documents/OU_pcm_eukaryotes/Github/160_r_prep_q2_predictor-tab.r`
   * **pending** - see _02.05.2020_ - find cause for missing sequences in `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/110_18S_merged-seq_blast-noenv.txt`
   * in `200_r_get_phyloseq.r`

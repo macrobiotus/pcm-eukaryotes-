@@ -781,10 +781,10 @@ length(unique(psob_signif$Sample)) # 128 samples from study sites
 unique(psob_signif$Sample) %>% grepl(".MM", . , fixed = TRUE) %>% sum # 16 sample Mount Menzies
 unique(psob_signif$Sample) %>% grepl(".ME", . , fixed = TRUE) %>% sum # 57 samples Mawson Escarpment
 unique(psob_signif$Sample) %>% grepl(".LT", . , fixed = TRUE) %>% sum # 55 samples Lake Terrasovoje
-sum(16 + 57 + 55) # 154 - ok
+sum(16 + 57 + 55) # 128 - ok
 
 # get total sequencing effort
-sum(psob_signif$Abundance) #  2 285 773 sequences total - after removal of bacteria and contamination
+sum(psob_signif$Abundance) #   1 210 855 sequences total - after removal of bacteria and contamination
 
 
 # Analyze coverages per samples
@@ -818,5 +818,4 @@ psob_asv_list <- left_join(coverage_per_asv , psob_signif, by = c("ASV" = "OTU")
   arrange(superkingdom, phylum, class, order, family, genus, species)  %>%
   arrange(desc(x))
 
-psob_asv_list %>% head(., n = 100)
-
+ 
