@@ -223,7 +223,7 @@ zoom(racmo_wnd, ext=fld_locs_spdf_stere, maxpixels=100000, layer=1, new=FALSE, u
 points(fld_locs_spdf_stere, pch=3, cex = 2 )
 plot(buffer(fld_locs_spdf_stere, width=20000), add=TRUE)
 
-zoom(racmo_tmp, ext=fld_locs_spdf_stere, maxpixels=100000, layer=1, new=FALSE, useRaster=TRUE, , main = "C: RACMO Temperature 2m 35km (zoom)")
+zoom(racmo_tmp, ext=fld_locs_spdf_stere, maxpixels=100000, layer=1, new=FALSE, useRaster=TRUE, main = "C: RACMO Temperature 2m 35km (zoom)")
 points(fld_locs_spdf_stere, pch=3, cex = 2 )
 plot(buffer(fld_locs_spdf_stere, width=20000), add=TRUE)
 
@@ -246,29 +246,21 @@ save(racmo_tmp_d, file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/165_r
 # check new spatial resolution of data - 1 px 1 km 
 # check spatial resolution of data - it is quite coarse
 
-dev.new()
-par(mfrow=c(2,2))
 
-zoom(racmo_prc_d, ext=fld_locs_spdf_stere, maxpixels=100000, layer=1, new=FALSE, useRaster=TRUE, main="A: RACMO Precipitation 35km (zoom)")
+pdf('/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/ProcessingPlots/210209_RACMO_selection_disagr_data_extent.pdf', width=10, height=6)
+par(mfrow=c(2,3))
+
+zoom(racmo_prc_d, ext=fld_locs_spdf_stere, maxpixels=100000, layer=1, new=FALSE, useRaster=TRUE, main="A: RACMO Precipitation 35km")
 points(fld_locs_spdf_stere, pch=3, cex = 2)
 plot(buffer(fld_locs_spdf_stere, width=20000), add=TRUE)
 
-
-zoom(racmo_wnd_d, ext=fld_locs_spdf_stere, maxpixels=100000, layer=1, new=FALSE, useRaster=TRUE, main="B: RACMO WindSpeed 10m 35km (zoom)")
+zoom(racmo_wnd_d, ext=fld_locs_spdf_stere, maxpixels=100000, layer=1, new=FALSE, useRaster=TRUE, main="B: RACMO WindSpeed 10m 35km")
 points(fld_locs_spdf_stere, pch=3, cex = 2 )
 plot(buffer(fld_locs_spdf_stere, width=20000), add=TRUE)
 
-
-zoom(racmo_tmp_d, ext=fld_locs_spdf_stere, maxpixels=100000, layer=1, new=FALSE, useRaster=TRUE, , main = "C: RACMO Temperature 2m 35km (zoom)")
+zoom(racmo_tmp_d, ext=fld_locs_spdf_stere, maxpixels=100000, layer=1, new=FALSE, useRaster=TRUE, , main = "C: RACMO Temperature 2m 35km")
 points(fld_locs_spdf_stere, pch=3, cex = 2 )
 plot(buffer(fld_locs_spdf_stere, width=20000), add=TRUE)
-
-dev.copy(pdf,'/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/ProcessingPlots/210209_RACMO_selection_disagr_data_extent.pdf')
-dev.off()
-
-
-
-
 
 # extract data from raster and format
 # ------------------------------------
@@ -300,10 +292,41 @@ fld_locs_spdf_stere_ramcmo$ID <- fld_locs_spdf_stere$SampleID
 names(fld_locs_spdf_stere_ramcmo) <- c("SampleID", "RACMO_precip_mm_35to1km", "RACMO_windsp_10m_35to1km", "RACMO_tmp_2m_35to1km")
 
 
-
 # merge data with input data frame
 # --------------------------------
 tib_compl_clim <- left_join( tib_compl, as_tibble(fld_locs_spdf_stere_ramcmo), by = "SampleID" )
+
+
+# merge data with input data frame
+# --------------------------------
+# plot location comparison  
+
+
+tib_compl_clim_fltrd <- tib_compl_clim %>% filter(Location %in% c("Lake_Terrasovoe", "Mawson_Escarpment", "Mount_Menzies"))
+
+# RACMO_precip_mm_35to1km <dbl>, RACMO_windsp_10m_35to1km <dbl>, RACMO_tmp_2m_35to1km <dbl>
+
+
+boxplot(RACMO_precip_mm_35to1km~droplevels(tib_compl_clim_fltrd$Location), 
+  data=tib_compl_clim_fltrd,
+  main="D: RACMO Precipitation 35 km",
+  names=c("LT","ME","ME"),
+  xlab="Location", ylab="Precipitation (mm)")
+  
+boxplot(RACMO_windsp_10m_35to1km~droplevels(tib_compl_clim_fltrd$Location), 
+  data=tib_compl_clim_fltrd,
+  main="E: RACMO WindSpeed 10m 35km",
+  names=c("LT","ME","ME"),
+  xlab="Location", ylab="WindSpeed (m/s)")
+  
+boxplot(RACMO_tmp_2m_35to1km~droplevels(tib_compl_clim_fltrd$Location), 
+  data=tib_compl_clim_fltrd,
+  main="F: RACMO Temperature 2m 35km",
+  names=c("LT","ME","ME"),
+  xlab="Location", ylab="Temperature (°C)")
+
+dev.off()
+
 
 # plot all raw data
 # -----------------
