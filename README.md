@@ -448,7 +448,12 @@ Creative Commons Attribution 4.0 International Public License as per
   * detected in-correct counts
     * in `/Users/paul/Documents/OU_pcm_eukaryotes/Github/165_r_prep_q2_predictor-tab_with-raster.r`
     * commit before moving code to `/Users/paul/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
-    * commit ``
+    * commit `08f3697b025a3e4e35ded69cfbb2523fe81084b0`
+* revised scripts and committed:
+  * `/Users/paul/Documents/OU_pcm_eukaryotes/Github/165_r_prep_q2_predictor-tab_with-raster.r`
+  * `/Users/paul/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
+  * commit ``
+  
 
   
 * **todo before publication**

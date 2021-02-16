@@ -1,22 +1,20 @@
 # *********************************************************
 # * Combine and correct sample descriptors and predictors *
 # ********************************************************* 
-# 09-Feb-2021
+# 09-Feb-2021; 16-Feb-2021
 
 # load packages
 # =============
 rm(list = ls(all.names = TRUE))
 gc()
 
-library("tidyverse")  # work using tibbles
-library("readxl")     # read excel sheets
-library("stringr")    # rename column names using dplyr
-
 library("raster")  # work with geographic raster data
 library("sp")      # work with spatial points
 # library("gstat")   # raster interpolation - unused
 
-
+library("tidyverse")  # work using tibbles
+library("readxl")     # read excel sheets
+library("stringr")    # rename column names using dplyr
 
 # load sample descriptions
 # =========================
@@ -135,7 +133,7 @@ save.image(file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/160_soil-dat
 
 # check xrd values
 tib_compl %>% 
-  mutate(row_sum = rowSums(select(., names(tib_xrd)[2:10]))) %>% 
+  mutate(row_sum = rowSums(dplyr::select(., names(tib_xrd)[2:10]))) %>% 
   dplyr:::select(names(tib_xrd)[2:10], row_sum) %>% print.data.frame()
 
 # re-scale xrd values to yield a column sum of 1, i.e. close data
@@ -246,7 +244,6 @@ save(racmo_tmp_d, file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/165_r
 # check new spatial resolution of data - 1 px 1 km 
 # check spatial resolution of data - it is quite coarse
 
-
 pdf('/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/ProcessingPlots/210209_RACMO_selection_disagr_data_extent.pdf', width=10, height=6)
 par(mfrow=c(2,3))
 
@@ -296,12 +293,34 @@ names(fld_locs_spdf_stere_ramcmo) <- c("SampleID", "RACMO_precip_mm_35to1km", "R
 # --------------------------------
 tib_compl_clim <- left_join( tib_compl, as_tibble(fld_locs_spdf_stere_ramcmo), by = "SampleID" )
 
+# limit data to pertinent values
+tib_compl_clim_fltrd <- tib_compl_clim %>% filter(Location %in% c("Lake_Terrasovoe", "Mawson_Escarpment", "Mount_Menzies"))
+
+# continue plotting of RACMO_precip_mm_35to1km <dbl>, RACMO_windsp_10m_35to1km <dbl>, RACMO_tmp_2m_35to1km <dbl>
+#  into open device
+
+boxplot(RACMO_precip_mm_35to1km~droplevels(tib_compl_clim_fltrd$Location), 
+  data=tib_compl_clim_fltrd,
+  main="D: RACMO Precipitation 35 km",
+  names=c("LT","ME","ME"),
+  xlab="Location", ylab="Precipitation (mm)")
+  
+boxplot(RACMO_windsp_10m_35to1km~droplevels(tib_compl_clim_fltrd$Location), 
+  data=tib_compl_clim_fltrd,
+  main="E: RACMO WindSpeed 10m 35km",
+  names=c("LT","ME","ME"),
+  xlab="Location", ylab="WindSpeed (m/s)")
+  
+boxplot(RACMO_tmp_2m_35to1km~droplevels(tib_compl_clim_fltrd$Location), 
+  data=tib_compl_clim_fltrd,
+  main="F: RACMO Temperature 2m 35km",
+  names=c("LT","ME","ME"),
+  xlab="Location", ylab="Temperature (°C)")
+
+dev.off()
 
 # inset: some variable summaries for manuscript 
 # ---------------------------------------------
-
-# limit data to pertinent values
-tib_compl_clim_fltrd <- tib_compl_clim %>% filter(Location %in% c("Lake_Terrasovoe", "Mawson_Escarpment", "Mount_Menzies"))
 
 # summary of climate variables - all PCM
 mean(tib_compl_clim_fltrd$"RACMO_precip_mm_35to1km")
@@ -344,35 +363,6 @@ tib_compl_clim %>% filter(Location %in% c("Lake_Terrasovoe")) %>% pull("RACMO_tm
 tib_compl_clim %>% filter(Location %in% c("Lake_Terrasovoe")) %>% pull("RACMO_tmp_2m_35to1km") %>% sd()
 
 
-# summary of RLU values
------------------------
-tib_compl_clim$RLU
-RLU_locations <- tib_compl_clim %>% filter(RLU != "NA") %>% dplyr::select(SampleID, Location, RLU) %>% group_by(Location) 
-table(RLU_locations$Location)
-
-
-# continue plotting of RACMO_precip_mm_35to1km <dbl>, RACMO_windsp_10m_35to1km <dbl>, RACMO_tmp_2m_35to1km <dbl>
-#  into open device
-
-boxplot(RACMO_precip_mm_35to1km~droplevels(tib_compl_clim_fltrd$Location), 
-  data=tib_compl_clim_fltrd,
-  main="D: RACMO Precipitation 35 km",
-  names=c("LT","ME","ME"),
-  xlab="Location", ylab="Precipitation (mm)")
-  
-boxplot(RACMO_windsp_10m_35to1km~droplevels(tib_compl_clim_fltrd$Location), 
-  data=tib_compl_clim_fltrd,
-  main="E: RACMO WindSpeed 10m 35km",
-  names=c("LT","ME","ME"),
-  xlab="Location", ylab="WindSpeed (m/s)")
-  
-boxplot(RACMO_tmp_2m_35to1km~droplevels(tib_compl_clim_fltrd$Location), 
-  data=tib_compl_clim_fltrd,
-  main="F: RACMO Temperature 2m 35km",
-  names=c("LT","ME","ME"),
-  xlab="Location", ylab="Temperature (°C)")
-
-dev.off()
 
 # plot all raw data
 # -----------------

@@ -1,7 +1,7 @@
 # **********************************************
 # * Create, filter, and write Physloseq object *
 # **********************************************
-# 26-Aug-2020, 03-Jan-2021, 04-Jan-2021, 07-Jan-2021, 10-02-2021
+# 26-Aug-2020, 03-Jan-2021, 04-Jan-2021, 07-Jan-2021, 10-Feb-2021, 16-Feb-2021
 
 # load packages
 # =============
@@ -245,6 +245,16 @@ unique(psob_raw_molten$Sample) %>% grepl(".ME", . , fixed = TRUE) %>% sum # 70 s
 unique(psob_raw_molten$Sample) %>% grepl(".LT", . , fixed = TRUE) %>% sum # 58 samples Lake Terrasovoje
 sum(26 + 70 + 58) # 154 - ok
 
+
+
+
+# summary of RLU values
+# -----------------------
+psob_raw_molten$RLU
+RLU_locations <- psob_raw_molten %>% filter(RLU != "NA") %>% dplyr::select(Sample, Location, RLU) %>% unique() %>% group_by(Location) 
+RLU_locations %>% print(n = Inf)
+table(RLU_locations$Location)
+
 # get total seqencing effort
 sum(psob_raw_molten$Abundance) #  16 524 031 sequences total - after import filtering
 
@@ -379,7 +389,6 @@ ggsave("200814_raw_library_coverage_and_types.pdf", plot = last_plot(),
          device = "pdf", path = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/ProcessingPlots",
          scale = 3, width = 50, height = 50, units = c("mm"),
          dpi = 500, limitsize = TRUE)
-
 
 # set type for subsequent code
 sample_data(psob)$RibLibConcAvg <- as.numeric(sample_data(psob)$RibLibConcAvg)
