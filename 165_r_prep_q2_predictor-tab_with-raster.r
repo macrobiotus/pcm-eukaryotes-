@@ -297,15 +297,62 @@ names(fld_locs_spdf_stere_ramcmo) <- c("SampleID", "RACMO_precip_mm_35to1km", "R
 tib_compl_clim <- left_join( tib_compl, as_tibble(fld_locs_spdf_stere_ramcmo), by = "SampleID" )
 
 
-# merge data with input data frame
-# --------------------------------
-# plot location comparison  
+# inset: some variable summaries for manuscript 
+# ---------------------------------------------
 
-
+# limit data to pertinent values
 tib_compl_clim_fltrd <- tib_compl_clim %>% filter(Location %in% c("Lake_Terrasovoe", "Mawson_Escarpment", "Mount_Menzies"))
 
-# RACMO_precip_mm_35to1km <dbl>, RACMO_windsp_10m_35to1km <dbl>, RACMO_tmp_2m_35to1km <dbl>
+# summary of climate variables - all PCM
+mean(tib_compl_clim_fltrd$"RACMO_precip_mm_35to1km")
+sd(tib_compl_clim_fltrd$"RACMO_precip_mm_35to1km")
 
+mean(tib_compl_clim_fltrd$"RACMO_windsp_10m_35to1km")
+sd(tib_compl_clim_fltrd$"RACMO_windsp_10m_35to1km")
+
+mean(tib_compl_clim_fltrd$"RACMO_tmp_2m_35to1km")
+sd(tib_compl_clim_fltrd$"RACMO_tmp_2m_35to1km")
+
+# summary of climate variables - only selected locations
+tib_compl_clim %>% filter(Location %in% c("Mount_Menzies")) %>% pull("RACMO_precip_mm_35to1km") %>% mean()
+tib_compl_clim %>% filter(Location %in% c("Mount_Menzies")) %>% pull("RACMO_precip_mm_35to1km") %>% sd()
+
+tib_compl_clim %>% filter(Location %in% c("Mount_Menzies")) %>% pull("RACMO_windsp_10m_35to1km") %>% mean()
+tib_compl_clim %>% filter(Location %in% c("Mount_Menzies")) %>% pull("RACMO_windsp_10m_35to1km") %>% sd()
+
+tib_compl_clim %>% filter(Location %in% c("Mount_Menzies")) %>% pull("RACMO_tmp_2m_35to1km") %>% mean()
+tib_compl_clim %>% filter(Location %in% c("Mount_Menzies")) %>% pull("RACMO_tmp_2m_35to1km") %>% sd()
+
+
+tib_compl_clim %>% filter(Location %in% c("Mawson_Escarpment")) %>% pull("RACMO_precip_mm_35to1km") %>% mean()
+tib_compl_clim %>% filter(Location %in% c("Mawson_Escarpment")) %>% pull("RACMO_precip_mm_35to1km") %>% sd()
+
+tib_compl_clim %>% filter(Location %in% c("Mawson_Escarpment")) %>% pull("RACMO_windsp_10m_35to1km") %>% mean()
+tib_compl_clim %>% filter(Location %in% c("Mawson_Escarpment")) %>% pull("RACMO_windsp_10m_35to1km") %>% sd()
+
+tib_compl_clim %>% filter(Location %in% c("Mawson_Escarpment")) %>% pull("RACMO_tmp_2m_35to1km") %>% mean()
+tib_compl_clim %>% filter(Location %in% c("Mawson_Escarpment")) %>% pull("RACMO_tmp_2m_35to1km") %>% sd()
+
+
+tib_compl_clim %>% filter(Location %in% c("Lake_Terrasovoe")) %>% pull("RACMO_precip_mm_35to1km") %>% mean()
+tib_compl_clim %>% filter(Location %in% c("Lake_Terrasovoe")) %>% pull("RACMO_precip_mm_35to1km") %>% sd()
+
+tib_compl_clim %>% filter(Location %in% c("Lake_Terrasovoe")) %>% pull("RACMO_windsp_10m_35to1km") %>% mean()
+tib_compl_clim %>% filter(Location %in% c("Lake_Terrasovoe")) %>% pull("RACMO_windsp_10m_35to1km") %>% sd()
+
+tib_compl_clim %>% filter(Location %in% c("Lake_Terrasovoe")) %>% pull("RACMO_tmp_2m_35to1km") %>% mean()
+tib_compl_clim %>% filter(Location %in% c("Lake_Terrasovoe")) %>% pull("RACMO_tmp_2m_35to1km") %>% sd()
+
+
+# summary of RLU values
+-----------------------
+tib_compl_clim$RLU
+RLU_locations <- tib_compl_clim %>% filter(RLU != "NA") %>% dplyr::select(SampleID, Location, RLU) %>% group_by(Location) 
+table(RLU_locations$Location)
+
+
+# continue plotting of RACMO_precip_mm_35to1km <dbl>, RACMO_windsp_10m_35to1km <dbl>, RACMO_tmp_2m_35to1km <dbl>
+#  into open device
 
 boxplot(RACMO_precip_mm_35to1km~droplevels(tib_compl_clim_fltrd$Location), 
   data=tib_compl_clim_fltrd,
@@ -326,7 +373,6 @@ boxplot(RACMO_tmp_2m_35to1km~droplevels(tib_compl_clim_fltrd$Location),
   xlab="Location", ylab="Temperature (°C)")
 
 dev.off()
-
 
 # plot all raw data
 # -----------------

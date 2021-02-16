@@ -444,8 +444,11 @@ Creative Commons Attribution 4.0 International Public License as per
   * revised `/Users/paul/Documents/OU_pcm_eukaryotes/Github/165_r_prep_q2_predictor-tab_with-raster.r`
     * plot `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/ProcessingPlots/210209_RACMO_selection_disagr_data_extent.pdf`
     * now used in SI as `/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/201230_supplemental_information/210216_RACMO_variables.pdf`
-  * commit ``
-
+  * commit `18f66c05ce6be9041a32573a2ab090018c074147`
+  * detected in-correct counts
+    * in `/Users/paul/Documents/OU_pcm_eukaryotes/Github/165_r_prep_q2_predictor-tab_with-raster.r`
+    * commit before moving code to `/Users/paul/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
+    * commit ``
 
   
 * **todo before publication**
