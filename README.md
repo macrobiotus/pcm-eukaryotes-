@@ -452,9 +452,13 @@ Creative Commons Attribution 4.0 International Public License as per
 * revised scripts and committed:
   * `/Users/paul/Documents/OU_pcm_eukaryotes/Github/165_r_prep_q2_predictor-tab_with-raster.r`
   * `/Users/paul/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
-  * commit ``
-  
-
+  * commit `336efabd390d9615b576bc871fcb14907cb3e963`
+* **03.03.2021** - working on manuscript submission
+  * worked on `/Users/paul/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
+  * **next**
+    * in manuscript correct counts (lines 139ff) and figure 2 (using Qgis)
+      * for this, in `/Users/paul/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
+        * read in MdL's object at line 705, re-extract counts (for text) and coordinates (for figure)
   
 * **todo before publication**
   * **pending** - * use excel files in supplemnt as stored here: `/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/201230_supplemental_information`

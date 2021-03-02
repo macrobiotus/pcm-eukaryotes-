@@ -1,7 +1,8 @@
 # **********************************************
 # * Create, filter, and write Physloseq object *
 # **********************************************
-# 26-Aug-2020, 03-Jan-2021, 04-Jan-2021, 07-Jan-2021, 10-Feb-2021, 16-Feb-2021
+# 26-Aug-2020, 03-Jan-2021, 04-Jan-2021, 07-Jan-2021, 10-Feb-2021, 16-Feb-2021, 
+# 03-Mar-2021
 
 # load packages
 # =============
@@ -244,9 +245,6 @@ unique(psob_raw_molten$Sample) %>% grepl(".MM", . , fixed = TRUE) %>% sum # 26 s
 unique(psob_raw_molten$Sample) %>% grepl(".ME", . , fixed = TRUE) %>% sum # 70 samples Mawson Escarpment
 unique(psob_raw_molten$Sample) %>% grepl(".LT", . , fixed = TRUE) %>% sum # 58 samples Lake Terrasovoje
 sum(26 + 70 + 58) # 154 - ok
-
-
-
 
 # summary of RLU values
 # -----------------------
@@ -703,11 +701,15 @@ psob_molten %>%
   distinct_at(vars("Sample", "Location", "LongDEC", "LatDEC")) %>%
   write.xlsx(.,"/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/200622_display_item_development/200828_coordinates_all_filtered_phyla_at_all_locations.xlsx", overwrite = TRUE)
 
+
 # VII. Get barplot of ASV that proved to be significant after MdLs analysis
 # =========================================================================
 
 # keep only significant phyla as per MdL's analysis
 psob_signif <- psob_molten %>% filter(phylum  == "Basidiomycota" | phylum  == "Chlorophyta" | phylum  == "Ciliophora" | phylum  ==  "Nematoda" | phylum  == "Tardigrada") 
+
+# alternatively load MdLs file - this one doesn't seem toi be the right one
+load("/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/210222_MDL_psob_return.Rdata")
 
 # use data.table to speed up things and to reuse older code from other project 
 psob_signif <- psob_signif %>% data.table()
@@ -800,4 +802,10 @@ psob_asv_list <- left_join(coverage_per_asv , psob_signif, by = c("ASV" = "OTU")
   arrange(superkingdom, phylum, class, order, family, genus, species)  %>%
   arrange(desc(x))
 
- 
+ # VII. Export coordinate list for map
+# ===================================
+names(psob_molten)
+psob_molten %>% 
+  distinct_at(vars("Sample", "Location", "LongDEC", "LatDEC")) %>%
+  write.xlsx(.,"/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/200622_display_item_development/200828_coordinates_all_filtered_phyla_at_all_locations.xlsx", overwrite = TRUE)
+
