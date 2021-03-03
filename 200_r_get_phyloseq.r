@@ -694,6 +694,7 @@ psob_asv_list_and_location <- left_join(coverage_per_asv, psob_molten, by = c("A
 save.image(file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data_long_export_filtered-image.Rdata")
 save(psob_molten, file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data_long_export_filtered.Rdata")
 
+
 # VI. Export coordinate list for map
 # ===================================
 names(psob_molten)
@@ -708,8 +709,26 @@ psob_molten %>%
 # keep only significant phyla as per MdL's analysis
 psob_signif <- psob_molten %>% filter(phylum  == "Basidiomycota" | phylum  == "Chlorophyta" | phylum  == "Ciliophora" | phylum  ==  "Nematoda" | phylum  == "Tardigrada") 
 
-# alternatively load MdLs file - this one doesn't seem toi be the right one
+# insert 03.03.2020
+# ----------------
+#  trouble shooting - sample counts are off bewtween MdL and PC
+#  compare Tardigrade counts between PC and ML to check sample counts
+
+# load MdLs file with tardigrade observations
 load("/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/210222_MDL_psob_return.Rdata")
+
+tard_sid_ml <- s %>% filter( distinct.otus  != 0) %>% pull(Sample) 
+tard_sid_pc <- psob_signif %>% filter( phylum  == "Tardigrada") %>% filter( Abundance  != 0) %>% pull(Sample) 
+
+psob_signif_tard <- psob_signif %>% filter( phylum  == "Tardigrada") %>% filter( Abundance  != 0)
+psob_signif_tard_mdlcols <- psob_signif_tard %>% dplyr::select("OTU", "Abundance", "Sample", "Location", "LongDEC", "LatDEC", 
+                       "CALCITE", "CHLORITE",
+                       "COND", "DOLOMITE", "FELDSPAR", "GARNETS", "KAOLCHLOR", "MICAS", "PH_CACL", "POTA", "RLU", 
+                       "SLOPE", "SULPH", "TITANITE") %>% print(n = Inf)
+# -------------------------
+# end insert 03.03.2020                        
+                      
+                       
 
 # use data.table to speed up things and to reuse older code from other project 
 psob_signif <- psob_signif %>% data.table()
