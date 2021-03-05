@@ -459,6 +459,7 @@ Creative Commons Attribution 4.0 International Public License as per
     * in manuscript correct counts (lines 139ff) and figure 2 (using Qgis)
       * for this, in `/Users/paul/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
         * read in MdL's object at line 705, re-extract counts (for text) and coordinates (for figure)
+  * commit `b96dffb43f67aa704608073572c92c5fbbca07cf`
   
 * **todo before publication**
   * **pending** - * use excel files in supplemnt as stored here: `/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/201230_supplemental_information`
