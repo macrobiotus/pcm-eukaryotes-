@@ -460,6 +460,12 @@ Creative Commons Attribution 4.0 International Public License as per
       * for this, in `/Users/paul/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
         * read in MdL's object at line 705, re-extract counts (for text) and coordinates (for figure)
   * commit `b96dffb43f67aa704608073572c92c5fbbca07cf`
+* **03.03.2021** - submitted manuscript
+  * commit `4a340cafb1383c925a8f521090b61c173e0685a6`
+* **20.04.2021** - checking springtail assignments for Mark
+  * in `/Users/paul/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
+  * after line `614`
+  * running `psob_molten %>% select(OTU, Sample, Location, LongDEC, LatDEC, phylum, class, order, family, genus, species) %>% filter(class == "Collembola") %>% print(n = Inf)`
   
 * **todo before publication**
   * **pending** - * use excel files in supplemnt as stored here: `/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/201230_supplemental_information`
