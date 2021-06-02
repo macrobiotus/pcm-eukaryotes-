@@ -466,6 +466,13 @@ Creative Commons Attribution 4.0 International Public License as per
   * in `/Users/paul/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
   * after line `614`
   * running `psob_molten %>% select(OTU, Sample, Location, LongDEC, LatDEC, phylum, class, order, family, genus, species) %>% filter(class == "Collembola") %>% print(n = Inf)`
+  * commit `41bd1bc9348a969edce570ce5e745843e52706c3`
+* **02.06.2021** - started to work on manuscript revsions
+  * created and ran `/Users/paul/Documents/OU_pcm_eukaryotes/Github/000_r_in_silico_pcr.R`
+    * not the usual results - aborted
+  * commit `foo`
+  * **pending coding for revisions**
+    * provide per-ASV coverage histogram as supplemental web graphic
   
 * **todo before publication**
   * **pending** - * use excel files in supplemnt as stored here: `/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/201230_supplemental_information`
