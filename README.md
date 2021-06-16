@@ -470,9 +470,18 @@ Creative Commons Attribution 4.0 International Public License as per
 * **02.06.2021** - started to work on manuscript revsions
   * created and ran `/Users/paul/Documents/OU_pcm_eukaryotes/Github/000_r_in_silico_pcr.R`
     * not the usual results - aborted
-  * commit `foo`
-  * **pending coding for revisions**
-    * provide per-ASV coverage histogram as supplemental web graphic
+  * commit `0ee59e1e85d88678f6ae14e92f58591a77c5122c`
+* **11.06.2021** - continued to work on manuscript revsions
+  * started reformatting supplemental materials
+* **15.06.2021** - continued to work on manuscript revsions
+  * continued reformatting supplemental materials
+* **16.06.2021** - continued to work on manuscript revsions
+  * continued reformatting supplemental materials
+  * adding better histogram code and other modifications to `/Users/paul/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
+  * start re-tracing steps in `/Users/paul/Documents/OU_pcm_eukaryotes/Github/150_r_get_q2_tax-tab.r`
+
+* **pending coding for revisions**
+  * continue re-tracing steps in `/Users/paul/Documents/OU_pcm_eukaryotes/Github/150_r_get_q2_tax-tab.r`
   
 * **todo before publication**
   * **pending** - * use excel files in supplemnt as stored here: `/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/201230_supplemental_information`

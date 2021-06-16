@@ -42,7 +42,7 @@ names(blast_results_list) <- blast_results_files # works
 # save object and some time by reloading it - comment in if necessary
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # save(blast_results_list, file="/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_blast-noenv.Rdata")
-# load(file="/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_blast-noenv.Rdata", verbose = TRUE)
+load(file="/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_blast-noenv.Rdata", verbose = TRUE)
 
 # create one large item from many few, while keeping source file info fo grouping or subsetting
 blast_results_list %>% bind_rows(, .id = "src" ) %>%        # add source file names as column elements

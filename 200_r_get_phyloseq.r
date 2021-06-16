@@ -9,15 +9,18 @@
 rm(list = ls(all.names = TRUE))
 gc()
 
-library("tidyverse")   # work using tibbles
-library("phyloseq")    # handle Qiime 2 data in R - best used to generate long dataframe
-library("decontam")    # decontamination - check `https://benjjneb.github.io/decontam/vignettes/decontam_intro.html`
-library("openxlsx")    # write Excel tables
+library("tidyverse")    # work using tibbles
+library("phyloseq")     # handle Qiime 2 data in R - best used to generate long dataframe
+library("decontam")     # decontamination - check `https://benjjneb.github.io/decontam/vignettes/decontam_intro.html`
+library("openxlsx")     # write Excel tables
 
 library("data.table")   # faster handling of large tables
 library("future.apply") # faster handling of large tables
 
-library("magrittr")        # more pipes
+library("magrittr")     # more pipes
+
+library("ggpubr")       # combine plots
+
 
 # functions
 # =========
@@ -121,6 +124,18 @@ retain_pcm_sample_for_inspection <- function(molten_phyloseq_object){
   
   return(molten_phyloseq_object)
 
+}
+
+# as per https://stackoverflow.com/questions/11610377/how-do-i-change-the-formatting-of-numbers-on-an-axis-with-ggplot
+fancy_scientific <- function(l) {
+     # turn in to character string in scientific notation
+     l <- format(l, scientific = TRUE)
+     # quote the part before the exponent to keep all the digits
+     l <- gsub("^(.*)e", "'\\1'e", l)
+     # turn the 'e+' into plotmath format
+     l <- gsub("e", "%*%10^", l)
+     # return this as an expression
+     parse(text=l)
 }
 
 
@@ -275,6 +290,19 @@ psob_raw_molten %>% filter(superkingdom %!in% c("Eukaryota")) %>% distinct(OTU) 
 # Analyze coverages per samples
 coverage_per_sample <- aggregate(psob_raw_molten$Abundance, by=list(Sample=psob_raw_molten$Sample), FUN=sum)
 summary(coverage_per_sample)
+hist(coverage_per_sample$x)
+
+# added 16-Jul-2021 - 1 of 6
+# --------------------------
+p_smpl_cov_uf <- ggplot(coverage_per_sample, aes(x=x)) +
+  geom_histogram(color="black", fill="white") +
+  geom_vline(aes(xintercept=median(x)), color="blue", size=0.5) + 
+  scale_x_continuous(labels=fancy_scientific) +
+  theme_bw() +
+  labs( title = "Prior to filtering: sequence coverage \nper sample") + 
+  ylab("sample count (n = 154)") + 
+  xlab("sequences for each sample (median in blue)")
+
 sd(coverage_per_sample$x) # 60940.4
 
 coverage_per_sample %>% filter(., grepl(".MM", Sample , fixed = TRUE)) %>% summary(x)
@@ -290,6 +318,19 @@ coverage_per_sample %>% filter(., grepl(".LT", Sample , fixed = TRUE)) %>% pull(
 coverage_per_asv <- aggregate(psob_raw_molten$Abundance, by=list(ASV=psob_raw_molten$OTU), FUN=sum)
 coverage_per_asv <- coverage_per_asv %>% arrange(desc(x))
 summary(coverage_per_asv)
+plot(density(coverage_per_asv$x))
+
+# added 16-Jul-2021 - 2 of 6
+# --------------------------
+p_asv_cov_uf <- ggplot(coverage_per_asv, aes(x=x)) +
+  geom_histogram(color="black", fill="white") +
+  geom_vline(aes(xintercept=median(x)), color="blue", size=0.5) + 
+  scale_x_continuous(labels=fancy_scientific) +
+  theme_bw() +
+  labs( title = "Prior to filtering: sequence coverage \nper ASV") + 
+  ylab("ASV count (n = 8097)") + 
+  xlab("sequences for each ASV (median in blue)")
+
 
 # get most species ordered by frequency
 psob_asv_list <- left_join(coverage_per_asv , psob_raw_molten, by = c("ASV" = "OTU")) %>%
@@ -623,7 +664,6 @@ sum(24 + 65 + 56) # 154 - ok
 # get total sequencing effort
 sum(psob_molten$Abundance) #  2 285 773 sequences total - after removal of bacteria and contamination
 
-
 # Analyze coverages per samples
 coverage_per_sample <- aggregate(psob_molten$Abundance, by=list(Sample=psob_molten$Sample), FUN=sum)
 summary(coverage_per_sample)
@@ -631,11 +671,32 @@ coverage_per_sample %>% filter(., grepl(".MM", Sample , fixed = TRUE)) %>% summa
 coverage_per_sample %>% filter(., grepl(".ME", Sample , fixed = TRUE)) %>% summary(x) 
 coverage_per_sample %>% filter(., grepl(".LT", Sample , fixed = TRUE)) %>% summary(x) 
 
+# added 16-Jul-2021 - 3 of 6
+# --------------------------
+p_smpl_cov_pf <- ggplot(coverage_per_sample, aes(x=x)) +
+  geom_histogram(color="black", fill="white") +
+  geom_vline(aes(xintercept=median(x)), color="blue", size=0.5) + 
+  scale_x_continuous(labels=fancy_scientific) +
+  theme_bw() +
+  labs( title = "After filtering: sequence coverage per \nsample") + 
+  ylab("sample count (n = 142)") + 
+  xlab("sequences for each sample (median in blue)")
+
 # get coverages per ASV and analyze
 coverage_per_asv <- aggregate(psob_molten$Abundance, by=list(ASV=psob_molten$OTU), FUN=sum)
 coverage_per_asv <- coverage_per_asv %>% arrange(desc(x))
 summary(coverage_per_asv)
 
+# added 16-Jul-2021 - 4 of 6
+# --------------------------
+p_asv_cov_pf <- ggplot(coverage_per_asv, aes(x=x)) +
+  geom_histogram(color="black", fill="white") +
+  geom_vline(aes(xintercept=median(x)), color="blue", size=0.5) + 
+  scale_x_continuous(labels=fancy_scientific) +
+  theme_bw() +
+  labs( title = "After filtering: sequence coverage per \nASV") + 
+  ylab("ASV count (n = 766)") + 
+  xlab("sequences for each ASV (median in blue)")
 
 # Analyze coverages per ASVs
 length(unique(psob_molten$OTU)) # 766
@@ -703,11 +764,12 @@ psob_molten %>%
   write.xlsx(.,"/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/200622_display_item_development/200828_coordinates_all_filtered_phyla_at_all_locations.xlsx", overwrite = TRUE)
 
 
-# VII. Get barplot of ASV that proved to be significant after MdLs analysis
+# VII. Get barplot and other plots of ASV that proved to be significant after MdLs analysis
 # =========================================================================
 
 # keep only significant phyla as per MdL's analysis
 psob_signif <- psob_molten %>% filter(phylum  == "Basidiomycota" | phylum  == "Chlorophyta" | phylum  == "Ciliophora" | phylum  ==  "Nematoda" | phylum  == "Tardigrada") 
+
 
 # insert 03.03.2020
 # ----------------
@@ -727,8 +789,6 @@ psob_signif_tard_mdlcols <- psob_signif_tard %>% dplyr::select("OTU", "Abundance
                        "SLOPE", "SULPH", "TITANITE") %>% print(n = Inf)
 # -------------------------
 # end insert 03.03.2020                        
-                      
-                       
 
 # use data.table to speed up things and to reuse older code from other project 
 psob_signif <- psob_signif %>% data.table()
@@ -751,7 +811,56 @@ psob_signif [which(psob_signif$phylum  == "Tardigrada"),]$species %>% unique() %
 
 length(unique(psob_signif$OTU))
 
-# write table for supplemental information 
+# Analyze coverages per samples
+coverage_per_sample <- aggregate(psob_signif$Abundance, by=list(Sample=psob_signif$Sample), FUN=sum)
+summary(coverage_per_sample)
+coverage_per_sample %>% filter(., grepl(".MM", Sample , fixed = TRUE)) %>% summary(x) 
+coverage_per_sample %>% filter(., grepl(".ME", Sample , fixed = TRUE)) %>% summary(x) 
+coverage_per_sample %>% filter(., grepl(".LT", Sample , fixed = TRUE)) %>% summary(x) 
+
+# added 16-Jul-2021 - 5 of 6
+# --------------------------
+p_smpl_cov_pfs <- ggplot(coverage_per_sample, aes(x=x)) +
+  geom_histogram(color="black", fill="white") +
+  geom_vline(aes(xintercept=median(x)), color="blue", size=0.5) + 
+  scale_x_continuous(labels=fancy_scientific) +
+  theme_bw() +
+  labs( title = "After filtering and keeping significant \nphyla: sequence coverage per sample") + 
+  ylab("sample count (n = 128)") + 
+  xlab("sequences for each sample (median in blue)")
+
+# get coverages per ASV and analyze
+coverage_per_asv <- aggregate(psob_signif$Abundance, by=list(ASV=psob_signif$OTU), FUN=sum)
+coverage_per_asv <- coverage_per_asv %>% arrange(desc(x))
+summary(coverage_per_asv)
+
+# added 16-Jul-2021 - 6 of 6
+# --------------------------
+p_asv_cov_pfs <- ggplot(coverage_per_asv, aes(x=x)) +
+  geom_histogram(color="black", fill="white") +
+  geom_vline(aes(xintercept=median(x)), color="blue", size=0.5) + 
+  scale_x_continuous(labels=fancy_scientific) +
+  theme_bw() +
+  labs( title = "After filtering and keeping significant \nphyla: sequence coverage per ASV") + 
+  ylab("ASV count (n = 256)") + 
+  xlab("sequences for each ASV (median in blue)")
+
+
+# added 16-Jul-2021 - 4 of 6 - combine histograms 
+
+
+plt_comb <- ggarrange(ggarrange( p_smpl_cov_uf, p_smpl_cov_pf, p_smpl_cov_pfs, ncol = 3),
+                      ggarrange( p_asv_cov_uf, p_asv_cov_pf, p_asv_cov_pfs, ncol = 3), 
+                      nrow = 2,
+                      align = "hv")
+
+ggsave("210616_coverage_plots.pdf", plot = last_plot(), 
+         device = "pdf", path = "/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/200622_display_item_development",
+         scale = 1, width = 297, height = 210, units = c("mm"),
+         dpi = 500, limitsize = TRUE)
+
+
+# write table for supplemental information will be a "WebTable"
 write.xlsx(psob_signif,"/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/SpeciesLists/200104_significant_species.xlsx", overwrite = TRUE)
 
 # get species plot as Figure 2
