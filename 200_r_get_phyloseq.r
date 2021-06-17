@@ -811,7 +811,7 @@ psob_signif [which(psob_signif$phylum  == "Tardigrada"),]$species %>% unique() %
 
 length(unique(psob_signif$OTU))
 
-# Analyze coverages per samples
+# Analyze coverage per samples
 coverage_per_sample <- aggregate(psob_signif$Abundance, by=list(Sample=psob_signif$Sample), FUN=sum)
 summary(coverage_per_sample)
 coverage_per_sample %>% filter(., grepl(".MM", Sample , fixed = TRUE)) %>% summary(x) 
@@ -829,7 +829,7 @@ p_smpl_cov_pfs <- ggplot(coverage_per_sample, aes(x=x)) +
   ylab("sample count (n = 128)") + 
   xlab("sequences for each sample (median in blue)")
 
-# get coverages per ASV and analyze
+# get coverage per ASV and analyze
 coverage_per_asv <- aggregate(psob_signif$Abundance, by=list(ASV=psob_signif$OTU), FUN=sum)
 coverage_per_asv <- coverage_per_asv %>% arrange(desc(x))
 summary(coverage_per_asv)
@@ -907,12 +907,12 @@ coverage_per_sample %>% filter(., grepl(".MM", Sample , fixed = TRUE)) %>% summa
 coverage_per_sample %>% filter(., grepl(".ME", Sample , fixed = TRUE)) %>% summary(x) 
 coverage_per_sample %>% filter(., grepl(".LT", Sample , fixed = TRUE)) %>% summary(x) 
 
-# get coverages per ASV and analyze
+# get coverage per ASV and analyze
 coverage_per_asv <- aggregate(psob_signif$Abundance, by=list(ASV=psob_signif$OTU), FUN=sum)
 coverage_per_asv <- coverage_per_asv %>% arrange(desc(x))
 summary(coverage_per_asv)
 
-# Analyze coverages per ASVs
+# Analyze coverage per ASVs
 length(unique(psob_signif$OTU)) # 766
 # count eukaryotes and non-eukaryotes 
 psob_signif %>% filter(superkingdom %in% c("Eukaryota")) %>% distinct(OTU)  # 766 Eukaryota ASV
@@ -923,6 +923,10 @@ show_vars <- c("OTU", "Abundance", "Sample", "BarcodeSequence", "Location", "Des
                "superkingdom", "phylum", "class", "order", "family", "genus", "species")
 psob_signif %>% select(any_of(show_vars)) %>% summarize_all(n_distinct, na.rm = TRUE)
 
+# used as /Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/210602_supporting_material/WebTable 4.xlsx
+psob_signif_distinct <- psob_signif %>% distinct(across(c("superkingdom", "phylum", "class", "order", "family", "genus", "species")))
+write.xlsx(psob_signif_distinct,"/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/SpeciesLists/200104_significant_species_unique.xlsx", overwrite = TRUE)
+saveRDS(psob_signif_distinct, file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_uniq_sign_species.Rdata")
 
 # get most species ordered by frequency
 psob_asv_list <- left_join(coverage_per_asv , psob_signif, by = c("ASV" = "OTU")) %>%

@@ -479,6 +479,25 @@ Creative Commons Attribution 4.0 International Public License as per
   * continued reformatting supplemental materials
   * adding better histogram code and other modifications to `/Users/paul/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
   * start re-tracing steps in `/Users/paul/Documents/OU_pcm_eukaryotes/Github/150_r_get_q2_tax-tab.r`
+  * commit can't be copied anymore check date
+* **17.06.2021** - continued to work on manuscript revsions
+  * ammending `/Users/paul/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
+    * saving distinct species to `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/SpeciesLists/200104_significant_species_unique.xlsx`
+    * saving copy as `WebTable4`
+    * saving copy to `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_uniq_sign_species.Rdata`
+  * started to work through `/Users/paul/Documents/OU_pcm_eukaryotes/Github/150_r_get_q2_tax-tab.r`to describe taxonomy assignment process properly
+  * creating `/Users/paul/Documents/OU_pcm_eukaryotes/Github/220_r_check_species_occurences.r`  for GBIF parsing
+* **17.06.2021** - continued to work on manuscript revsions
+  * continued working through `/Users/paul/Documents/OU_pcm_eukaryotes/Github/150_r_get_q2_tax-tab.r`
+    * to describe taxonomy assignment process properly
+    * saved workspace
+    * updated all intermediate files at `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast`
+    * **completed** describing taxonomy assignment process
+  * continued  to work through `/Users/paul/Documents/OU_pcm_eukaryotes/Github/220_r_check_species_occurences.r`
+    * to describe taxonomy assignment process properly
+        * **unfinished**
+  * **no commit yet**
+
 
 * **pending coding for revisions**
   * continue re-tracing steps in `/Users/paul/Documents/OU_pcm_eukaryotes/Github/150_r_get_q2_tax-tab.r`
