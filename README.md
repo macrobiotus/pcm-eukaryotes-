@@ -493,14 +493,15 @@ Creative Commons Attribution 4.0 International Public License as per
     * saved workspace
     * updated all intermediate files at `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast`
     * **completed** describing taxonomy assignment process
+    * commit `9bf9fc6a13b8fb58c08b8ee0d588a123798d303a`
   * continued  to work through `/Users/paul/Documents/OU_pcm_eukaryotes/Github/220_r_check_species_occurences.r`
-    * to describe taxonomy assignment process properly
-        * **unfinished**
+    * to describe species occurrences
+    * **unfinished** - see comments within
   * **no commit yet**
 
 
 * **pending coding for revisions**
-  * continue re-tracing steps in `/Users/paul/Documents/OU_pcm_eukaryotes/Github/150_r_get_q2_tax-tab.r`
+  * foo
   
 * **todo before publication**
   * **pending** - * use excel files in supplemnt as stored here: `/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/201230_supplemental_information`
