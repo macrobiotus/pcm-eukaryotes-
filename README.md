@@ -497,7 +497,23 @@ Creative Commons Attribution 4.0 International Public License as per
   * continued  to work through `/Users/paul/Documents/OU_pcm_eukaryotes/Github/220_r_check_species_occurences.r`
     * to describe species occurrences
     * **unfinished** - see comments within
+    * commit `92030a2dd12964ceba35e33a7b1792a7423f3447`
+    * extended code somewhat - outlined next steps
+* **23.06.2021** - continued to work on manuscript revsions
+  * likely finished `/Users/paul/Documents/OU_pcm_eukaryotes/Github/220_r_check_species_occurences.r`
   * **no commit yet**
+* **24.06.2021** - continued to work on manuscript revsions
+  * worked on `/Users/paul/Documents/OU_pcm_eukaryotes/Github/165_r_prep_q2_predictor-tab_with-raster.r`
+    * updated `/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/210602_supporting_material/WebFigure 4.docx`
+    * created `/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/210602_supporting_material/WebTable 7.xlsx`
+  * **next:**
+    * update manuscript files with regards to data completeness
+    * [...]
+    * sort tables
+  * commit
+
+
+  
 
 
 * **pending coding for revisions**

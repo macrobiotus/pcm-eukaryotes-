@@ -1,7 +1,7 @@
 # *********************************************************
 # * Combine and correct sample descriptors and predictors *
 # ********************************************************* 
-# 09-Feb-2021; 16-Feb-2021
+# 09-Feb-2021; 16-Feb-2021; 24-Jun-2021
 
 # load packages
 # =============
@@ -15,6 +15,9 @@ library("sp")      # work with spatial points
 library("tidyverse")  # work using tibbles
 library("readxl")     # read excel sheets
 library("stringr")    # rename column names using dplyr
+
+library("openxlsx")
+
 
 # load sample descriptions
 # =========================
@@ -150,12 +153,6 @@ tib_compl %>%
   mutate(row_sum = rowSums(select(., names(tib_xrd)[2:10]))) %>% 
   select(names(tib_xrd)[2:9], row_sum) %>% print.data.frame()
 
-# save intermediate state after corrections
-save(tib_compl, file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/160_soil-data_corrected.Rdata")
-save.image(file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/160_soil-data_corrected_image.Rdata")
-
-# older code above - can be kept 
-#########################################
 
 # Adding data from climate rasters 
 # =================================
@@ -206,7 +203,6 @@ points(fld_locs_spdf_stere, pch=3, cex = 2 )
 dev.copy(pdf,'/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/ProcessingPlots/210209_RACMO_selection_raw.pdf')
 dev.off()
 
-
 # resample raster for higher spatial resolution
 # ------------------------------------------------
 
@@ -225,10 +221,8 @@ zoom(racmo_tmp, ext=fld_locs_spdf_stere, maxpixels=100000, layer=1, new=FALSE, u
 points(fld_locs_spdf_stere, pch=3, cex = 2 )
 plot(buffer(fld_locs_spdf_stere, width=20000), add=TRUE)
 
-
 dev.copy(pdf,'/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/ProcessingPlots/210209_RACMO_selection_raw_data_extent.pdf')
 dev.off()
-
 
 # increase raster resolution - possibly improve using Inverse Distance Weighting
 #   https://swilke-geoscience.net/post/spatial_interpolation/
@@ -362,19 +356,44 @@ tib_compl_clim %>% filter(Location %in% c("Lake_Terrasovoe")) %>% pull("RACMO_wi
 tib_compl_clim %>% filter(Location %in% c("Lake_Terrasovoe")) %>% pull("RACMO_tmp_2m_35to1km") %>% mean()
 tib_compl_clim %>% filter(Location %in% c("Lake_Terrasovoe")) %>% pull("RACMO_tmp_2m_35to1km") %>% sd()
 
-
-
 # plot all raw data
 # -----------------
-tib_compl_clim %>% keep(is.numeric) %>%  gather() %>% 
-  ggplot2:::ggplot(aes(value)) + facet_wrap(~ key, scales = "free") + geom_histogram() + geom_density() + theme_bw() +
+
+# reshape data copy for plotting
+tib_compl_clim_plot <- tib_compl_clim %>% keep(is.numeric) %>% gather()
+
+# get a tibble from which to generate custom lables
+lbl_tibble <- tib_compl_clim_plot %>% group_by(key) %>% 
+  summarise_all(~sum(is.na(.))) %>% 
+  mutate(size = tib_compl_clim_plot %>% group_by(key) %>% group_size) %>%
+  mutate(n_defined = 1-(value / size))
+
+# print for revision
+lbl_tibble_prnt <- lbl_tibble %>% rename("Variable" = "key", "Observations" = "value",
+  "Desirable" = "size",  "Fraction defined" = "n_defined")
+  
+lbl_tibble_prnt %>% print(n= Inf)
+write.xlsx(lbl_tibble_prnt, "/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/210602_supporting_material/WebTable 7.xlsx", asTable = TRUE, overwrite = FALSE)
+
+lbl <- setNames(  paste0( gsub("_", " ", lbl_tibble$key), " (", as.character(signif(lbl_tibble$n_defined,2)), ")"),    lbl_tibble$key)
+
+# appender <- function(string, suffix = " foo") paste0(gsub("_", " ", string), suffix)
+# appender <- function(string, suffix = get_suffix(x)) paste0(gsub("_", " ", string)," ", suffix)
+
+
+tib_compl_clim_plot %>% 
+  ggplot2:::ggplot(aes(value)) + 
+  facet_wrap(. ~ key, labeller = as_labeller(lbl),  scales = "free") + 
+  geom_histogram(color = "lightgrey") + 
+  geom_density(color = "darkred") + 
+  theme_bw() +
   theme(legend.position = "none") +
   theme(strip.text.y = element_text(angle=0)) + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
         axis.text.y = element_text(angle = 0, hjust = 1,  size = 7), 
         axis.ticks.y = element_blank())
 
-ggsave("200810_predictor_data_of_script_160.pdf", plot = last_plot(), 
+ggsave("210624_predictor_data_of_script_160.pdf", plot = last_plot(), 
        device = "pdf", path = "/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/200622_display_item_development/",
        scale = 3, width = 75, height = 50, units = c("mm"),
        dpi = 500, limitsize = TRUE)
