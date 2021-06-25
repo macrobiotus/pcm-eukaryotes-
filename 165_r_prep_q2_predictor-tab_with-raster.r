@@ -18,6 +18,8 @@ library("stringr")    # rename column names using dplyr
 
 library("openxlsx")
 
+# Define new operator "not in"
+'%!in%' <- function(x,y)!('%in%'(x,y))
 
 # load sample descriptions
 # =========================
@@ -356,37 +358,57 @@ tib_compl_clim %>% filter(Location %in% c("Lake_Terrasovoe")) %>% pull("RACMO_wi
 tib_compl_clim %>% filter(Location %in% c("Lake_Terrasovoe")) %>% pull("RACMO_tmp_2m_35to1km") %>% mean()
 tib_compl_clim %>% filter(Location %in% c("Lake_Terrasovoe")) %>% pull("RACMO_tmp_2m_35to1km") %>% sd()
 
-# plot all raw data
-# -----------------
+# 20-26-Jun-2021 plot all raw data for revisions
+# -----------------------------------------------
+
+# load raw sequence data object from later script
+load(file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/200_all_data_psob_import.Rdata")
+psob_raw_molten <- phyloseq::psmelt(psob_raw) %>% as_tibble()
+
+# get list of sequenced samples
+seqSampleIDs <- psob_raw_molten %>% filter(Description == "PCMNT") %>% 
+  filter(Location %!in%  c("East Antarctic Coast", "Reinbolt Hills")) %>%
+  distinct(Sample) %>% pull(Sample)
+
+## compare metadate gathered here with subsequently generated metadata
+tib_compl_clim %>% filter(SampleID %in% seqSampleIDs)
+tib_compl_clim %>% filter(SampleID %!in% seqSampleIDs)
 
 # reshape data copy for plotting
-tib_compl_clim_plot <- tib_compl_clim %>% keep(is.numeric) %>% gather()
+# tib_compl_clim_plot <- tib_compl_clim %>% filter(Description == "PCM") %>% 
+#   filter(Location %!in%  c("East Antarctic Coast", "Reinbolt Hills")) %>% 
+#   keep(is.numeric) %>%
+#   gather()
+
+tib_compl_clim_plot <- tib_compl_clim %>% filter(SampleID %in% seqSampleIDs) %>% 
+keep(is.numeric) %>%
+gather()
+
 
 # get a tibble from which to generate custom lables
 lbl_tibble <- tib_compl_clim_plot %>% group_by(key) %>% 
-  summarise_all(~sum(is.na(.))) %>% 
+  summarise_all(~sum(!is.na(.))) %>% 
   mutate(size = tib_compl_clim_plot %>% group_by(key) %>% group_size) %>%
-  mutate(n_defined = 1-(value / size))
+  mutate(n_defined = (value / size))
+lbl_tibble %>% print(n= Inf)
 
 # print for revision
 lbl_tibble_prnt <- lbl_tibble %>% rename("Variable" = "key", "Observations" = "value",
   "Desirable" = "size",  "Fraction defined" = "n_defined")
   
 lbl_tibble_prnt %>% print(n= Inf)
-write.xlsx(lbl_tibble_prnt, "/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/210602_supporting_material/WebTable 7.xlsx", asTable = TRUE, overwrite = FALSE)
+write.xlsx(lbl_tibble_prnt, "/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/210602_supporting_material/WebTable 7.xlsx", asTable = TRUE, overwrite = TRUE)
 
-lbl <- setNames(  paste0( gsub("_", " ", lbl_tibble$key), " (", as.character(signif(lbl_tibble$n_defined,2)), ")"),    lbl_tibble$key)
-
-# appender <- function(string, suffix = " foo") paste0(gsub("_", " ", string), suffix)
-# appender <- function(string, suffix = get_suffix(x)) paste0(gsub("_", " ", string)," ", suffix)
+lbl <- setNames(  paste0( gsub("_", " ", lbl_tibble$key), " (", as.character(lbl_tibble$value), ")"),  lbl_tibble$key)
 
 
 tib_compl_clim_plot %>% 
   ggplot2:::ggplot(aes(value)) + 
   facet_wrap(. ~ key, labeller = as_labeller(lbl),  scales = "free") + 
-  geom_histogram(color = "lightgrey") + 
   geom_density(color = "darkred") + 
   theme_bw() +
+  ylab("Density (%)") +
+  xlab("Measurement unit (see caption)") + 
   theme(legend.position = "none") +
   theme(strip.text.y = element_text(angle=0)) + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
@@ -397,6 +419,7 @@ ggsave("210624_predictor_data_of_script_160.pdf", plot = last_plot(),
        device = "pdf", path = "/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/200622_display_item_development/",
        scale = 3, width = 75, height = 50, units = c("mm"),
        dpi = 500, limitsize = TRUE)
+
 
 # write_merged tables - for Qiime import
 # ======================================

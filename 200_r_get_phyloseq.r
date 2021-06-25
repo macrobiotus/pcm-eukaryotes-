@@ -940,4 +940,3 @@ names(psob_molten)
 psob_molten %>% 
   distinct_at(vars("Sample", "Location", "LongDEC", "LatDEC")) %>%
   write.xlsx(.,"/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/200622_display_item_development/200828_coordinates_all_filtered_phyla_at_all_locations.xlsx", overwrite = TRUE)
-

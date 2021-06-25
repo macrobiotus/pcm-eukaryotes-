@@ -502,15 +502,21 @@ Creative Commons Attribution 4.0 International Public License as per
 * **23.06.2021** - continued to work on manuscript revsions
   * likely finished `/Users/paul/Documents/OU_pcm_eukaryotes/Github/220_r_check_species_occurences.r`
   * **no commit yet**
-* **24.06.2021** - continued to work on manuscript revsions
+* **24.06.2021** - continued to work on manuscript revsions - updated manuscript files with regards to data completeness
   * worked on `/Users/paul/Documents/OU_pcm_eukaryotes/Github/165_r_prep_q2_predictor-tab_with-raster.r`
     * updated `/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/210602_supporting_material/WebFigure 4.docx`
     * created `/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/210602_supporting_material/WebTable 7.xlsx`
+  * commit `78b4f59c6753683732f67a340f7e4a70c344e7df`
+* **25.06.2021** - continued to work on manuscript revsions - updated manuscript files with regards to data completeness
+  * worked on `/Users/paul/Documents/OU_pcm_eukaryotes/Github/165_r_prep_q2_predictor-tab_with-raster.r`
+  * worked on `/Users/paul/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
+  * commit ``
+  
   * **next:**
     * update manuscript files with regards to data completeness
     * [...]
     * sort tables
-  * commit
+  * commit `78b4f59c6753683732f67a340f7e4a70c344e7df`
 
 
   
