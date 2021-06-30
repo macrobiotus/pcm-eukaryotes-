@@ -510,26 +510,9 @@ Creative Commons Attribution 4.0 International Public License as per
 * **25.06.2021** - continued to work on manuscript revsions - updated manuscript files with regards to data completeness
   * worked on `/Users/paul/Documents/OU_pcm_eukaryotes/Github/165_r_prep_q2_predictor-tab_with-raster.r`
   * worked on `/Users/paul/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
-  * commit ``
-  
-  * **next:**
-    * update manuscript files with regards to data completeness
-    * [...]
-    * sort tables
-  * commit `78b4f59c6753683732f67a340f7e4a70c344e7df`
-
-
-  
-
-
-* **pending coding for revisions**
-  * foo
-  
-* **todo before publication**
-  * **pending** - * use excel files in supplemnt as stored here: `/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/201230_supplemental_information`
-  * **addressed** - see _02.05.2020_ - find cause negative XRD values in `/Users/paul/Documents/OU_pcm_eukaryotes/Github/160_r_prep_q2_predictor-tab.r`
-  * **pending** - see _02.05.2020_ - find cause for missing sequences in `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/110_18S_merged-seq_blast-noenv.txt`
-  * in `200_r_get_phyloseq.r`
-    * check why roaches don't get removed 
-  * check alignments if using tree
+  * commit `88a8468862b63d349e2024e09bfc4720e316770c`
+* **28.06.2021** - continued to work on manuscript revsions
+* **29.06.2021** - continued to work on manuscript revsions
+* **30.06.2021** - finished manuscript revsions for review by coauthors - commit ``
+ 
   
