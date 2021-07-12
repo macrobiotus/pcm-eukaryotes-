@@ -513,6 +513,20 @@ Creative Commons Attribution 4.0 International Public License as per
   * commit `88a8468862b63d349e2024e09bfc4720e316770c`
 * **28.06.2021** - continued to work on manuscript revsions
 * **29.06.2021** - continued to work on manuscript revsions
-* **30.06.2021** - finished manuscript revsions for review by coauthors - commit ``
+* **30.06.2021** - finished manuscript revsions for review by coauthors - commit `cea3a7a393cb5de59783fe77bd7a0ce3d334f80d`
+* **12.07.2021** - started finalizing revisions after receiving feedback
+  * **next** 
+    * add Blast confidences to
+      * `/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/210602_supporting_material/WebTable 4.xlsx`
+      * `/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/210602_supporting_material/WebTable 5.xlsx`
+      * `/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/210602_supporting_material/WebTable 6.xlsx`
+    * continue in text `/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/210712_FEE21-0056_main_text.docx`
+* **13.07.2021** - started finalizing revisions after receiving feedback  
+  * use `/Users/paul/Documents/OU_pcm_eukaryotes/Github/150_r_get_q2_tax-tab.r`
+  * as a template for `/Users/paul/Documents/OU_pcm_eukaryotes/Github/230_r_add_blast_scores_to_som.r`
+  * finished `/Users/paul/Documents/OU_pcm_eukaryotes/Github/230_r_add_blast_scores_to_som.r`
+  * finalising revisions
+  * 
+  
  
   
