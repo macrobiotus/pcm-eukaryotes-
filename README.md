@@ -526,7 +526,16 @@ Creative Commons Attribution 4.0 International Public License as per
   * as a template for `/Users/paul/Documents/OU_pcm_eukaryotes/Github/230_r_add_blast_scores_to_som.r`
   * finished `/Users/paul/Documents/OU_pcm_eukaryotes/Github/230_r_add_blast_scores_to_som.r`
   * finalising revisions
-  * 
+  * commit `a0dcc39ebc9546608944e925686ff8ca38571514`
+* **10.11.2021** - starting revisions in version `FEE21-0056.R2`
+  * see files:
+    * `/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/211110_FEE21-0056.R1_responses.docx`
+    * `/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/211110_FEE21-0056.R2_main_text.docx`
+* **11.11.2021** - continuing revisions in version `FEE21-0056.R2`
+* **12.11.2021** - continuing revisions in version `FEE21-0056.R2`
+  * done with most - waiting fro MdL
+  * commit 
+
   
  
   
