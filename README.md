@@ -536,6 +536,11 @@ Creative Commons Attribution 4.0 International Public License as per
   * commit `e8454abe7e6d4f57364d4ec5656abbe55f8e599b`
 * **18.11.2021** - continuing revisions in version `FEE21-0056.R2`
   * uploading script folder to GitHub
+  * releasing scripts on GitHub - crosslinking to Zenodo for doi minting
+  * compressing  analysis files `tar -zcvf 211118_analysis_files.tar.gz Zenodo/` 
+  * uploading files to Zenodo
+  * erase archive to save local disk space
+  * finalising revsion for co-authors
 
 
   
