@@ -1,7 +1,7 @@
 # ***************************************************************
 # * Check occurrence record of significant Antarctic eukaryotes *
 # ***************************************************************
-# 21-Jun-20201
+# 19-Nov-20201
 
 rm(list = ls(all.names = TRUE))
 gc()
@@ -105,6 +105,7 @@ euk_occ_raw <- readRDS(file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/R/
 
 euk_occ_df <- occ2df(euk_occ_raw)
 
+write.csv(euk_occ_df, file = "/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Metadata/211120_220_occurence_records_raw.csv", row.names = TRUE)
 
 # some cleaning https://spannbaueradam.shinyapps.io/r_regex_tester/
 euk_occ_df %<>% mutate(name = str_match(name, "\\S*\\s\\S*")[, 1])

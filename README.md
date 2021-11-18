@@ -541,7 +541,10 @@ Creative Commons Attribution 4.0 International Public License as per
   * uploading files to Zenodo
   * erase archive to save local disk space
   * finalising revsion for co-authors
-
+* **19.11.2021** - updating archives for GBIF licensing
+  * getting derived data set for GBIF
+  * creating new code commit past release version
+  * creating new Zenodo version
 
   
  
