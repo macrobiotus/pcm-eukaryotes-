@@ -1,7 +1,6 @@
 # Analysing 18S data from **Prince Charles Mountains**
 
-Using **Gradient Forrest Techniques** to analyse abiotic predictor affect on
-eukaryotic soil biodiversity. Paul Czechowski 2011-2020, Material released with
+Paul Czechowski 2011-2021, Material released with
 Creative Commons Attribution 4.0 International Public License as per
 `https://creativecommons.org/licenses/by/4.0/legalcode`
 
@@ -534,7 +533,10 @@ Creative Commons Attribution 4.0 International Public License as per
 * **11.11.2021** - continuing revisions in version `FEE21-0056.R2`
 * **12.11.2021** - continuing revisions in version `FEE21-0056.R2`
   * done with most - waiting fro MdL
-  * commit 
+  * commit `e8454abe7e6d4f57364d4ec5656abbe55f8e599b`
+* **18.11.2021** - continuing revisions in version `FEE21-0056.R2`
+  * uploading script folder to GitHub
+
 
   
  
