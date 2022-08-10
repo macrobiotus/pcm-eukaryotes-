@@ -54,7 +54,7 @@ Creative Commons Attribution 4.0 International Public License as per
   * obtained original analysis files from 2016 and earlier, from:
     * `/Volumes/Macintosh HD-1/Users/paul/Archive/Papers/Czechowski_et_al_2017/analyses/5_mapping_files`
     * `/Volumes/Macintosh HD-1/Users/paul/Archive/Papers/Czechowski_et_al_2017/analyses`
-  * copied to 
+  * copied to
     * `/Users/paul/Documents/OU_pcm_eukaryotes/Scratch/160127_data_analysis_1a_18S.sh`
     * `/Users/paul/Documents/OU_pcm_eukaryotes/Manifest/160202_18S_MF.txt`
   * restoring from commit `4e8dccdaa9ac0501b6bf0655bef4b5d2fe91ae3d`
@@ -68,7 +68,7 @@ Creative Commons Attribution 4.0 International Public License as per
 * **15.04.2020** - re-start sequencing processing
   * running and adjusting:
     * `/Users/paul/Documents/OU_pcm_eukaryotes/Github/050_q1_demultiplex.sh`
-      * syntax corrections  
+      * syntax corrections
     * `/Users/paul/Documents/OU_pcm_eukaryotes/Github/060_q1_split_samples.sh`
       * creation and running
     * `/Users/paul/Documents/OU_pcm_eukaryotes/Github/070_bash_check_quality.sh`
@@ -119,7 +119,7 @@ Creative Commons Attribution 4.0 International Public License as per
   * blast taxonomy assignment ongoing on cluster - finished after 6 h **ok**
     * `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/110_18S_merged-seq_blast-noenv.xml.gz`
 * **17.04.2020** - sequence processing - get taxonomy table
-  * get `.tsv` from Blast results 
+  * get `.tsv` from Blast results
     * at `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/140_18S_merged-seq.fasta.gz`
     * column headers are:
      * `#OTUID`, `taxonomy`, `confidence`
@@ -133,7 +133,7 @@ Creative Commons Attribution 4.0 International Public License as per
   * progressed passed `.xml` import as indicated in script
   * commit `e657584f98d43f73e715b2eb7c0bd4968c64`
   * taxonomy table now available at
-    * `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_q2taxtable.tsv` 
+    * `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/150_18S_merged-seq_q2taxtable.tsv`
   * commit `dc91a5f4d69bdfa1e3219293774d654aaff38a8`
 * **19.04.2020** - combining metadata for Qiime import
   * script `/Users/paul/Documents/OU_pcm_eukaryotes/Github/160_r_prep_q2_predictor-tab.r`
@@ -142,11 +142,11 @@ Creative Commons Attribution 4.0 International Public License as per
     * exported predictors `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Metadata/200419_pcm_atp.csv`
       * reviewed for import - **ok**
     * exported predictors `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Metadata/200419_pcm_geog.csv`
-       * reviewed for import - **ok**   
+       * reviewed for import - **ok**
     * exported predictors `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Metadata/200419_pcm_xrd.csv`
-      * reviewed for import - **ok**    
+      * reviewed for import - **ok**
     * exported predictors `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Metadata/200419_pcm_csbp.csv`
-       * reviewed for import - **ok** 
+       * reviewed for import - **ok**
 * **20.04.2020** - data verification
   * checking number formats in above `csv` files - **ok**
   * checking hash formats via `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Metadata/200420_hash_correction.xlsm`
@@ -215,7 +215,7 @@ Creative Commons Attribution 4.0 International Public License as per
   * commit `63ff7efbe3caaa8f05bf077cb4e39108f90b05fa`
 * **04.05.2020** - testing `qiime2R`
   * `qiime2R` import function (`qza_to_phyloseq()`) is buggy.
-  * `150_r_get_q2_tax-tab.r` should be yesterday's state. 
+  * `150_r_get_q2_tax-tab.r` should be yesterday's state.
   * commit `61ecbb94869d87ecea2779db68368467628c5033`
 * **05.05.2020** - creating Phyloseqs objects
   * working on `~/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
@@ -234,7 +234,7 @@ Creative Commons Attribution 4.0 International Public License as per
 * **06.05.2020** - creating Phyloseqs objects
   * checking `~/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
 * **07.05.2020** - working on obtaining trees
-  * creating and running `/Users/paul/Documents/OU_pcm_eukaryotes/Github/175_q2_seq_align.sh`  
+  * creating and running `/Users/paul/Documents/OU_pcm_eukaryotes/Github/175_q2_seq_align.sh`
   * creating and running `/Users/paul/Documents/OU_pcm_eukaryotes/Github/177_q2_mask_align.sh`
   * creating and running `/Users/paul/Documents/OU_pcm_eukaryotes/Github/180_q2_get_fastree.sh`
 * **29.06.2020** -  in `200_r_get_phyloseq.r` implement filtering
@@ -249,11 +249,11 @@ Creative Commons Attribution 4.0 International Public License as per
   * `591721c79d7a02df556c1bcb4ae8136ff214ce5b`
 * **20.07.2020** -  in `200_r_get_phyloseq.r` started re-code and new decontamination
   * continue in line 255: `# ---- continue here after 20-Jul-2020 -----` - **aborted**
-* **27.07.2020** - 
+* **27.07.2020** -
   * create hitherto unused file `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Manifest/200727_18S_MF.xlsx`
   * updated todo list
   * commit before further changes
-  * commmit `72403c340a5ac9bea5a848d9f7b763b026c454b` 
+  * commmit `72403c340a5ac9bea5a848d9f7b763b026c454b`
   * drafted `decontam` usage and minor adjustments in `200_r_get_phyloseq.r`
   * commit `ae762b6201f0b1128cf4477d247572d21c39d34`
   * starting re-processing
@@ -266,7 +266,7 @@ Creative Commons Attribution 4.0 International Public License as per
 * **29.07.2020** - continuing processing
   * running `/Users/paul/Documents/OU_pcm_eukaryotes/Github/060_q1_split_samples.sh` - **ok**
   * running `/Users/paul/Documents/OU_pcm_eukaryotes/Github/070_bash_check_quality.sh`  - **ok**
-  * compressing files in place 
+  * compressing files in place
     * `pigz /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/050_plate_1/*.fastq` - **ok**
     * `pigz /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/050_plate_2/*.fastq` - **ok**
   * running `/Users/paul/Documents/OU_pcm_eukaryotes/Github/080_bash_cutadapt.sh` - **ok**
@@ -292,7 +292,7 @@ Creative Commons Attribution 4.0 International Public License as per
     * ran only for `ee=1`
       * `/Users/paul/Documents/OU_pcm_eukaryotes/Github/115_gnu_plot_denoise_plate1.gnu`
       * `/Users/paul/Documents/OU_pcm_eukaryotes/Github/115_gnu_plot_denoise_plate2.gnu`
-    * ran `/Users/paul/Documents/OU_pcm_eukaryotes/Github/120_q2_merge.sh` 
+    * ran `/Users/paul/Documents/OU_pcm_eukaryotes/Github/120_q2_merge.sh`
     * ran `/Users/paul/Documents/OU_pcm_eukaryotes/Github/130_q2_summary.sh`
   * exporting sequences for BLAST taxonomy annotation on cluster
     * `qiime tools export --input-path /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Processing/120_18S_merged-seq.qza --output-path /Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/120_18S_merged-seq.fasta`
@@ -313,7 +313,7 @@ Creative Commons Attribution 4.0 International Public License as per
       * `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/140_18S_merged-seq_blast-noenv.xml.gz`
     * start working on `/Users/paul/Documents/OU_pcm_eukaryotes/Github/150_r_get_q2_tax-tab.r` - **unfinished**
       * waiting for `furrr::future_map()` to finish
-      * contains no data 
+      * contains no data
       * re-BLast with less stringent settings (not `-evalue 1e-5`, nor `-evalue 1e-50`,  but `-evalue 1e-10` ) - **pending**
         * readily adjusted `~/Documents/OU_pcm_eukaryotes/Github/140_bash_fasta_blast.sh`
       * commit `1a75d8e79ec98d4982167c41f6138df10f15df2b`
@@ -324,7 +324,7 @@ Creative Commons Attribution 4.0 International Public License as per
 * **04.08.2020** - third blast on Cornell cluster
   * working on `cbsumm25` - files arriving ok
   * files blasted and back on local
-  * continue 
+  * continue
     * reading in `/Users/paul/Documents/OU_pcm_eukaryotes/Zenodo/Blast/140_18S_merged-seq_blast-noenv.xml`
     * with `/Users/paul/Documents/OU_pcm_eukaryotes/Github/150_r_get_q2_tax-tab.r`
 * **06.08.2020** - read-in of 3rd Blast results
@@ -371,13 +371,13 @@ Creative Commons Attribution 4.0 International Public License as per
     * script needs restructuring, otherwise `decontam` filtering dosen't make sense
   * commit `f8157bbfea9688f1ee3f1b7bc7b1f79e020bb6fd`
 * **13.08.2020** - continue re-processing - checking XRD values
-  * drafted revisions of `200_r_get_phyloseq.r` 
+  * drafted revisions of `200_r_get_phyloseq.r`
     * needs cleaning up from top two bottom
     * upper and lower section surrounding cleanup need to be adjusted
     * adjust output file names
   * commit `39f32a129888691d69d3cbc3887c93f297b1c31b`
     * continue at line 228
-* **14.08.2020** - continue re-processing - 
+* **14.08.2020** - continue re-processing -
   * finished revision of `200_r_get_phyloseq.r`
   * putative contamination / moss reads removed to largest extent possible
   * exclude Streptophyta in Discussion
@@ -396,7 +396,7 @@ Creative Commons Attribution 4.0 International Public License as per
   * commit `f86106a8dd1618674d7f026fb9293a4d84f8629`
 * **26.08.2020** - rerunning script for manuscript composition
   * re-running `/Users/paul/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
-  * commit `eb5c5ebe894c9c68dae3d84079b24f27a4f8accd`
+  * commit `eb5c5ebe8[<35;66;35M]94c9c68dae3d84079b24f27a4f8accd`
 * **26.08.2020** - rerunning script for manuscript composition
   * adding to `/Users/paul/Documents/OU_pcm_eukaryotes/Github/200_r_get_phyloseq.r`
     * adding code to export sample locations for QGis map to `/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/200622_display_item_development/200828_coordinates_all_filtered_phyla_at_all_locations.xlsx`
@@ -426,7 +426,7 @@ Creative Commons Attribution 4.0 International Public License as per
     * RACMO Average 2 m Temperature  (35 km) - `/Users/paul/Quantarctica/Quantarctica3/Atmosphere/Van Wessem RACMO/RACMO_Temperature_2m_35km.txt`
   * created script draft
     * using `raster::diaggregate()` only -  **possibly rework**
-    * better use 
+    * better use
        * AreaToPointKriging (`https://link.springer.com/article/10.1007/s11004-019-09840-6`) - ****possibly rework****
        * `raster.downscale()` as per `https://rdrr.io/cran/spatialEco/man/raster.downscale.html` - ****possibly rework****
     * step through pipeline again - keep in mind new mapping file with new metadata - **pending**
@@ -514,22 +514,22 @@ Creative Commons Attribution 4.0 International Public License as per
 * **29.06.2021** - continued to work on manuscript revsions
 * **30.06.2021** - finished manuscript revsions for review by coauthors - commit `cea3a7a393cb5de59783fe77bd7a0ce3d334f80d`
 * **12.07.2021** - started finalizing revisions after receiving feedback
-  * **next** 
+  * **next**
     * add Blast confidences to
       * `/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/210602_supporting_material/WebTable 4.xlsx`
       * `/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/210602_supporting_material/WebTable 5.xlsx`
       * `/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/210602_supporting_material/WebTable 6.xlsx`
     * continue in text `/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/210712_FEE21-0056_main_text.docx`
-* **13.07.2021** - started finalizing revisions after receiving feedback  
+* **13.07.2021** - started finalizing revisions after receiving feedback
   * use `/Users/paul/Documents/OU_pcm_eukaryotes/Github/150_r_get_q2_tax-tab.r`
   * as a template for `/Users/paul/Documents/OU_pcm_eukaryotes/Github/230_r_add_blast_scores_to_som.r`
   * finished `/Users/paul/Documents/OU_pcm_eukaryotes/Github/230_r_add_blast_scores_to_som.r`
   * finalising revisions
   * commit `a0dcc39ebc9546608944e925686ff8ca38571514`
 * **10.11.2021** - starting revisions in version `FEE21-0056.R2`
-  * see files:
-    * `/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/211110_FEE21-0056.R1_responses.docx`
-    * `/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/211110_FEE21-0056.R2_main_text.docx`
+  * see files
+     * `/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/211110_FEE21-0056.R1_responses.doc`
+     * `/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/211110_FEE21-0056.R2_main_text.docx`
 * **11.11.2021** - continuing revisions in version `FEE21-0056.R2`
 * **12.11.2021** - continuing revisions in version `FEE21-0056.R2`
   * done with most - waiting fro MdL
@@ -537,7 +537,7 @@ Creative Commons Attribution 4.0 International Public License as per
 * **18.11.2021** - continuing revisions in version `FEE21-0056.R2`
   * uploading script folder to GitHub
   * releasing scripts on GitHub - crosslinking to Zenodo for doi minting
-  * compressing  analysis files `tar -zcvf 211118_analysis_files.tar.gz Zenodo/` 
+  * compressing  analysis files `tar -zcvf 211118_analysis_files.tar.gz Zenodo/`
   * uploading files to Zenodo
   * erase archive to save local disk space
   * finalising revsion for co-authors
@@ -545,7 +545,9 @@ Creative Commons Attribution 4.0 International Public License as per
   * getting derived data set for GBIF
   * creating new code commit past release version
   * creating new Zenodo version
-
-  
- 
-  
+* **25.04.2022** - checking project folder for springtail coordinates, as per MS request
+ * sent `/Users/paul/Documents/OU_pcm_eukaryotes/Manuscript/211118_FEE21-0056.R2_supporting_material/WebTable 3.xlsx`
+* **10.08.2022** - checking FEE proofs for editor
+  * minor chnage to file name in SI, no code run.
+  * all relvant files copied to proof folder among manuscript
+  * pushing to Github for completion, after commit
